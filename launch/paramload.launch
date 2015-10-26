@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="model_urdf" value="$(find modeldb)/defs/wheelchair_body.urdf.xacro" />
+	<arg name="robot_name" value="wheelchair" />
+	<param name="tf_prefix" value="$(arg robot_name)" />
+	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" />
+</launch>

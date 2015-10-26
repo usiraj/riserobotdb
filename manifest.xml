@@ -1,0 +1,19 @@
+<package>
+  <description brief="riserobotdb">
+
+     modeldb
+
+  </description>
+  <author>Rise Lab</author>
+  <license>apache</license>
+  <review status="unreviewed" notes="Contains Models of different Robots and Sensors"/>
+  <url>http://ros.org/wiki/modeldb</url>
+  <depend package="roscpp" />
+  <depend package="std_msgs" />
+  <depend package="sensor_msgs" />
+  <depend package="xacro" />
+  <depend package="gazebo_ros" />
+  <depend package="rviz" />
+</package>
+
+
