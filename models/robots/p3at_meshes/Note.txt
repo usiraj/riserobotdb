@@ -1,0 +1,2 @@
+Meshes contained in this package are from https://github.com/allenh1/p2os.git.
+Check that package for license information regarding these meshes.
