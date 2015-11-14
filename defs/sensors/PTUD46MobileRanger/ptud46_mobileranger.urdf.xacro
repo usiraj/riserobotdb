@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ptud46_mobileranger">
+
+<xacro:include filename="$(find riserobotdb)/defs/common/common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/ptud46_mobileranger.common.xacro" />
+<!-- A base fixed frame with two moveable joints pan and tilt-->
+
+<!-- Definition -->
+<xacro:macro name="ptud46_mobileranger" params="_baselink _basexyz _baserpy _usejointcontroller" >
+	<!-- Ptud46 mount base Link -->
+	<xacro:urdf_link _name="${ptud46_base_link}" _xyz="0 0 0" _rpy="0 0 0" _mesh="${ptud46_base_mesh}" 
+		_mass="${ptud46_base_mass}" _cg="${ptud46_base_cg}" _ixx="${ptud46_base_ixx}" _iyy="${ptud46_base_iyy}" 
+		_izz="${ptud46_base_izz}" _ixy="${ptud46_base_ixy}" _ixz="${ptud46_base_ixz}" _iyz="${ptud46_base_iyz}" />
+	<xacro:urdf_link _name="${ptud46_yaw_link}" _xyz="0 0 0" _rpy="0 0 0" _mesh="${ptud46_yaw_mesh}" 
+		_mass="${ptud46_yaw_mass}" _cg="${ptud46_yaw_cg}" _ixx="${ptud46_yaw_ixx}" _iyy="${ptud46_yaw_iyy}" 
+		_izz="${ptud46_yaw_izz}" _ixy="${ptud46_yaw_ixy}" _ixz="${ptud46_yaw_ixz}" _iyz="${ptud46_yaw_iyz}" />
+	<xacro:urdf_link _name="${ptud46_camtilt_link}" _xyz="0 0 0" _rpy="0 0 0" _mesh="${ptud46_camtilt_mesh}" 
+		_mass="${ptud46_camtilt_mass}" _cg="${ptud46_camtilt_cg}" _ixx="${ptud46_camtilt_ixx}" _iyy="${ptud46_camtilt_iyy}" 
+		_izz="${ptud46_camtilt_izz}" _ixy="${ptud46_camtilt_ixy}" _ixz="${ptud46_camtilt_ixz}" _iyz="${ptud46_camtilt_iyz}" />
+	<xacro:urdf_link_null _name="${ptud46_camleft_link}" />
+	<xacro:urdf_link_null _name="${ptud46_camright_link}" />
+	<!-- Now Joints -->
+	<xacro:urdf_fixed_joint _name="${ptud46_base_joint}" _parent="${_baselink}"
+	 _child="${ptud46_base_link}" _xyz="${_basexyz}" _rpy="${_baserpy}" />
+	<xacro:urdf_fixed_joint _name="${ptud46_camleft_joint}" _parent="${ptud46_camtilt_link}"
+	 _child="${ptud46_camleft_link}" _xyz="${ptud46_camleft_xyz}" _rpy="0 0 0" />
+	<xacro:urdf_fixed_joint _name="${ptud46_camright_joint}" _parent="${ptud46_camtilt_link}"
+	 _child="${ptud46_camright_link}" _xyz="${ptud46_camright_xyz}" _rpy="0 0 0" />
+	<!-- Pan and tilt joints -->
+	<xacro:urdf_revolute_joint _name="${ptud46_yaw_joint}" _parent="${ptud46_base_link}" _child="${ptud46_yaw_link}" _axis="0 0 1" 
+	_xyz="${ptud46_yaw_xyz}" _rpy="0 0 0" _lower="${ptud46_pan_lower}" _upper="${ptud46_pan_upper}"
+	 _effort="${ptud46_joint_effort}" _velocity="${ptud46_joint_velocity}" />
+	<xacro:urdf_revolute_joint _name="${ptud46_camtilt_joint}" _parent="${ptud46_yaw_link}" _child="${ptud46_camtilt_link}" _axis="0 1 0" 
+	_xyz="${ptud46_camtilt_xyz}" _rpy="0 0 0" _lower="${ptud46_tilt_lower}" _upper="${ptud46_tilt_upper}"
+	 _effort="${ptud46_joint_effort}" _velocity="${ptud46_joint_velocity}" />
+	<!-- Joint Controllers -->
+	<xacro:if value="${_usejointcontroller}">
+		<xacro:urdf_transmission joint="${ptud46_yaw_joint}" id="1" />
+		<xacro:urdf_transmission joint="${ptud46_camtilt_joint}" id="2" />
+	</xacro:if>
+</xacro:macro>
+</robot>

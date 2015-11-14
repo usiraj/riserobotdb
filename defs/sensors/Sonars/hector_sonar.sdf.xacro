@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:property name="sa_min_range" value="0.1" />
+<xacro:property name="sa_max_range" value="4.0" />
+<xacro:property name="sa_fov"		value="0.52" />
+<xacro:property name="sa_samples"	value="1" />
+<xacro:property name="sa_updaterate" value="40" />
+<xacro:macro name="sonar_sensor" params="robot_name arrayname id pose">
+<sensor name='${arrayname}_sonar_${id}' type='ray'>
+	<always_on>1</always_on>
+	<update_rate>${sa_updaterate}</update_rate>
+	<visualize>0</visualize>
+	<ray>
+		<scan>
+		<horizontal>
+			<samples>1</samples>
+			<resolution>1</resolution>
+            <min_angle>-${sa_fov/2}</min_angle>
+            <max_angle>${sa_fov/2}</max_angle>
+		</horizontal>
+		<vertical>
+			<samples>1</samples>
+			<resolution>1</resolution>
+			<min_angle>-${sa_fov/2}</min_angle>
+			<max_angle>${sa_fov/2}</max_angle>
+		</vertical>
+		</scan>
+		<range>
+			<min>${sa_min_range}</min>
+			<max>${sa_max_range}</max>
+			<resolution>0.01</resolution>
+		</range>
+	</ray>
+	<plugin name='gazebo_ros_${arrayname}_sonar_${id}_controller' filename='$(find hector_gazebo_plugins)/lib/libhector_gazebo_ros_sonar.so'>
+		<robotNamespace>${robot_name}/${arrayname}</robotNamespace>
+		<gaussianNoise>0.005</gaussianNoise>
+		<topicName>sonar_${id}</topicName>
+		<frameId>${robot_name}/${arrayname}_sonar_${id}_link</frameId>
+	</plugin>
+	<pose>${pose}</pose>
+</sensor>
+</xacro:macro>
+
+</sdf>

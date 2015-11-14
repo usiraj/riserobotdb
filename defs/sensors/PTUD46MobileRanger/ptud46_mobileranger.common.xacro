@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:property name="ptud46_base_mesh" value="models/sensors/PTUD46MobileRanger/ptud46_mount.dae" />
+<xacro:property name="ptud46_yaw_mesh" value="models/sensors/PTUD46MobileRanger/ptud46_yaw.dae" />
+<xacro:property name="ptud46_camtilt_mesh" value="models/sensors/PTUD46MobileRanger/ptud46_cammounted_tilt.dae" />
+<!-- Some Names of Links and Joints -->
+<xacro:property name="ptud46_base_link" value="ptud46_base_link" />
+<xacro:property name="ptud46_yaw_link" value="ptud46_yaw_link" />
+<xacro:property name="ptud46_camtilt_link" value="ptud46_camtilt_link" />
+<xacro:property name="ptud46_camleft_link" value="ptud46_camleft_link" />
+<xacro:property name="ptud46_camright_link" value="ptud46_camright_link" />
+<xacro:property name="ptud46_base_joint" value="ptud46_base_joint" />
+<xacro:property name="ptud46_camleft_joint" value="ptud46_camleft_joint" />
+<xacro:property name="ptud46_camright_joint" value="ptud46_camright_joint" />
+<xacro:property name="ptud46_yaw_joint" value="ptud46_yaw_joint" />
+<xacro:property name="ptud46_camtilt_joint" value="ptud46_camtilt_joint" />
+<!-- Some Properties : Offsets and Positions -->
+
+<xacro:property name="ptud46_yaw_xyz" value="-0.0005 0.0001 0.04759" />
+<xacro:property name="ptud46_camtilt_xyz" value="0 0 0.045974" />
+<xacro:property name="ptud46_camleft_xyz" value="0 0.02921 0.074049" />
+<xacro:property name="ptud46_camright_xyz" value="0 -0.02921 0.074049" />
+<!-- Mass and Inertias -->
+<xacro:property name="ptud46_base_cg" value="0 0 0" />
+<xacro:property name="ptud46_yaw_cg" value="0 0 0" />
+<xacro:property name="ptud46_camtilt_cg" value="0 0 0" />
+<xacro:property name="ptud46_base_mass" value="1.0" />
+<xacro:property name="ptud46_yaw_mass" value="1.0" />
+<xacro:property name="ptud46_camtilt_mass" value="3.0" />
+<xacro:property name="ptud46_base_ixx" value="1" />
+<xacro:property name="ptud46_base_iyy" value="1" />
+<xacro:property name="ptud46_base_izz" value="1" />
+<xacro:property name="ptud46_base_ixy" value="0" />
+<xacro:property name="ptud46_base_ixz" value="0" />
+<xacro:property name="ptud46_base_iyz" value="0" />
+<xacro:property name="ptud46_yaw_ixx" value="1" />
+<xacro:property name="ptud46_yaw_iyy" value="1" />
+<xacro:property name="ptud46_yaw_izz" value="1" />
+<xacro:property name="ptud46_yaw_ixy" value="0" />
+<xacro:property name="ptud46_yaw_ixz" value="0" />
+<xacro:property name="ptud46_yaw_iyz" value="0" />
+<xacro:property name="ptud46_camtilt_ixx" value="1" />
+<xacro:property name="ptud46_camtilt_iyy" value="1" />
+<xacro:property name="ptud46_camtilt_izz" value="1" />
+<xacro:property name="ptud46_camtilt_ixy" value="0" />
+<xacro:property name="ptud46_camtilt_ixz" value="0" />
+<xacro:property name="ptud46_camtilt_iyz" value="0" />
+<!-- Some Joint Limits -->
+<xacro:property name="ptud46_joint_effort" value="100" />
+<xacro:property name="ptud46_joint_velocity" value="1" />
+<xacro:property name="ptud46_pan_lower" value="-3.8397" />
+<xacro:property name="ptud46_pan_upper" value="3.8397" />
+<xacro:property name="ptud46_tilt_lower" value="-0.75398" />
+<xacro:property name="ptud46_tilt_upper" value="0.5236" />
+<!-- Camera Properties -->
+<xacro:property name="mobileranger_name" value="ptud46_mobileranger" />
+<xacro:property name="mobileranger_image_width" value="752" />
+<xacro:property name="mobileranger_image_height" value="480" />
+<xacro:property name="mobileranger_fov" value="1.309" />
+<xacro:property name="mobileranger_clip_near" value="0.2" />
+<xacro:property name="mobileranger_clip_far" value="60" />
+<xacro:property name="mobileranger_updaterate" value="10" />
+<xacro:property name="mobileranger_baseline" value="0.058" />
+<xacro:property name="mobileranger_fx" value="490.011187" />
+<xacro:property name="mobileranger_cx" value="423.62" />
+<xacro:property name="mobileranger_cy" value="236.67" />
+<!-- Some other macros -->
+
+
+
+
+</robot>

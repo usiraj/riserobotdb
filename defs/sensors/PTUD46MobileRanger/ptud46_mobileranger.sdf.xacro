@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/ptud46_mobileranger.common.xacro" />
+<!-- Stereo Camera Plugin -->
+<xacro:macro name="ptud46_stereocam" params="robot_name _frame1 _frame2 _pose1 _pose2" >
+	<sensor type="multicamera" name="${mobileranger_name}">
+	<always_on>1</always_on>
+	<visualize>1</visualize>
+    <update_rate>${mobileranger_updaterate}</update_rate>
+    <camera name="${mobileranger_name}_left">
+    	<pose>${_pose1}</pose>
+		<horizontal_fov>${mobileranger_fov}</horizontal_fov>
+		<image>
+			<width>${mobileranger_image_width}</width>
+        	<height>${mobileranger_image_height}</height>
+        	<format>R8G8B8</format>
+		</image>
+		<clip>
+			<near>${mobileranger_clip_near}</near>
+			<far>${mobileranger_clip_far}</far>
+		</clip>
+		<noise>
+			<type>gaussian</type>
+			<mean>0.0</mean>
+			<stddev>0.007</stddev>
+		</noise>
+	</camera>
+	<camera name="${mobileranger_name}_right">
+		<horizontal_fov>${mobileranger_fov}</horizontal_fov>
+		<pose>${_pose2}</pose>
+		<image>
+			<width>${mobileranger_image_width}</width>
+        	<height>${mobileranger_image_height}</height>
+        	<format>R8G8B8</format>
+		</image>
+		<clip>
+			<near>${mobileranger_clip_near}</near>
+			<far>${mobileranger_clip_far}</far>
+		</clip>
+		<noise>
+			<type>gaussian</type>
+			<mean>0.0</mean>
+			<stddev>0.007</stddev>
+		</noise>
+	</camera>
+	<!-- Now the plugin -->
+	<plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+    	 <alwaysOn>true</alwaysOn>
+    	 <updateRate>${mobileranger_updaterate}</updateRate>
+    	 <robotNamespace>${robot_name}</robotNamespace>
+    	 <cameraName>${mobileranger_name}</cameraName>
+    	 <imageTopicName>image_raw</imageTopicName>
+    	 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+    	 <frameName>${_frame1}</frameName>
+    	 <rightFrameName>${_frame2}</rightFrameName>
+    	 <hackBaseline>${mobileranger_baseline}</hackBaseline>
+    	 <CxPrime>${mobileranger_cx}</CxPrime>
+    	 <Cx>${mobileranger_cx}</Cx>
+    	 <Cy>${mobileranger_cy}</Cy>
+    	 <focalLength>${mobileranger_fx}</focalLength>
+    	 <distortionK1>0.0</distortionK1>
+    	 <distortionK2>0.0</distortionK2>
+    	 <distortionK3>0.0</distortionK3>
+    	 <distortionT1>0.0</distortionT1>
+    	 <distortionT2>0.0</distortionT2>
+	</plugin>
+	</sensor>
+</xacro:macro>
+<!-- PTUD46 - MOBILERANGER DEFINITION -->
+<xacro:macro name="ptud46_mobileranger_base" params="_basepose">
+	<!-- Base -->
+	<!-- Don't Include Mass of base here -->
+	<collision name="${ptud46_base_link}_collision">
+		<pose>${_basepose}</pose>
+		<xacro:sdf_mesh _filename="${ptud46_base_mesh}" />
+    </collision>
+	<visual name="${ptud46_base_link}_visual">
+		<pose>${_basepose}</pose>
+		<xacro:sdf_mesh _filename="${ptud46_base_mesh}" />
+	</visual>
+</xacro:macro>
+<xacro:macro name="ptud46_mobileranger" params="_baselink robot_name _pose _pose2 _usejointcontroller" >
+<!-- Yaw -->
+	<link name="${ptud46_yaw_link}">
+		<xacro:link_def_extra />
+		<pose>${_pose}</pose>
+		<xacro:sdf_inertial _mass="${ptud46_yaw_mass}" _cg="${ptud46_yaw_cg}" 
+				_ixx="${ptud46_yaw_ixx}" _iyy="${ptud46_yaw_iyy}" _izz="${ptud46_yaw_izz}" _ixy="${ptud46_yaw_ixy}" 
+				_ixz="${ptud46_yaw_ixz}" _iyz="${ptud46_yaw_iyz}" />
+		<visual name="${ptud46_yaw_link}_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${ptud46_yaw_mesh}" />
+		</visual>
+		<collision name="${ptud46_yaw_link}_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${ptud46_yaw_mesh}" />
+		</collision>
+	</link>
+	<xacro:sdf_revolute_joint _name="${ptud46_yaw_joint}" _parent="${_baselink}" _child="${ptud46_yaw_link}" _axis="0 0 1" 
+				_lower="${ptud46_pan_lower}" _upper="${ptud46_pan_upper}" _useparent="1" />
+<!-- Tilt with camera-->
+	<link name="${ptud46_camtilt_link}">
+		<xacro:link_def_extra />
+		<pose>${_pose2}</pose>
+		<xacro:sdf_inertial _mass="${ptud46_camtilt_mass}" _cg="${ptud46_camtilt_cg}" 
+				_ixx="${ptud46_camtilt_ixx}" _iyy="${ptud46_camtilt_iyy}" _izz="${ptud46_camtilt_izz}" _ixy="${ptud46_camtilt_ixy}" 
+				_ixz="${ptud46_camtilt_ixz}" _iyz="${ptud46_camtilt_iyz}" />
+		<visual name="${ptud46_camtilt_link}_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${ptud46_camtilt_mesh}" />
+		</visual>
+		<collision name="${ptud46_camtilt_link}_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${ptud46_camtilt_mesh}" />
+		</collision>
+		<!-- Sensors -->
+		<xacro:ptud46_stereocam robot_name="${robot_name}" _frame1="${ptud46_camleft_link}" _frame2="${ptud46_camright_link}"
+		 _pose1="${ptud46_camleft_xyz} 0 0 0" _pose2="${ptud46_camright_xyz} 0 0 0" />
+	</link>
+	<xacro:sdf_revolute_joint _name="${ptud46_camtilt_joint}" _parent="${ptud46_yaw_link}" _child="${ptud46_camtilt_link}" _axis="0 1 0" 
+				_lower="${ptud46_tilt_lower}" _upper="${ptud46_tilt_upper}" _useparent="1" />
+	<xacro:if value="${_usejointcontroller}">
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>${robot_name}</robotNamespace>
+			<robotParam>${robot_name}_urdf</robotParam>
+		</plugin>	
+	</xacro:if>	
+</xacro:macro>
+</sdf>

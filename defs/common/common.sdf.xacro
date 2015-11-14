@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- Macro to load mesh -->
+<xacro:macro name="sdf_mesh" params="_filename">
+	<geometry><mesh><scale>1 1 1</scale>
+		<uri>$(find riserobotdb)/${_filename}</uri>
+	</mesh></geometry>
+</xacro:macro>
+<!-- Macro to load inertial information -->
+<xacro:macro name="sdf_inertial" params="_mass _cg _ixx _iyy _izz _ixy _ixz _iyz">
+	<inertial>
+		<pose>${_cg} 0 0 0</pose>
+		<mass>${_mass}</mass>
+		<inertia>
+            <ixx>${_ixx}</ixx>
+            <ixy>${_ixy}</ixy>
+            <ixz>${_ixz}</ixz>
+            <iyy>${_iyy}</iyy>
+            <iyz>${_iyz}</iyz>
+            <izz>${_izz}</izz>
+		</inertia>
+	</inertial>
+</xacro:macro>
+<!-- Macro to load revolute joint -->
+<xacro:macro name="sdf_revolute_joint" params="_name _parent _child _axis _lower _upper _useparent" >
+	<joint name="${_name}" type="revolute">
+		<child>${_child}</child>
+		<parent>${_parent}</parent>
+		<axis>
+			<xyz>${_axis}</xyz>
+			<limit>
+				<lower>${_lower}</lower>
+				<upper>${_upper}</upper>
+			</limit>
+			<dynamics>
+				<spring_reference>0</spring_reference>
+				<spring_stiffness>0</spring_stiffness>
+			</dynamics>
+			<use_parent_model_frame>${_useparent}</use_parent_model_frame>
+		</axis>	
+	</joint>
+</xacro:macro>
+<!-- Macro for a wheel joint -->
+<xacro:macro name="sdf_wheel_joint" params="_name _parent _child _axis" >
+	<xacro:sdf_revolute_joint _name="${_name}" _parent="${_parent}" _child="${_child}" _axis="${_axis}" 
+		_lower="-1e+16" _upper="1e+16" _useparent="1"/>
+</xacro:macro>
+<!-- Macro for collision params -->
+<xacro:macro name="sdf_collision_params" params="kp kd mu mu2 slip1 slip2 fdir1 max_contacts">
+	<surface>
+		<contact>
+			<ode>
+				<kp>${kp}</kp>
+				<kd>${kd}</kd>
+			</ode>
+		</contact>
+        <friction>
+			<ode>
+               	<mu>${mu}</mu>
+           		<mu2>${mu2}</mu2>
+          		<slip1>${slip1}</slip1>
+           		<slip2>${slip2}</slip2>
+              	<fdir1>${fdir1}</fdir1>
+			</ode>
+		</friction>
+	</surface>
+	<max_contacts>${max_contacts}</max_contacts>
+</xacro:macro>
+<!-- Macro for extra params of a link -->
+<xacro:macro name="link_def_extra">
+	<velocity_decay>
+		<linear>0.001</linear>
+		<angular>0.001</angular>
+	</velocity_decay>
+	<gravity>1</gravity>
+	<self_collide>0</self_collide>
+	<kinematic>0</kinematic>
+</xacro:macro>
+<!-- Macro for null link in sdf -->
+<xacro:macro name="sdf_link_null" params="_name geom_rpy joint_xyz">
+	<link name="${_name}">
+		<xacro:link_def_extra />
+		<pose>${joint_xyz} ${geom_rpy}</pose>
+		<xacro:sdf_inertial _mass="0.01" _cg="0 0 0" _ixx="1" _iyy="1" _izz="1" _ixy="0" _ixz="0" _iyz="0" />
+		<visual name="${_name}_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+		</visual>
+		<collision name="${_name}_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<geometry><box><size>0.02 0.02 0.02</size></box></geometry>
+		</collision>
+	</link>
+</xacro:macro>
+</sdf>

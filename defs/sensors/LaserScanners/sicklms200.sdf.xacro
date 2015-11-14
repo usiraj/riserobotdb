@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:property name="sicklms200_laser_mesh" value="models/sensors/LaserScanners/sicklms200.dae" />
+
+	<xacro:macro name="sicklms200_laser" params="robot_name id frame_pose sensor_pose">
+		<collision name='base_link_collision_sicklms200_link_0'>
+          <pose>${frame_pose}</pose>
+          <geometry><box><size>0.156 0.155 0.185</size></box></geometry>
+        </collision>
+		<visual name='base_link_visual_sicklms200'>
+          <pose>${frame_pose}</pose>
+			<xacro:sdf_mesh _filename="${sicklms200_laser_mesh}" />
+        </visual>
+        <!--LRF Sensor Definition -->
+        <sensor name='sicklms200_laser_${id}' type='ray'>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>180</samples>
+                <resolution>1</resolution>
+                <min_angle>-1.5708</min_angle>
+                <max_angle>1.5708</max_angle>
+              </horizontal>
+            </scan>
+            <range>
+              <min>0.2</min>
+              <max>10</max>
+              <resolution>0.01</resolution>
+            </range>
+          </ray>
+          <!-- LRF Plugin -->
+          <plugin name='sicklms200_laser_${id}' filename='libgazebo_ros_laser.so'>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>30</updateRate>
+            <gaussianNoise>0.01</gaussianNoise>
+            <topicName>lms200_laserscan_${id}</topicName>
+            <frameName>sicklms200_sensor_${id}</frameName>
+            <robotNamespace>${robot_name}</robotNamespace>
+          </plugin>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>1</visualize>
+          <pose>${sensor_pose}</pose>
+        </sensor>
+	</xacro:macro>
+	
+</sdf>
