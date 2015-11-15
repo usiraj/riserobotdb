@@ -27,7 +27,7 @@
     	</include>
 	    <!-- load the robot_description in ROS Parameter Server -->	
 	    <param name="$(arg robot_name)_urdf" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" />
-	    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" />
+	    <!--param name="robot_description" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" /-->
 	    <param name="$(arg robot_name)_sdf" command="$(find xacro)/xacro.py $(arg model_sdf) prefix:=$(arg robot_name)" />
 	    <param name="$(arg robot_name)_tfprefix" value="$(arg robot_name)" />
 	    <rosparam file="$(arg ignore_joints)" command="load" />

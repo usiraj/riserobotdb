@@ -3,7 +3,7 @@
 <launch>
 	<arg name="robot_model" default="" />
 	<arg name="robot_name" default="risewheelchair" />
-	<arg name="param_name" defualt="robot_description" />
+	<arg name="param_name" default="robot_description" />
 	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
 	<!-- Load Params -->
 	<param name="$(arg robot_name)_tfprefix" value="$(arg robot_name)" />
