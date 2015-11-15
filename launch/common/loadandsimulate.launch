@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- these are the arguments you can pass this launch file, for example paused:=true -->
+	<arg name="model_urdf" />
+	<arg name="model_sdf" />
+	<arg name="robot_name" default="basic_robot" />
+  	<arg name="paused" default="false"/>
+  	<arg name="use_sim_time" default="true"/>
+  	<arg name="gazebo_gui" default="true"/>
+  	<arg name="gazebo_world" default="worlds/empty.world" />
+  	<arg name="rviz_config" default="$(find rviz)/default.rviz" />
+  	<arg name="headless" default="false"/>
+  	<arg name="debug" default="false"/>
+  	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
+  	<arg name="rootns" default="/Robots" />  	
+	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+	<group ns="$(arg rootns)">
+	    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    	    <arg name="world_name" value="$(arg gazebo_world)"/>
+        	<!-- more default parameters can be changed here -->
+         	<arg name="debug" value="$(arg debug)" />
+    	    <arg name="gui" value="$(arg gazebo_gui)" />
+    	    <arg name="paused" value="$(arg paused)"/>
+    	    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    	    <arg name="headless" value="$(arg headless)"/>
+    	    <!--arg name="extra_arg" value="-e ode" /-->
+    	</include>
+	    <!-- load the robot_description in ROS Parameter Server -->	
+	    <param name="$(arg robot_name)_urdf" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" />
+	    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model_urdf) prefix:=$(arg robot_name)" />
+	    <param name="$(arg robot_name)_sdf" command="$(find xacro)/xacro.py $(arg model_sdf) prefix:=$(arg robot_name)" />
+	    <param name="$(arg robot_name)_tfprefix" value="$(arg robot_name)" />
+	    <rosparam file="$(arg ignore_joints)" command="load" />
+	    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+  	    <node name="sdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	    	args="-sdf -model $(arg robot_name) -param $(arg robot_name)_sdf -gazebo_namespace /Robots/gazebo"/>
+	    <!-- now launch rviz -->	
+	    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" />
+	</group>
+	<!-- Joints and Robot state publishers -->	
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    	respawn="false" output="screen" ns="$(arg rootns)/$(arg robot_name)" >
+    		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+    		<remap from="tf_prefix" to="$(arg rootns)/$(arg robot_name)_tfprefix" />
+    		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+ 	</node>
+	<!--Joint State with Ignrore List -->
+	<node name="joint_state_publisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
+		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+	</node>	
+</launch>

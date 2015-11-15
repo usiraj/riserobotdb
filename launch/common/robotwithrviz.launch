@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- To load robot model with rviz -->
+    <arg name="model_urdf" />
+    <arg name="rootns" default="/Robots" />
+	<arg name="robot_name" default="basic_robot" />
+  	<arg name="rviz_config" default="$(find rviz)/default.rviz" />
+  	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
+  	<!-- Load Robot in Parameter Server -->
+  	<include file="$(find riserobotdb)/launch/common/loadrobot.launch" >
+  	    <arg name="robot_model" value="$(arg model_urdf)" />
+  	    <arg name="robot_name" value="$(arg robot_name)" />
+  	    <arg name="rootns" value="$(arg rootns)" />
+  	    <arg name="ignore_joints" value="$(arg ignore_joints)" />
+  	</include>
+	<!-- now launch rviz -->	
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" ns="$(arg rootns)" />
+</launch>

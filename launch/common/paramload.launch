@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- To Load urdf/sdf into parameter server -->
+<launch>
+	<arg name="robot_model" default="" />
+	<arg name="robot_name" default="risewheelchair" />
+	<arg name="param_name" defualt="robot_description" />
+	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
+	<!-- Load Params -->
+	<param name="$(arg robot_name)_tfprefix" value="$(arg robot_name)" />
+	<param name="$(arg param_name)" command="$(find xacro)/xacro.py $(arg robot_model) prefix:=$(arg robot_name)" />
+	<rosparam file="$(arg ignore_joints)" command="load" />
+</launch>

@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:property name="wheelchair_base_mesh" value="models/robots/wheelchair1/Wheelchair_Structure.dae" />
+<xacro:property name="wheelchair_caster_mesh" value="models/robots/wheelchair1/Wheelchair_Caster.dae" />
+<xacro:property name="wheelchair_wheel_mesh" value="models/robots/wheelchair1/Wheelchair_Wheel.dae" />
+<xacro:property name="bender_body_mesh" value="models/robots/wheelchair1/Bender_Body.dae" />
+<xacro:property name="bender_head_mesh" value="models/robots/wheelchair1/Bender_Head.dae" />
+<!-- Wheel Chair Data -->
+<xacro:property name="wheelchair_xyz" value="0 0 0" />
+<xacro:property name="wheelchair_rpy" value="0 0 0" />
+<xacro:property name="wheelchair_cg" value="0.2 0 0.2" />
+<xacro:property name="bender_x" value="0.106" />
+<xacro:property name="bender_y" value="0" />
+<xacro:property name="bender_z" value="0.508" />
+<xacro:property name="bender_rpy" value="0 0 0" />
+<xacro:property name="bender_cg" value="0 0 0" />
+<xacro:property name="bender_head_x" value="0.04" />
+<xacro:property name="bender_head_y" value="0" />
+<xacro:property name="bender_head_z" value="0.25" />
+<xacro:property name="bender_head_rpy" value="0 0 0" />
+<xacro:property name="bender_head_cg" value="0 0 0.2" />
+<xacro:property name="bender_head_xyz" value="${bender_head_x} ${bender_head_y} ${bender_head_z}" />
+<xacro:property name="bender_xyz" value="${bender_x} ${bender_y} ${bender_z}" />
+<xacro:property name="bender_head_gaz_xyz" value="${bender_x + bender_head_x} ${bender_y + bender_head_y} ${bender_z + bender_head_z}" />
+<!-- Wheel Data -->
+<xacro:property name="wheel_left_joint_xyz" value="0 0.2374 0"/>
+<xacro:property name="wheel_right_joint_xyz" value="0 -0.2374 0"/>
+<xacro:property name="wheel_left_rpy" value="-1.57 0 0" />
+<xacro:property name="wheel_right_rpy" value="1.57 0 0" />
+<xacro:property name="wheel_cg" value="0 0 0"/>
+<xacro:property name="wheel_axis" value="0 1 0" />
+<!-- Caster Wheel Data -->
+<xacro:property name="caster_left_joint_xyz" value="0.5203 0.2006 0.0376"/>
+<xacro:property name="caster_right_joint_xyz" value="0.5203 -0.2006 0.0376"/>
+<xacro:property name="caster_left_rpy" value="0 0 0" />
+<xacro:property name="caster_right_rpy" value="0 0 0" />
+<xacro:property name="caster_cg" value="0.045 0 -0.13"/>
+<xacro:property name="caster_axis" value="0 0 1" />
+<!-- Mass and Inertias -->
+<xacro:property name="wheelchair_mass" value="60.0" />
+<xacro:property name="wheelchair_sicklms_mass" value="4.5" />
+<xacro:property name="bender_mass" value="70" />
+<xacro:property name="bender_head_mass" value="7" />
+<xacro:property name="wheel_mass" value="1.5" />
+<xacro:property name="caster_mass" value="2.0" />
+<xacro:property name="wheelchair_ixx" value="${wheelchair_mass * 0.06}" />
+<xacro:property name="wheelchair_iyy" value="${wheelchair_mass * 0.0833}" />
+<xacro:property name="wheelchair_izz" value="${wheelchair_mass * 0.0833}" />
+<xacro:property name="wheelchair_ixy" value="0" />
+<xacro:property name="wheelchair_ixz" value="0" />
+<xacro:property name="wheelchair_iyz" value="0" />
+<xacro:property name="wheel_ixx" value="${wheel_mass * 0.0577}" />
+<xacro:property name="wheel_iyy" value="${wheel_mass * 0.0577}" />
+<xacro:property name="wheel_izz" value="${wheel_mass * 0.01883}" />
+<xacro:property name="wheel_ixy" value="0" />
+<xacro:property name="wheel_ixz" value="0" />
+<xacro:property name="wheel_iyz" value="0" />
+<xacro:property name="caster_ixx" value="${caster_mass * 0.0039}" />
+<xacro:property name="caster_iyy" value="${caster_mass * 0.0033}" />
+<xacro:property name="caster_izz" value="${caster_mass * 0.0039}" />
+<xacro:property name="caster_ixy" value="0" />
+<xacro:property name="caster_ixz" value="0" />
+<xacro:property name="caster_iyz" value="0" />
+<!-- Others -->
+<xacro:property name="joint_effort" value="100" />
+<xacro:property name="joint_velocity" value="50" />
+<xacro:property name="pan_lower" value="-1.22173" />
+<xacro:property name="pan_upper" value="1.22173" />
+<xacro:property name="tilt_lower" value="-1.308997" />
+<xacro:property name="tilt_upper" value="0.95993" />
+<!-- Wheels ODE Params -->
+<xacro:property name="wheel_kp" value="1e+06" />
+<xacro:property name="wheel_kd" value="100" />
+<xacro:property name="wheel_mu" value="0.3" />
+<xacro:property name="wheel_mu2" value="0.5" />
+<xacro:property name="wheel_slip1" value="0.5" />
+<xacro:property name="wheel_slip2" value="0.2" />
+<xacro:property name="wheel_fdir1" value="1 0 0" />
+<xacro:property name="caster_kp" value="1e+06" />
+<xacro:property name="caster_kd" value="100" />
+<xacro:property name="caster_mu" value="0.2" />
+<xacro:property name="caster_mu2" value="0.3" />
+<xacro:property name="caster_slip1" value="0.7" />
+<xacro:property name="caster_slip2" value="0.4" />
+<xacro:property name="caster_fdir1" value="1 0 0" />
+<!-- Sick LMS 200 Data -->
+<xacro:property name="wheelchair_sicklms_x" value="0.8081" />
+<xacro:property name="wheelchair_sicklms_y" value="0" />
+<xacro:property name="wheelchair_sicklms_z" value="-0.01" />
+<xacro:property name="wheelchair_sicklms_z_visual_offset" value="0.0925" />
+<xacro:property name="wheelchair_sicklms_sensor_z_offset" value="0.063" />
+<xacro:property name="wheelchair_sicklms_xyz" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z}" />
+<xacro:property name="wheelchair_sicklms_frame" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z + wheelchair_sicklms_z_visual_offset} 0 -0 1.5708" />
+<xacro:property name="wheelchair_sicklms_sensor" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z + wheelchair_sicklms_sensor_z_offset} 0 0 0" />
+<!-- Camera in Simulation -->
+<xacro:property name="bender_eyes_xyz" value="0 0 0.1673" />
+<xacro:property name="bender_eyes_width" value="640" />
+<xacro:property name="bender_eyes_height" value="480" />
+<xacro:property name="bender_eyes_fov" value="1.22" />
+<!-- SDF Specific -->
+<xacro:property name="max_contacts" value="6" />
+<xacro:property name="drive_update_rate" value="30" />
+<xacro:property name="drive_torque" value="50" />
+<xacro:property name="drive_wheel_dia" value="0.385" />
+<xacro:property name="drive_wheel_seperation" value="0.535" />
+<xacro:property name="drive_acceleration" value="2.0" />
+</robot>

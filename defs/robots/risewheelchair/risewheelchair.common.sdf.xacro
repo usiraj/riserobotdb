@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/LaserScanners/sicklms200.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.xacro" />
+
+<xacro:macro name="rear_wheel" params="suffix geom_rpy joint_xyz">
+	<!-- Rear Wheel -->
+	<link name="${suffix}_rear_wheel_link">
+		<xacro:link_def_extra />
+		<pose>${joint_xyz} ${geom_rpy}</pose>
+		<xacro:sdf_inertial _mass="${wheel_mass}" _cg="${wheel_cg}" 
+				_ixx="${wheel_ixx}" _iyy="${wheel_iyy}" _izz="${wheel_izz}" _ixy="${wheel_ixy}" 
+				_ixz="${wheel_ixz}" _iyz="${wheel_iyz}" />
+		<visual name="${suffix}_rear_wheel_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${wheelchair_wheel_mesh}" />
+		</visual>
+		<collision name="${suffix}_rear_wheel_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${wheelchair_wheel_mesh}" />
+			<xacro:sdf_collision_params kp="${wheel_kp}" kd="${wheel_kd}" mu="${wheel_mu}" mu2="${wheel_mu2}" 
+				slip1="${wheel_slip1}" slip2="${wheel_slip2}" fdir1="${wheel_fdir1}" max_contacts="${max_contacts}"/>
+		</collision>
+	</link>
+	<xacro:sdf_wheel_joint _name="${suffix}_rear_wheel_joint" _parent="base_link" 
+		_child="${suffix}_rear_wheel_link" _axis="${wheel_axis}" />
+</xacro:macro>
+<xacro:macro name="caster_wheel" params="suffix geom_rpy joint_xyz">
+	<!-- Caster Wheel -->
+	<link name="${suffix}_caster_wheel_link">
+		<xacro:link_def_extra />
+		<pose>${joint_xyz} ${geom_rpy}</pose>
+		<xacro:sdf_inertial _mass="${caster_mass}" _cg="${caster_cg}" 
+				_ixx="${caster_ixx}" _iyy="${caster_iyy}" _izz="${caster_izz}" _ixy="${caster_ixy}" 
+				_ixz="${caster_ixz}" _iyz="${caster_iyz}" />
+		<visual name="${suffix}_caster_wheel_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${wheelchair_caster_mesh}" />
+		</visual>
+		<collision name="${suffix}_caster_wheel_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${wheelchair_caster_mesh}" />
+			<xacro:sdf_collision_params kp="${caster_kp}" kd="${caster_kd}" mu="${caster_mu}" mu2="${caster_mu2}" 
+				slip1="${caster_slip1}" slip2="${caster_slip2}" fdir1="${caster_fdir1}" max_contacts="${max_contacts}"/>
+		</collision>
+	</link>
+	<xacro:sdf_wheel_joint _name="${suffix}_caster_wheel_joint" _parent="base_link" 
+		_child="${suffix}_caster_wheel_link" _axis="${caster_axis}" />
+</xacro:macro>
+<!-- Differential Driver Gazebo Plugin -->
+<xacro:macro name="wheelchair_diffdrive_gazebo" params="_pubjoints">
+	<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+		<alwaysOn>true</alwaysOn>
+		<updateRate>${drive_update_rate}</updateRate>
+		<leftJoint>left_rear_wheel_joint</leftJoint>
+		<rightJoint>right_rear_wheel_joint</rightJoint>
+		<wheelSeparation>${drive_wheel_seperation}</wheelSeparation>
+		<wheelDiameter>${drive_wheel_dia}</wheelDiameter>
+		<wheelTorque>${drive_torque}</wheelTorque>
+		<commandTopic>cmd_vel</commandTopic>
+		<odometryTopic>odom</odometryTopic>
+		<odometryFrame>odom</odometryFrame>
+		<robotBaseFrame>base_link</robotBaseFrame>
+		<robotNamespace>$(arg prefix)</robotNamespace>
+		<publishWheelJointState>${_pubjoints}</publishWheelJointState>
+		<publishWheelTF>false</publishWheelTF>
+		<wheelAcceleration>${drive_acceleration}</wheelAcceleration>
+		<rosDebugLevel>na</rosDebugLevel>
+	</plugin>
+</xacro:macro>
+</sdf>

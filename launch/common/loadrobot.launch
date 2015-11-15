@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- To load robot model with rviz -->
+    <arg name="model_urdf" />
+    <arg name="rootns" default="/Robots" />
+	<arg name="robot_name" default="basic_robot" />
+	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
+  	<!-- Load Robot in Parameter Server -->
+  	<include file="$(find riserobotdb)/launch/common/paramload.launch" ns="$(arg rootns)">
+  	    <arg name="robot_model" value="$(arg model_urdf)" />
+  	    <arg name="robot_name" value="$(arg robot_name)" />
+  	    <arg name="param_name" value="$(arg rootns)/$(arg robot_name)_urdf" />
+  	    <arg name="ignore_joints" value="$(arg ignore_joints)" />
+  	</include>
+  	<!-- Joints and Robot state publishers -->	
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    	respawn="false" output="screen" ns="$(arg rootns)/$(arg robot_name)" >
+    		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+    		<remap from="tf_prefix" to="$(arg rootns)/$(arg robot_name)_tfprefix" />
+    		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+ 	</node>
+	<!--Joint State with Ignrore List -->
+	<node name="joint_state_publisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
+		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+	</node>
+</launch>

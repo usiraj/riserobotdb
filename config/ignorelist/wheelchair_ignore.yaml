@@ -1,0 +1,3 @@
+# list of joints to ignore
+ignore_joints: [bender_head_pan_joint, bender_head_tilt_joint,left_rear_wheel_joint,right_rear_wheel_joint]
+ 

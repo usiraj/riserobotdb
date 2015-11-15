@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/LaserScanners/sicklms200.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.xacro" />
+<!-- Rear Wheels of Wheelchair -->
+<xacro:macro name="rear_wheel" params="suffix geom_rpy joint_xyz">
+	<xacro:urdf_link _name="${suffix}_rear_wheel_link" _xyz="0 0 0" _rpy="${geom_rpy}" _mesh="${wheelchair_wheel_mesh}" 
+		_mass="${wheel_mass}" _cg="${wheel_cg}" _ixx="${wheel_ixx}" _iyy="${wheel_iyy}" 
+		_izz="${wheel_izz}" _ixy="${wheel_ixy}" _ixz="${wheel_ixz}" _iyz="${wheel_iyz}" />
+	<xacro:urdf_wheel_joint _name="${suffix}_rear_wheel_joint" _parent="base_link" _child="${suffix}_rear_wheel_link" 
+		_axis="${wheel_axis}" _xyz="${joint_xyz}" _rpy="0 0 0" _effort="${joint_effort}" _velocity="${joint_velocity}"/>
+</xacro:macro>
+<!-- Caster Wheels of Wheelchair -->
+<xacro:macro name="caster_wheel" params="suffix geom_rpy joint_xyz">
+	<xacro:urdf_link _name="${suffix}_caster_wheel_link" _xyz="0 0 0" _rpy="${geom_rpy}" _mesh="${wheelchair_caster_mesh}" 
+		_mass="${caster_mass}" _cg="${caster_cg}" _ixx="${caster_ixx}" _iyy="${caster_iyy}" 
+		_izz="${caster_izz}" _ixy="${caster_ixy}" _ixz="${caster_ixz}" _iyz="${caster_iyz}" />
+	<xacro:urdf_wheel_joint _name="${suffix}_caster_wheel_joint" _parent="base_link" _child="${suffix}_caster_wheel_link" 
+		_axis="${caster_axis}" _xyz="${joint_xyz}" _rpy="0 0 0" _effort="${joint_effort}" _velocity="${joint_velocity}"/>
+</xacro:macro>
+</robot>

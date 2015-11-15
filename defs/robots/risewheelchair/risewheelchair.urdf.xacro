@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="risewheelchair">
+<xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.urdf.xacro" />
+	<!-- Chassis -->
+	<xacro:urdf_link _name="base_link" _xyz="${wheelchair_xyz}" _rpy="${wheelchair_rpy}" _mesh="${wheelchair_base_mesh}" 
+		_mass="${wheelchair_mass}" _cg="${wheelchair_cg}" _ixx="${wheelchair_ixx}" _iyy="${wheelchair_iyy}" 
+		_izz="${wheelchair_izz}" _ixy="${wheelchair_ixy}" _ixz="${wheelchair_ixz}" _iyz="${wheelchair_iyz}" />
+	<!-- Caster Wheels -->
+	<xacro:caster_wheel suffix="left" geom_rpy="${caster_left_rpy}" joint_xyz="${caster_left_joint_xyz}" />
+	<xacro:caster_wheel suffix="right" geom_rpy="${caster_right_rpy}" joint_xyz="${caster_right_joint_xyz}" />
+	<!-- Rear Wheels -->
+	<xacro:rear_wheel suffix="left" geom_rpy="${wheel_left_rpy}" joint_xyz="${wheel_left_joint_xyz}" />
+	<xacro:rear_wheel suffix="right" geom_rpy="${wheel_right_rpy}" joint_xyz="${wheel_right_joint_xyz}" />
+	<!-- SickLMS 200 -->	
+	<xacro:sicklms200_laser nameid="0" parent="base_link">
+		<origin xyz="${wheelchair_sicklms_xyz}" rpy="0 0 0" />
+	</xacro:sicklms200_laser>	
+	<!-- Mobile Ranger Stereo Camera -->
+	<!-- To ADD -->	
+</robot>
