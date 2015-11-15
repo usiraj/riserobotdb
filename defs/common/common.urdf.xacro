@@ -45,6 +45,23 @@
 		</collision>	
 	</link>
 </xacro:macro>
+<xacro:macro name="urdf_link_color" params="_name _xyz _rpy _mesh _mass _cg _ixx _iyy _izz _ixy _ixz _iyz _colorname _rgba">
+	<link name="${_name}">
+		<xacro:urdf_inertial _mass="${_mass}" _cg="${_cg}" _ixx="${_ixx}" 
+			_iyy="${_iyy}" _izz="${_izz}" _ixy="${_ixy}" _ixz="${_ixz}" _iyz="${_iyz}" />
+		<visual>
+			<origin xyz="${_xyz}" rpy="${_rpy}" />
+			<xacro:urdf_mesh _filename="${_mesh}" />
+			<material name="${_colorname}">
+				<color rgba="${_rgba}"/>
+			</material>			
+		</visual>
+		<collision>
+			<origin xyz="${_xyz}" rpy="${_rpy}" />
+			<xacro:urdf_mesh _filename="${_mesh}" />
+		</collision>	
+	</link>
+</xacro:macro>
 <!-- Macro of a fixed joint in urdf -->
 <xacro:macro name="urdf_fixed_joint" params="_name _parent _child _xyz _rpy">
 	<joint name="${_name}" type="fixed">

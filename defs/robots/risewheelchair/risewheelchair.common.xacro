@@ -37,7 +37,7 @@
 <xacro:property name="caster_cg" value="0.045 0 -0.13"/>
 <xacro:property name="caster_axis" value="0 0 1" />
 <!-- Mass and Inertias -->
-<xacro:property name="wheelchair_mass" value="60.0" />
+<xacro:property name="wheelchair_mass" value="80.0" />
 <xacro:property name="wheelchair_sicklms_mass" value="4.5" />
 <xacro:property name="bender_mass" value="70" />
 <xacro:property name="bender_head_mass" value="7" />

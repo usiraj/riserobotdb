@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Meshes -->
+    <xacro:property name="p3at_chasis_mesh" value="models/robots/p3at_meshes/chasis.stl" />
+    <xacro:property name="p3at_wheel_mesh" value="models/robots/p3at_meshes/wheel.stl" />
+    <xacro:property name="p3at_top_mesh" value="models/robots/p3at_meshes/top.stl" />
+    <xacro:property name="p3at_axle_mesh" value="models/robots/p3at_meshes/axle.stl" />
+    <xacro:property name="p3at_bsonar_mesh" value="models/robots/p3at_meshes/back_sonar.stl" />
+    <xacro:property name="p3at_fsonar_mesh" value="models/robots/p3at_meshes/front_sonar.stl" />
+    <xacro:property name="p3at_left_hubcap_mesh" value="models/robots/p3at_meshes/left_hubcap.stl" />
+    <xacro:property name="p3at_right_hubcap_mesh" value="models/robots/p3at_meshes/right_hubcap.stl" />
+
+
+
+</robot>

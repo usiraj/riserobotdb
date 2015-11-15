@@ -92,4 +92,12 @@
 		</collision>
 	</link>
 </xacro:macro>
+
+<!-- Macro for color information -->
+<xacro:macro name="gazebo_color" params="color">
+	<material><script>
+		<name>Gazebo/${color}</name>
+		<uri>__default__</uri>
+	</script></material>
+</xacro:macro>
 </sdf>

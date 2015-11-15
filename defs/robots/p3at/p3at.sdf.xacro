@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/p3at/p3at.common.xacro" />
+
+<xacro:macro name="pioneer_wheel" params="side suffix pose">
+    <link name='p3at_${suffix}_${side}_wheel'>
+        <xacro:link_def_extra />
+    	<pose>${pose}</pose>
+    	<xacro:sdf_inertial _mass="0.5" _cg="0 0 0" _ixx="0.0124118" _iyy="0.0152182" _izz="0.011764" _ixy="0" _ixz="0" _iyz="0" />
+    	<collision name='p3at_${suffix}_${side}_wheel_collision'>
+    		<pose>0 0 0 -1.5708 0 0</pose>
+    		<geometry>
+        		<cylinder>
+        			<length>0.075</length>
+        			<radius>0.111</radius>
+        		</cylinder>
+    		</geometry>
+    		<xacro:sdf_collision_params kp="1e+06" kd="100" mu="0.3" mu2="0.5" slip1="0.5" slip2="0.2" fdir1="1 0 0" max_contacts="6" />
+    	</collision>
+    	<visual name='p3at_${suffix}_${side}_wheel_visual'>
+    		<pose>0 0 0 0 -0 0</pose>
+    		<xacro:sdf_mesh _filename="${p3at_wheel_mesh}" />
+    		<xacro:gazebo_color color="Black"/>
+    	</visual>
+    </link>
+    <xacro:sdf_wheel_joint _name="p3at_${suffix}_${side}_wheel_joint" _parent="base_link" _child="p3at_${suffix}_${side}_wheel" _axis="0 1 0"/>
+</xacro:macro>
+<xacro:macro name="pioneer3at_baselink" params="robot_name">
+    <xacro:link_def_extra />
+	<pose>0 0 0 0 -0 0</pose>
+	<xacro:sdf_inertial _mass="15.619" _cg="0.0255742 7.95109e-11 0.202719" _ixx="12.4004" _iyy="12.5674" _izz="12.4071"
+	     _ixy="9.44272e-11" _ixz="-0.0302714" _iyz="-5.49921e-11" />
+    <collision name='base_link_collision'>
+       <pose>0 0 0.177 0 -0 0</pose>
+       <xacro:sdf_mesh _filename="${p3at_chasis_mesh}" />
+    </collision>
+    <collision name='base_link_collision_p3at_back_left_axle'>
+          <pose>-0.134 0.156 0.111 0 -0 0</pose>
+          <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+    </collision>
+    <collision name='base_link_collision_p3at_back_left_hub'>
+       <pose>-0.134 0.197 0.111 0 -0 0</pose>
+       <xacro:sdf_mesh _filename="${p3at_left_hubcap_mesh}" />
+    </collision>
+    <collision name='base_link_collision_p3at_back_right_axle'>
+       <pose>-0.134 -0.156 0.111 0 -0 0</pose>
+       <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+    </collision>
+    <collision name='base_link_collision_p3at_back_right_hub'>
+       <pose>-0.134 -0.197 0.111 0 -0 0</pose>
+       <xacro:sdf_mesh _filename="${p3at_right_hubcap_mesh}" />
+    </collision>
+    <visual name='base_link_visual'>
+        <pose>0 0 0.177 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_chasis_mesh}" />
+	    <xacro:gazebo_color color="Red" />
+    </visual>
+	<visual name='base_link_visual_back_sonar'>
+        <pose>-0.187 0 0.247 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_bsonar_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_front_sonar'>
+        <pose>0.193 0 0.25 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_fsonar_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_p3at_back_left_axle'>
+        <pose>-0.134 0.156 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+        <xacro:gazebo_color color="Grey" />
+    </visual>
+    <visual name='base_link_visual_p3at_back_left_hub'>
+        <pose>-0.134 0.197 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_left_hubcap_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_p3at_back_right_axle'>
+        <pose>-0.134 -0.156 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+        <xacro:gazebo_color color="Grey" />
+    </visual>
+    <visual name='base_link_visual_p3at_back_right_hub'>
+        <pose>-0.134 -0.197 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_right_hubcap_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_p3at_front_left_axle'>
+        <pose>0.135 0.156 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+        <xacro:gazebo_color color="Grey" />
+    </visual>
+    <visual name='base_link_visual_p3at_front_left_hub'>
+        <pose>0.135 0.197 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_left_hubcap_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_p3at_front_right_axle'>
+        <pose>0.135 -0.156 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_axle_mesh}" />
+        <xacro:gazebo_color color="Grey" />
+    </visual>
+    <visual name='base_link_visual_p3at_front_right_hub'>
+        <pose>0.135 -0.197 0.111 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_right_hubcap_mesh}" />
+        <xacro:gazebo_color color="Yellow" />
+    </visual>
+    <visual name='base_link_visual_top_plate'>
+        <pose>0.003 0 0.274 0 -0 0</pose>
+        <xacro:sdf_mesh _filename="${p3at_top_mesh}" />
+        <xacro:gazebo_color color="Black" />
+    </visual>
+</xacro:macro>
+<!-- Wheels for P3AT -->
+<xacro:macro name="pioneer3at_wheels" params="robot_name">
+	<xacro:pioneer_wheel suffix="front" side="left" pose="0.135 0.197 0.111 0 -0 0" />
+    <xacro:pioneer_wheel suffix="front" side="right" pose="0.135 -0.197 0.111 0 -0 0" />
+    <xacro:pioneer_wheel suffix="back" side="left" pose="-0.134 0.197 0.111 0 -0 0" />
+    <xacro:pioneer_wheel suffix="back" side="right" pose="-0.134 -0.197 0.111 0 -0 0" />
+      
+    <plugin name='skid_steer_drive_controller' filename='libgazebo_ros_skid_steer_drive.so'>
+        <updateRate>100.0</updateRate>
+        <robotNamespace>${robot_name}</robotNamespace>
+        <leftFrontJoint>p3at_front_left_wheel_joint</leftFrontJoint>
+        <rightFrontJoint>p3at_front_right_wheel_joint</rightFrontJoint>
+        <leftRearJoint>p3at_back_left_wheel_joint</leftRearJoint>
+        <rightRearJoint>p3at_back_right_wheel_joint</rightRearJoint>
+        <wheelSeparation>0.4</wheelSeparation>
+        <wheelDiameter>0.215</wheelDiameter>
+        <robotBaseFrame>base_link</robotBaseFrame>
+        <torque>200</torque>
+        <!--MaxForce>5.0</MaxForce-->
+        <commandTopic>cmd_vel</commandTopic>
+        <odometryTopic>odom</odometryTopic>
+        <odometryFrame>odom</odometryFrame>
+        <broadcastTF>1</broadcastTF>
+    </plugin>
+</xacro:macro>
+<!-- A Simple P3AT with no attachments -->
+<xacro:macro name="pioneer3at" params="robot_name">
+    <model name='pioneer3at'>
+	    <static>0</static>
+	    <pose>0 0 0 0 0 0</pose>	
+        <link name='base_link'>      	
+            <xacro:pioneer3at_baselink robot_name="${robot_name}" />
+        </link>
+        <xacro:pioneer3at_wheels robot_name="${robot_name}" />
+    </model>
+</xacro:macro>
+
+</sdf>

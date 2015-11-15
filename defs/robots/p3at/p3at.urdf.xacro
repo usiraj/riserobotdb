@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"  name="pioneer3at">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/p3at/p3at.common.xacro" />
+<!-- Chassis -->
+<xacro:macro name="p3at_chasis" >
+    <!-- Chassis Links -->
+    <xacro:urdf_link _name="base_link" _xyz="0 0 0.177" _rpy="0 0 0" 
+        _mesh="${p3at_chasis_mesh}" _mass="10.0" _cg="0 0 0.177" 
+        _ixx="0.3338" _iyy="0.4783" _izz="0.3338" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="ChassisRed" _rgba="0.851 0.0 0.0 1.0" />
+    
+    <xacro:urdf_link _name="top_plate" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_top_mesh}" _mass="0.1" _cg="-0.025 0 -0.223"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="TopBlack" _rgba="0.038 0.038 0.038 1.0" />
+            
+    <xacro:urdf_link _name="front_sonar" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_fsonar_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="SonarYellow" _rgba="0.715 0.583 0.210 1.0" />
+        
+    <xacro:urdf_link _name="back_sonar" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_bsonar_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0"
+        _colorname="SonarYellow" _rgba="0.715 0.583 0.210 1.0" />
+    <!-- Chassis Joints -->
+    <xacro:urdf_fixed_joint _name="base_top_joint" _parent="base_link" _child="top_plate"
+        _xyz="0.003 0 0.274" _rpy="0 0 0" />
+    <xacro:urdf_fixed_joint _name="base_front_joint" _parent="base_link" _child="front_sonar"
+        _xyz="0.193 0 0.25" _rpy="0 0 0" />
+    <xacro:urdf_fixed_joint _name="base_back_joint" _parent="base_link" _child="back_sonar"
+        _xyz="-0.187 0 0.247" _rpy="0 0 0" />
+</xacro:macro>    
+<!-- P3AT Axles + Wheels + Hubcaps -->
+<xacro:macro name="p3at_wheels" params="suffix reflect">
+<!-- Front Axles + Wheels + Hubcaps -->
+    <!-- Axle Front-->
+    <xacro:urdf_link _name="p3at_front_${suffix}_axle" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_axle_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="AxleGrey" _rgba="0.5 0.5 0.5 1" />
+    <xacro:urdf_fixed_joint _name="base_front_${suffix}_axle_joint" _parent="base_link" _child="p3at_front_${suffix}_axle"
+        _xyz="0.135 ${reflect*0.156} 0.111" _rpy="0 0 0" />
+    <!-- Axle Back-->
+    <xacro:urdf_link _name="p3at_back_${suffix}_axle" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_axle_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="AxleGrey" _rgba="0.5 0.5 0.5 1" />
+    <xacro:urdf_fixed_joint _name="base_back_${suffix}_axle_joint" _parent="base_link" _child="p3at_back_${suffix}_axle"
+        _xyz="-0.134 ${reflect*0.156} 0.111" _rpy="0 0 0" />
+	<!-- Front Hub -->
+    <xacro:urdf_link _name="p3at_front_${suffix}_hub" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_${suffix}_hubcap_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="HubcapYellow" _rgba="1.0 0.811 0.151 1.0" />
+    <xacro:urdf_fixed_joint _name="base_front_${suffix}_hub_joint" _parent="p3at_front_${suffix}_axle" _child="p3at_front_${suffix}_hub"
+        _xyz="0 ${reflect*0.041} 0" _rpy="0 0 0" />    
+    <!-- Back Hub -->
+    <xacro:urdf_link _name="p3at_back_${suffix}_hub" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_${suffix}_hubcap_mesh}" _mass="0.1" _cg="0 0 0"
+        _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="HubcapYellow" _rgba="1.0 0.811 0.151 1.0" />
+    <xacro:urdf_fixed_joint _name="base_back_${suffix}_hub_joint" _parent="p3at_back_${suffix}_axle" _child="p3at_back_${suffix}_hub"
+        _xyz="-0 ${reflect*0.041} 0" _rpy="0 0 0" />    
+    <!-- Front Wheel -->
+    <xacro:urdf_link _name="p3at_front_${suffix}_wheel" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_wheel_mesh}" _mass="0.5" _cg="0 0 0"
+        _ixx="0.012411765597" _iyy="0.015218160428" _izz="0.011763977943" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="WheelBlack" _rgba="0.117 0.117 0.117 1" />
+    <xacro:urdf_wheel_joint _name="p3at_front_${suffix}_wheel_joint" 
+        _parent="p3at_front_${suffix}_hub" _child="p3at_front_${suffix}_wheel" 
+        _axis="0 1 0" _xyz="0 0 0" _rpy="0 0 0" _effort="100" _velocity="100" />
+    <!-- Back Wheel -->
+    <xacro:urdf_link _name="p3at_back_${suffix}_wheel" _xyz="0 0 0" _rpy="0 0 0"
+        _mesh="${p3at_wheel_mesh}" _mass="0.5" _cg="0 0 0"
+        _ixx="0.012411765597" _iyy="0.015218160428" _izz="0.011763977943" _ixy="0" _ixz="0" _iyz="0" 
+        _colorname="WheelBlack" _rgba="0.117 0.117 0.117 1" />
+    <xacro:urdf_wheel_joint _name="p3at_back_${suffix}_wheel_joint" 
+        _parent="p3at_back_${suffix}_hub" _child="p3at_back_${suffix}_wheel" 
+        _axis="0 1 0" _xyz="0 0 0" _rpy="0 0 0" _effort="100" _velocity="100" />
+</xacro:macro>
+</robot>
