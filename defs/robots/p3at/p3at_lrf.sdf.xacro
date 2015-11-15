@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find riserobotdb)/defs/robots/p3at/p3at.sdf.xacro" />
+    <xacro:include filename="$(find riserobotdb)/defs/sensors/LaserScanners/sicklms200.sdf.xacro" />
+    <!-- P3AT with LRF -->
+    <model name='pioneer3at'>
+	    <static>0</static>
+	    <pose>0 0 0 0 0 0</pose>	
+        <link name='base_link'>      	
+            <xacro:pioneer3at_baselink robot_name="$(arg prefix)" />
+            <!-- LRF -->
+            <xacro:sicklms200_laser robot_name="$(arg prefix)" id="0" frame_pose="0.153 0 0.3698 0 -0 1.5708" sensor_pose="0.153 0 0.3403 0 -0 0"/>
+        </link>
+        <xacro:pioneer3at_wheels robot_name="$(arg prefix)" />
+    </model>    
+</sdf>

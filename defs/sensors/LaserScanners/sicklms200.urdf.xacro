@@ -14,7 +14,7 @@
 		<xacro:insert_block name="origin"/>
 	</joint>
 	<!-- LRF Link -->
-	<xacro:urdf_link _name="sicklms200_link_${nameid}" _xyz="0 0 0.925" _rpy="0 0 1.5708" 
+	<xacro:urdf_link _name="sicklms200_link_${nameid}" _xyz="0 0 0.0925" _rpy="0 0 1.5708" 
 	    _mesh="${sicklms200_laser_mesh}" _mass="4.5" _cg="0 0 0" 
 	    _ixx="1.0" _iyy="1.0" _izz="1.0" _ixy="0" _ixz="0" _iyz="0" />
 	<!-- Dummy link and joint for proper placement of sensor -->

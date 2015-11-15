@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"  name="pioneer3at_sicklms200">
+    <xacro:include filename="$(find riserobotdb)/defs/robots/p3at/p3at.urdf.xacro" />
+    <xacro:include filename="$(find riserobotdb)/defs/sensors/LaserScanners/sicklms200.urdf.xacro" />
+    <!-- Chassis -->
+    <xacro:p3at_chasis />
+    <!-- Wheels -->
+    <xacro:p3at_wheels suffix="left" reflect="1" />
+    <xacro:p3at_wheels suffix="right" reflect="-1" />
+    <!-- LRF -->
+    <xacro:sicklms200_laser nameid="0" parent="top_plate">
+		<origin xyz="0.15 0 0.0033" rpy="0 0 0" />
+	</xacro:sicklms200_laser>
+</robot>
