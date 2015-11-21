@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" ?>
 <sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
-<xacro:include filename="$(find modeldb)/defs/robots/risewheelchair/risewheelchair.common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.sdf.xacro" />
 	<model name="risewheelchair">
 		<static>0</static>
-		<pose>0 0 1.2 0 0 0</pose>
+		<pose>0 0 0 0 0 0</pose>
 		<!-- Chassis -->
 			<link name="base_link">
 				<xacro:link_def_extra />
