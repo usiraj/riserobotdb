@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- To launch real robot -->
+	<arg name="robot_name" default="p3at" />
+    <arg name="rviz_config" default="$(find riserobotdb)/config/rviz/p3at_mobileranger.rviz" />
+    <include file="$(find riserobotdb)/launch/common/robotwithrviz.launch" >	
+        <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/p3at/p3at_mobileranger.urdf.xacro" />
+        <arg name="rootns" value="/Robots" />
+	    <arg name="robot_name" value="$(arg robot_name)" />
+  	    <arg name="rviz_config" value="$(arg rviz_config)" />
+  	    <!--arg name="ignore_joints" value="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" /-->
+    </include>	
+</launch>

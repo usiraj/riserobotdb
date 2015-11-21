@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="robot_name" default="p3at" />
+	<arg name="gazebo_world" default="$(find riserobotdb)/worlds/petrolstation.world" />
+  	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/p3at_mobileranger_sim.rviz" />
+  	<arg name="gazebo_gui" default="true" />
+    <!-- Launches a basic version of P3AT in gazebo along with rviz -->
+    <include file="$(find riserobotdb)/launch/common/loadandsimulate.launch" >
+        <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/p3at/p3at_mobileranger.urdf.xacro" />
+	    <arg name="model_sdf"  value="$(find riserobotdb)/defs/robots/p3at/p3at_mobileranger.sdf.xacro"/>
+    	<arg name="robot_name" value="$(arg robot_name)" />
+    	<arg name="rootns" value="/Robots" /> 
+  	    <arg name="paused" value="false"/>
+  	    <arg name="use_sim_time" value="true"/>
+  	    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
+  	    <arg name="gazebo_world" value="$(arg gazebo_world)" />
+  	    <arg name="rviz_config" value="$(arg rviz_config)" />
+  	    <arg name="headless" value="false"/>
+  	    <arg name="debug" value="false"/>
+  	    <arg name="ignore_joints" value="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" /> 
+    </include>
+</launch>

@@ -7,3 +7,5 @@ These launch files accept following arguments:
 The launch files load robots with different sensor configurations. Run these launch files directly or include them into your launch file.
 - p3at_basic.launch : Pioneer 3 AT robot with no extra sensors attached.
 - p3at_lrf.launch : Pioneer 3 AT robot with Sick LMS 200 fixed on top.
+- p3at_mobileranger.launch : Pioneer 3AT robot with Sick LMS 200 and Mobile Ranger Stereo Camera.
+- risewheelchair.launch : Rise Wheelchair with SickLMS 200 and Stereo Camera.

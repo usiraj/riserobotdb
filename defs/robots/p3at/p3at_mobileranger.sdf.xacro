@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find riserobotdb)/defs/robots/p3at/p3at.sdf.xacro" />
+    <xacro:include filename="$(find riserobotdb)/defs/sensors/LaserScanners/sicklms200.sdf.xacro" />
+    <xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/ptud46_mobileranger.sdf.xacro" />
+    <!-- P3AT with LRF and Pan Tilt Stereo Camera -->
+    <model name='pioneer3at'>
+	    <static>0</static>
+	    <pose>0 0 0 0 0 0</pose>	
+        <link name='base_link'>      	
+            <xacro:pioneer3at_baselink robot_name="$(arg prefix)" />
+            <!-- LRF -->
+            <xacro:sicklms200_laser robot_name="$(arg prefix)" id="0" frame_pose="0.153 0 0.3698 0 -0 1.5708" sensor_pose="0.153 0 0.3403 0 -0 0"/>
+            <!-- Adding PTUD46 Base Link -->
+      		<xacro:ptud46_mobileranger_base _basepose="0.153 0 0.4623 0 0 0" />	<!-- 0.003 0 0.274 + 0.15 0 0.1883 +  -->
+        </link>
+        <!-- Adding Pan Tilt + Camera -->
+      	<!-- 0.003 0 0.274 + 0.15 0 0.1883 + -0.0005 0.0001 0.04759  -->
+      	<!-- Pose 2 : 0.003 0 0.274 + 0.15 0 0.1883 + -0.0005 0.0001 0.04759  +  0 0 0.045974 -->
+      	<xacro:ptud46_mobileranger _baselink="base_link" robot_name="$(arg prefix)" _pose="0.1525 0.0001 0.5099 0 0 0"
+      	_pose2="0.1525 0.0001 0.5559 0 0 0" _usejointcontroller="0" />
+      	<xacro:pioneer3at_wheels robot_name="$(arg prefix)" />
+      	<!-- Wheels -->
+        <xacro:pioneer3at_wheels robot_name="$(arg prefix)" />
+    </model>    
+</sdf>
