@@ -19,7 +19,6 @@
       	<!-- Pose 2 : 0.003 0 0.274 + 0.15 0 0.1883 + -0.0005 0.0001 0.04759  +  0 0 0.045974 -->
       	<xacro:ptud46_mobileranger _baselink="base_link" robot_name="$(arg prefix)" _pose="0.1525 0.0001 0.5099 0 0 0"
       	_pose2="0.1525 0.0001 0.5559 0 0 0" _usejointcontroller="0" />
-      	<xacro:pioneer3at_wheels robot_name="$(arg prefix)" />
       	<!-- Wheels -->
         <xacro:pioneer3at_wheels robot_name="$(arg prefix)" />
     </model>    
