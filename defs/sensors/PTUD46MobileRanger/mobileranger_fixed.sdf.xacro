@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/mobileranger_fixed.common.xacro" />
+<!-- Stereo Camera Plugin -->
+<xacro:macro name="mobileranger_stereocam" params="robot_name _frame1 _frame2 _pose1 _pose2" >
+	<sensor type="multicamera" name="${mobileranger_name}">
+	<always_on>1</always_on>
+	<visualize>1</visualize>
+    <update_rate>${mobileranger_updaterate}</update_rate>
+    <camera name="${mobileranger_name}_left">
+    	<pose>${_pose1}</pose>
+		<horizontal_fov>${mobileranger_fov}</horizontal_fov>
+		<image>
+			<width>${mobileranger_image_width}</width>
+        	<height>${mobileranger_image_height}</height>
+        	<format>R8G8B8</format>
+		</image>
+		<clip>
+			<near>${mobileranger_clip_near}</near>
+			<far>${mobileranger_clip_far}</far>
+		</clip>
+		<noise>
+			<type>gaussian</type>
+			<mean>0.0</mean>
+			<stddev>0.007</stddev>
+		</noise>
+	</camera>
+	<camera name="${mobileranger_name}_right">
+		<horizontal_fov>${mobileranger_fov}</horizontal_fov>
+		<pose>${_pose2}</pose>
+		<image>
+			<width>${mobileranger_image_width}</width>
+        	<height>${mobileranger_image_height}</height>
+        	<format>R8G8B8</format>
+		</image>
+		<clip>
+			<near>${mobileranger_clip_near}</near>
+			<far>${mobileranger_clip_far}</far>
+		</clip>
+		<noise>
+			<type>gaussian</type>
+			<mean>0.0</mean>
+			<stddev>0.007</stddev>
+		</noise>
+	</camera>
+	<!-- Now the plugin -->
+	<plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+    	 <alwaysOn>true</alwaysOn>
+    	 <updateRate>${mobileranger_updaterate}</updateRate>
+    	 <robotNamespace>${robot_name}</robotNamespace>
+    	 <cameraName>${mobileranger_name}</cameraName>
+    	 <imageTopicName>image_raw</imageTopicName>
+    	 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+    	 <frameName>${_frame1}</frameName>
+    	 <rightFrameName>${_frame2}</rightFrameName>
+    	 <hackBaseline>${mobileranger_baseline}</hackBaseline>
+    	 <CxPrime>${mobileranger_cx}</CxPrime>
+    	 <Cx>${mobileranger_cx}</Cx>
+    	 <Cy>${mobileranger_cy}</Cy>
+    	 <focalLength>${mobileranger_fx}</focalLength>
+    	 <distortionK1>0.0</distortionK1>
+    	 <distortionK2>0.0</distortionK2>
+    	 <distortionK3>0.0</distortionK3>
+    	 <distortionT1>0.0</distortionT1>
+    	 <distortionT2>0.0</distortionT2>
+	</plugin>
+	</sensor>
+</xacro:macro>
+<!-- PTUD46 - MOBILERANGER DEFINITION -->
+<xacro:macro name="mobileranger_fixed" params="_basepose robot_name left_pose right_pose">
+	<!-- Base -->
+	<!-- Don't Include Mass of base here -->
+	<collision name="${mobileranger_link}_collision">
+		<pose>${_basepose}</pose>
+		<xacro:sdf_mesh _filename="${mobileranger_mesh}" />
+    </collision>
+	<visual name="${mobileranger_link}_visual">
+		<pose>${_basepose}</pose>
+		<xacro:sdf_mesh _filename="${mobileranger_mesh}" />
+	</visual>
+	<!-- Sensors -->
+	<xacro:mobileranger_stereocam robot_name="${robot_name}" _frame1="${mobileranger_camleft_link}" _frame2="${mobileranger_camright_link}"
+	 _pose1="${left_pose}" _pose2="${right_pose}" />
+</xacro:macro>
+</sdf>

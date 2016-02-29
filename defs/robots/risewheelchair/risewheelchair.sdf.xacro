@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" ?>
 <sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
 <xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/mobileranger_fixed.sdf.xacro" />
 	<model name="risewheelchair">
 		<static>0</static>
 		<pose>0 0 0 0 0 0</pose>
@@ -22,6 +23,9 @@
 				<!-- Sick LMS 200 -->
 				<xacro:sicklms200_laser robot_name="$(arg prefix)" id="0" 
 					frame_pose="${wheelchair_sicklms_frame}" sensor_pose="${wheelchair_sicklms_sensor}"/>
+                <!-- Mobile Ranger Stereo Camera -->
+                <xacro:mobileranger_fixed robot_name="$(arg prefix)" _basepose="0.81 0.0 0.1755 0 0 0" 
+                    left_pose="0.81 0.02921 0.25455 0 0 0" right_pose="0.81 -0.02921 0.25455 0 0 0"/>					
 			</link>
 		<!-- Caster Wheels -->
 			<xacro:caster_wheel suffix="left" geom_rpy="${caster_left_rpy}" joint_xyz="${caster_left_joint_xyz}" />

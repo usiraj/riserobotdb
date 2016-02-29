@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:property name="mobileranger_mesh" value="models/sensors/PTUD46MobileRanger/mobileranger_fixed.dae" />
+<!-- Some Names of Links and Joints -->
+<xacro:property name="mobileranger_link" value="mobileranger_link" />
+<xacro:property name="mobileranger_camleft_link" value="mobileranger_camleft_link" />
+<xacro:property name="mobileranger_camright_link" value="mobileranger_camright_link" />
+<xacro:property name="mobileranger_joint" value="mobileranger_joint" />
+<xacro:property name="mobileranger_camleft_joint" value="mobileranger_camleft_joint" />
+<xacro:property name="mobileranger_camright_joint" value="mobileranger_camright_joint" />
+<!-- Mass and Inertias -->
+<xacro:property name="mobileranger_cg" value="0 0 0" />
+<xacro:property name="mobileranger_mass" value="3.0" />
+<xacro:property name="mobileranger_ixx" value="1" />
+<xacro:property name="mobileranger_iyy" value="1" />
+<xacro:property name="mobileranger_izz" value="1" />
+<xacro:property name="mobileranger_ixy" value="0" />
+<xacro:property name="mobileranger_ixz" value="0" />
+<xacro:property name="mobileranger_iyz" value="0" />
+<!-- Camera Properties -->
+<xacro:property name="mobileranger_name" value="mobileranger" />
+<xacro:property name="mobileranger_image_width" value="752" />
+<xacro:property name="mobileranger_image_height" value="480" />
+<xacro:property name="mobileranger_fov" value="1.309" />
+<xacro:property name="mobileranger_clip_near" value="0.2" />
+<xacro:property name="mobileranger_clip_far" value="60" />
+<xacro:property name="mobileranger_updaterate" value="10" />
+<xacro:property name="mobileranger_baseline" value="0.058" />
+<xacro:property name="mobileranger_fx" value="490.011187" />
+<xacro:property name="mobileranger_cx" value="423.62" />
+<xacro:property name="mobileranger_cy" value="236.67" />
+<!-- Some other macros -->
+<xacro:property name="mobileranger_camleft_xyz" value="0 0.02921 0.079049" />
+<xacro:property name="mobileranger_camright_xyz" value="0 -0.02921 0.079049" />
+</robot>

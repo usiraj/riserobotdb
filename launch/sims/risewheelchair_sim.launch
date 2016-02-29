@@ -4,7 +4,7 @@
 	<arg name="gazebo_world" default="$(find riserobotdb)/worlds/petrolstation.world" />
   	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/risewheelchair_sim.rviz" />
   	<arg name="gazebo_gui" default="true" />
-    <!-- Launches a basic version of P3AT in gazebo along with rviz -->
+    <!-- Launches a RiseWheelChair in gazebo along with rviz -->
     <include file="$(find riserobotdb)/launch/common/loadandsimulate.launch" >
         <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.urdf.xacro" />
 	    <arg name="model_sdf"  value="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.sdf.xacro"/>

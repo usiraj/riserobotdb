@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="risewheelchair">
 <xacro:include filename="$(find riserobotdb)/defs/robots/risewheelchair/risewheelchair.common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/mobileranger_fixed.urdf.xacro" />
 	<!-- Chassis -->
 	<xacro:urdf_link _name="base_link" _xyz="${wheelchair_xyz}" _rpy="${wheelchair_rpy}" _mesh="${wheelchair_base_mesh}" 
 		_mass="${wheelchair_mass}" _cg="${wheelchair_cg}" _ixx="${wheelchair_ixx}" _iyy="${wheelchair_iyy}" 
@@ -16,5 +17,5 @@
 		<origin xyz="${wheelchair_sicklms_xyz}" rpy="0 0 0" />
 	</xacro:sicklms200_laser>	
 	<!-- Mobile Ranger Stereo Camera -->
-	<!-- To ADD -->	
+	<xacro:mobileranger_fixed _baselink="base_link" _basexyz="0.81 0.0 0.368" _baserpy="0 0 0" />
 </robot>

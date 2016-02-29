@@ -91,8 +91,8 @@
 <xacro:property name="wheelchair_sicklms_z_visual_offset" value="0.0925" />
 <xacro:property name="wheelchair_sicklms_sensor_z_offset" value="0.063" />
 <xacro:property name="wheelchair_sicklms_xyz" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z}" />
-<xacro:property name="wheelchair_sicklms_frame" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z + wheelchair_sicklms_z_visual_offset} 0 -0 1.5708" />
-<xacro:property name="wheelchair_sicklms_sensor" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z + wheelchair_sicklms_sensor_z_offset} 0 0 0" />
+<xacro:property name="wheelchair_sicklms_frame" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_z_visual_offset -0.01} 0 -0 1.5708" />
+<xacro:property name="wheelchair_sicklms_sensor" value="${wheelchair_sicklms_x} ${wheelchair_sicklms_y} ${wheelchair_sicklms_sensor_z_offset -0.01} 0 0 0" />
 <!-- Camera in Simulation -->
 <xacro:property name="bender_eyes_xyz" value="0 0 0.1673" />
 <xacro:property name="bender_eyes_width" value="640" />

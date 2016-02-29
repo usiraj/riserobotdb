@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="mobileranger_fixed">
+
+<xacro:include filename="$(find riserobotdb)/defs/common/common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/sensors/PTUD46MobileRanger/mobileranger_fixed.common.xacro" />
+<!-- Definition -->
+<xacro:macro name="mobileranger_fixed" params="_baselink _basexyz _baserpy" >
+	<!-- Ptud46 mount base Link -->
+	<xacro:urdf_link _name="${mobileranger_link}" _xyz="0 0 0" _rpy="0 0 0" _mesh="${mobileranger_mesh}" 
+		_mass="${mobileranger_mass}" _cg="${mobileranger_cg}" _ixx="${mobileranger_ixx}" _iyy="${mobileranger_iyy}" 
+		_izz="${mobileranger_izz}" _ixy="${mobileranger_ixy}" _ixz="${mobileranger_ixz}" _iyz="${mobileranger_iyz}" />
+	<xacro:urdf_link_null _name="${mobileranger_camleft_link}" />
+	<xacro:urdf_link_null _name="${mobileranger_camright_link}" />
+	<!-- Now Joints -->
+	<xacro:urdf_fixed_joint _name="${mobileranger_joint}" _parent="${_baselink}"
+	 _child="${mobileranger_link}" _xyz="${_basexyz}" _rpy="${_baserpy}" />
+	<xacro:urdf_fixed_joint _name="${mobileranger_camleft_joint}" _parent="${mobileranger_link}"
+	 _child="${mobileranger_camleft_link}" _xyz="${mobileranger_camleft_xyz}" _rpy="0 0 0" />
+	<xacro:urdf_fixed_joint _name="$mobileranger_camright_joint}" _parent="${mobileranger_link}"
+	 _child="${mobileranger_camright_link}" _xyz="${mobileranger_camright_xyz}" _rpy="0 0 0" />
+</xacro:macro>
+</robot>
