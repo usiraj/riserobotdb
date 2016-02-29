@@ -20,7 +20,7 @@
     		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
  	</node>
 	<!--Joint State with Ignrore List -->
-	<node name="joint_state_publisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
+	<node name="jspublisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
 		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
 		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
 	</node>
