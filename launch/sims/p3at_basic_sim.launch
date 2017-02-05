@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 	<arg name="robot_name" default="p3at" />
-	<arg name="gazebo_world" default="$(find riserobotdb)/worlds/petrolstation.world" />
+	<arg name="gazebo_world" default="$(find riserobotdb)/worlds/indoor_basic_01.world" />
   	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/p3at_basic_sim.rviz" />
   	<arg name="gazebo_gui" default="true" />
     <!-- Launches a basic version of P3AT in gazebo along with rviz -->
