@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<!-- Mesh Files -->
+<xacro:property name="felis_base_mesh" value="models/robots/felis/felisbody.dae" />
+<xacro:property name="felis_spool_mesh" value="models/robots/felis/felislegspool.dae" />
+<xacro:property name="felis_linkA" value="models/robots/felis/felislinkA.dae" />
+<xacro:property name="felis_linkB" value="models/robots/felis/felislinkB.dae" />
+<xacro:property name="felis_linkC" value="models/robots/felis/felislinkC.dae" />
+<xacro:property name="felis_linkD" value="models/robots/felis/felislinkD.dae" />
+<xacro:property name="felis_linkE" value="models/robots/felis/felislinkE.dae" />
+<xacro:property name="felis_linkF" value="models/robots/felis/felislinkF.dae" />
+<!-- Base/Cage Data -->
+<xacro:property name="felis_z" value="0" />
+<xacro:property name="felis_xyz" value="0 0 ${felis_z}" />
+<xacro:property name="felis_rpy" value="0 0 3.14159" />
+<xacro:property name="felis_baselink_cg" value="0 0 0" />
+<!-- Spool Data -->
+<xacro:property name="felis_spool_xyz" value="0 0 0" />
+<xacro:property name="felis_spool_cg" value="0 0 0" />
+<xacro:property name="felis_spool_jointA_xyz" value="-3 1 0" />
+<xacro:property name="felis_spool_jointA_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_spool_jointB_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_jointC_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_jointD_xyz" value="0 1 0" />
+<!-- Link A Data -->
+<xacro:property name="felis_linkA_xyz" value="0 0 0" />
+<xacro:property name="felis_linkA_rpy" value="0 0 0" />
+<xacro:property name="felis_linkA_cg" value="0 0 0" />
+<!-- Link B Data -->
+<xacro:property name="felis_linkB_xyz" value="0 0 0" />
+<xacro:property name="felis_linkB_rpy" value="0 0 0" />
+<xacro:property name="felis_linkB_cg" value="0 0 0" />
+<!-- Link C Data -->
+<xacro:property name="felis_linkC_xyz" value="0 0 0" />
+<xacro:property name="felis_linkC_rpy" value="0 0 0" />
+<xacro:property name="felis_linkC_cg" value="0 0 0" />
+<!-- Link D Data -->
+<xacro:property name="felis_linkD_xyz" value="0 0 0" />
+<xacro:property name="felis_linkD_rpy" value="0 0 0" />
+<xacro:property name="felis_linkD_cg" value="0 0 0" />
+<!-- Link E Data -->
+<xacro:property name="felis_linkE_xyz" value="0 0 0" />
+<xacro:property name="felis_linkE_rpy" value="0 0 0" />
+<xacro:property name="felis_linkE_cg" value="0 0 0" />
+<!-- Link F Data -->
+<xacro:property name="felis_linkF_xyz" value="0 0 0" />
+<xacro:property name="felis_linkF_rpy" value="0 0 0" />
+<xacro:property name="felis_linkF_cg" value="0 0 0" />
+<!-- Mass -->
+<xacro:property name="felis_baselink_mass" value="1.5" />
+<xacro:property name="felis_spool_mass" value="0.2" />
+<xacro:property name="felis_linkA_mass" value="0.2" />
+<xacro:property name="felis_linkB_mass" value="0.2" />
+<xacro:property name="felis_linkC_mass" value="0.2" />
+<xacro:property name="felis_linkD_mass" value="0.2" />
+<xacro:property name="felis_linkE_mass" value="0.2" />
+<xacro:property name="felis_linkF_mass" value="0.2" />
+<!-- Inertial parameters -->
+<xacro:property name="felis_baselink_ixx" value="0.1" />
+<xacro:property name="felis_baselink_iyy" value="0.1" />
+<xacro:property name="felis_baselink_izz" value="0.1" />
+<xacro:property name="felis_baselink_ixy" value="0.1" />
+<xacro:property name="felis_baselink_ixz" value="0.1" />
+<xacro:property name="felis_baselink_iyz" value="0.1" />
+<xacro:property name="felis_spool_ixx" value="0.1" />
+<xacro:property name="felis_spool_iyy" value="0.1" />
+<xacro:property name="felis_spool_izz" value="0.1" />
+<xacro:property name="felis_spool_ixy" value="0.1" />
+<xacro:property name="felis_spool_ixz" value="0.1" />
+<xacro:property name="felis_spool_iyz" value="0.1" />
+<xacro:property name="felis_linkA_ixx" value="0.1" />
+<xacro:property name="felis_linkA_iyy" value="0.1" />
+<xacro:property name="felis_linkA_izz" value="0.1" />
+<xacro:property name="felis_linkA_ixy" value="0.1" />
+<xacro:property name="felis_linkA_ixz" value="0.1" />
+<xacro:property name="felis_linkA_iyz" value="0.1" />
+<xacro:property name="felis_linkB_ixx" value="0.1" />
+<xacro:property name="felis_linkB_iyy" value="0.1" />
+<xacro:property name="felis_linkB_izz" value="0.1" />
+<xacro:property name="felis_linkB_ixy" value="0.1" />
+<xacro:property name="felis_linkB_ixz" value="0.1" />
+<xacro:property name="felis_linkB_iyz" value="0.1" />
+<xacro:property name="felis_linkC_ixx" value="0.1" />
+<xacro:property name="felis_linkC_iyy" value="0.1" />
+<xacro:property name="felis_linkC_izz" value="0.1" />
+<xacro:property name="felis_linkC_ixy" value="0.1" />
+<xacro:property name="felis_linkC_ixz" value="0.1" />
+<xacro:property name="felis_linkC_iyz" value="0.1" />
+<xacro:property name="felis_linkD_ixx" value="0.1" />
+<xacro:property name="felis_linkD_iyy" value="0.1" />
+<xacro:property name="felis_linkD_izz" value="0.1" />
+<xacro:property name="felis_linkD_ixy" value="0.1" />
+<xacro:property name="felis_linkD_ixz" value="0.1" />
+<xacro:property name="felis_linkD_iyz" value="0.1" />
+<xacro:property name="felis_linkE_ixx" value="0.1" />
+<xacro:property name="felis_linkE_iyy" value="0.1" />
+<xacro:property name="felis_linkE_izz" value="0.1" />
+<xacro:property name="felis_linkE_ixy" value="0.1" />
+<xacro:property name="felis_linkE_ixz" value="0.1" />
+<xacro:property name="felis_linkE_iyz" value="0.1" />
+<xacro:property name="felis_linkF_ixx" value="0.1" />
+<xacro:property name="felis_linkF_iyy" value="0.1" />
+<xacro:property name="felis_linkF_izz" value="0.1" />
+<xacro:property name="felis_linkF_ixy" value="0.1" />
+<xacro:property name="felis_linkF_ixz" value="0.1" />
+<xacro:property name="felis_linkF_iyz" value="0.1" />
+<!-- Simulation Camera parameters -->
+
+<!-- Misc. Sensors Parameters -->
+
+<!-- Friction parameters -->
+<xacro:property name="spool_joint_effort" value="100" />
+<xacro:property name="spool_joint_velocity" value="50" />
+<xacro:property name="spool_lower_angle" value="0" />
+<xacro:property name="spool_upper_angle" value="1.0" />
+
+<!-- SDF Specific parameters -->
+
+</robot>

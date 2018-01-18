@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="felis">
+<xacro:include filename="$(find riserobotdb)/defs/robots/felis/felis.common.urdf.xacro" />
+<!-- Base Link -->
+<xacro:urdf_link _name="base_link" _xyz="${felis_xyz}" _rpy="${felis_rpy}"
+	_mesh="${felis_base_mesh}" _mass="${felis_baselink_mass}" _cg="${felis_baselink_cg}"
+	 _ixx="${felis_baselink_ixx}" _iyy="${felis_baselink_iyy}" _izz="${felis_baselink_izz}"
+	_ixy="${felis_baselink_ixy}" _ixz="${felis_baselink_ixz}" _iyz="${felis_baselink_iyz}"/>
+<!-- Spools -->
+<xacro:rear_spool suffix="left" geom_rpy="${felis_spool_jointA_rpy}" joint_xyz="${felis_spool_jointA_xyz}" />
+
+</robot>

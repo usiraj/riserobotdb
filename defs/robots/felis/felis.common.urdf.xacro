@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.urdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/felis/felis.common.xacro" />
+<!-- Leg Spool -->
+<xacro:macro name="rear_spool" params="suffix geom_rpy joint_xyz">
+	<xacro:urdf_link _name="${suffix}_rear_spool_link" _xyz="${felis_spool_xyz}" _rpy="${geom_rpy}"
+		_mesh="${felis_spool_mesh}" _mass="${felis_spool_mass}" _cg="${felis_spool_cg}"
+		_ixx="${felis_spool_ixx}" _iyy="${felis_spool_iyy}" _izz="${felis_spool_izz}"
+		_ixy="${felis_spool_ixy}" _ixz="${felis_spool_ixz}" _iyz="${felis_spool_iyz}" />
+	<xacro:urdf_revolute_joint _name="${suffix}_rear_spool_joint" _parent="base_link"
+		_child="${suffix}_rear_spool_link" _axis="0 1 0" _xyz="${joint_xyz}" _rpy="0 0 0" _lower="${spool_lower_angle}"
+		_upper="${spool_upper_angle}" _effort="${spool_joint_effort}" _velocity="${spool_joint_velocity}" />
+</xacro:macro>
+</robot>
