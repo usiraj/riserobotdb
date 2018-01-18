@@ -7,6 +7,7 @@
 	 _ixx="${felis_baselink_ixx}" _iyy="${felis_baselink_iyy}" _izz="${felis_baselink_izz}"
 	_ixy="${felis_baselink_ixy}" _ixz="${felis_baselink_ixz}" _iyz="${felis_baselink_iyz}"/>
 <!-- Spools -->
-<xacro:rear_spool suffix="left" geom_rpy="${felis_spool_jointA_rpy}" joint_xyz="${felis_spool_jointA_xyz}" />
-
+<xacro:spool suffix="left" portion="rear" geom_rpy="${felis_spool_joint1_rpy}" joint_xyz="${felis_spool_joint1_xyz}" />
+<!-- Legs -->
+<xacro:quadleg suffix="left" portion="front" geom_rpy="${felis_linkA_joint1_rpy}" joint_xyz="${felis_linkA_joint1_xyz}" />
 </robot>

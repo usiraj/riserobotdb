@@ -3,12 +3,12 @@
 <!-- Mesh Files -->
 <xacro:property name="felis_base_mesh" value="models/robots/felis/felisbody.dae" />
 <xacro:property name="felis_spool_mesh" value="models/robots/felis/felislegspool.dae" />
-<xacro:property name="felis_linkA" value="models/robots/felis/felislinkA.dae" />
-<xacro:property name="felis_linkB" value="models/robots/felis/felislinkB.dae" />
-<xacro:property name="felis_linkC" value="models/robots/felis/felislinkC.dae" />
-<xacro:property name="felis_linkD" value="models/robots/felis/felislinkD.dae" />
-<xacro:property name="felis_linkE" value="models/robots/felis/felislinkE.dae" />
-<xacro:property name="felis_linkF" value="models/robots/felis/felislinkF.dae" />
+<xacro:property name="felis_linkA_mesh" value="models/robots/felis/felislinkA.dae" />
+<xacro:property name="felis_linkB_mesh" value="models/robots/felis/felislinkB.dae" />
+<xacro:property name="felis_linkC_mesh" value="models/robots/felis/felislinkC.dae" />
+<xacro:property name="felis_linkD_mesh" value="models/robots/felis/felislinkD.dae" />
+<xacro:property name="felis_linkE_mesh" value="models/robots/felis/felislinkE.dae" />
+<xacro:property name="felis_linkF_mesh" value="models/robots/felis/felislinkF.dae" />
 <!-- Base/Cage Data -->
 <xacro:property name="felis_z" value="0" />
 <xacro:property name="felis_xyz" value="0 0 ${felis_z}" />
@@ -17,19 +17,30 @@
 <!-- Spool Data -->
 <xacro:property name="felis_spool_xyz" value="0 0 0" />
 <xacro:property name="felis_spool_cg" value="0 0 0" />
-<xacro:property name="felis_spool_jointA_xyz" value="-3 1 0" />
-<xacro:property name="felis_spool_jointA_rpy" value="0 3.14159 3.14159" />
-<xacro:property name="felis_spool_jointB_xyz" value="0 1 0" />
-<xacro:property name="felis_spool_jointC_xyz" value="0 1 0" />
-<xacro:property name="felis_spool_jointD_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_joint1_xyz" value="-3 1 0" />
+<xacro:property name="felis_spool_joint1_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_spool_joint2_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_joint2_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_spool_joint3_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_joint3_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_spool_joint4_xyz" value="0 1 0" />
+<xacro:property name="felis_spool_joint4_rpy" value="0 3.14159 3.14159" />
 <!-- Link A Data -->
 <xacro:property name="felis_linkA_xyz" value="0 0 0" />
-<xacro:property name="felis_linkA_rpy" value="0 0 0" />
 <xacro:property name="felis_linkA_cg" value="0 0 0" />
+<xacro:property name="felis_linkA_joint1_xyz" value="-4 3 0" />
+<xacro:property name="felis_linkA_joint1_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_linkA_joint2_xyz" value="0 1 0" />
+<xacro:property name="felis_linkA_joint2_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_linkA_joint3_xyz" value="0 1 0" />
+<xacro:property name="felis_linkA_joint3_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_linkA_joint4_xyz" value="0 1 0" />
+<xacro:property name="felis_linkA_joint4_rpy" value="0 3.14159 3.14159" />
 <!-- Link B Data -->
 <xacro:property name="felis_linkB_xyz" value="0 0 0" />
 <xacro:property name="felis_linkB_rpy" value="0 0 0" />
 <xacro:property name="felis_linkB_cg" value="0 0 0" />
+<xacro:property name="felis_linkB_joint_xyz" value="1.5 0 0" />
 <!-- Link C Data -->
 <xacro:property name="felis_linkC_xyz" value="0 0 0" />
 <xacro:property name="felis_linkC_rpy" value="0 0 0" />
@@ -46,6 +57,13 @@
 <xacro:property name="felis_linkF_xyz" value="0 0 0" />
 <xacro:property name="felis_linkF_rpy" value="0 0 0" />
 <xacro:property name="felis_linkF_cg" value="0 0 0" />
+<!-- Joints Constraints -->
+<xacro:property name="spool_lower_angle" value="0" />
+<xacro:property name="spool_upper_angle" value="1.0" />
+<xacro:property name="quadleg_jointA_lower_angle"  value="0.0" />
+<xacro:property name="quadleg_jointA_upper_angle"  value="1.4" />
+<xacro:property name="quadleg_jointB_lower_angle"  value="0.0" />
+<xacro:property name="quadleg_jointB_upper_angle"  value="1.4" />
 <!-- Mass -->
 <xacro:property name="felis_baselink_mass" value="1.5" />
 <xacro:property name="felis_spool_mass" value="0.2" />
@@ -111,8 +129,9 @@
 <!-- Friction parameters -->
 <xacro:property name="spool_joint_effort" value="100" />
 <xacro:property name="spool_joint_velocity" value="50" />
-<xacro:property name="spool_lower_angle" value="0" />
-<xacro:property name="spool_upper_angle" value="1.0" />
+<xacro:property name="quadleg_joint_effort" value="100" />
+<xacro:property name="quadleg_joint_velocity" value="50" />
+
 
 <!-- SDF Specific parameters -->
 
