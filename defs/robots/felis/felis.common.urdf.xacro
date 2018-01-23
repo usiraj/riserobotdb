@@ -4,7 +4,7 @@
 <xacro:include filename="$(find riserobotdb)/defs/robots/felis/felis.common.xacro" />
 <!-- Leg Spool -->
 <xacro:macro name="spool" params="suffix portion geom_rpy joint_xyz">
-	<xacro:urdf_link _name="${suffix}_${portion}_spool_link" _xyz="${felis_spool_xyz}" _rpy="0 0 0"
+	<xacro:urdf_link _name="${suffix}_${portion}_spool_link" _xyz="0 0 0" _rpy="0 0 0"
 		_mesh="${felis_spool_mesh}" _mass="${felis_spool_mass}" _cg="${felis_spool_cg}"
 		_ixx="${felis_spool_ixx}" _iyy="${felis_spool_iyy}" _izz="${felis_spool_izz}"
 		_ixy="${felis_spool_ixy}" _ixz="${felis_spool_ixz}" _iyz="${felis_spool_iyz}" />
@@ -12,25 +12,76 @@
 		_child="${suffix}_${portion}_spool_link" _axis="0 0 1" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${spool_lower_angle}"
 		_upper="${spool_upper_angle}" _effort="${spool_joint_effort}" _velocity="${spool_joint_velocity}" />
 </xacro:macro>
-<!-- Leg Link -->
-<xacro:macro name="quadleg" params="suffix portion geom_rpy joint_xyz">
-	<xacro:urdf_link _name="${suffix}_${portion}_quadleg_linkA" _xyz="${felis_linkA_xyz}" _rpy="0 0 0"
+
+<!-- Leg Links -->
+<xacro:macro name="quadleg_left" params="portion geom_rpy joint_xyz">
+	<xacro:urdf_link _name="left_${portion}_quadleg_linkA" _xyz="0 0 0" _rpy="0 0 0"
 		_mesh="${felis_linkA_mesh}" _mass="${felis_linkA_mass}" _cg="${felis_linkA_cg}"
 		_ixx="${felis_linkA_ixx}" _iyy="${felis_linkA_iyy}" _izz="${felis_linkA_izz}"
 		_ixy="${felis_linkA_ixy}" _ixz="${felis_linkA_ixz}" _iyz="${felis_linkA_iyz}" />
-	<xacro:urdf_link _name="${suffix}_${portion}_quadleg_linkB" _xyz="${felis_linkB_xyz}" _rpy="${felis_linkB_rpy}"
+	<xacro:urdf_link _name="left_${portion}_quadleg_linkB" _xyz="0 0 0" _rpy="0 0 0"
 		_mesh="${felis_linkB_mesh}" _mass="${felis_linkB_mass}" _cg="${felis_linkB_cg}"
 		_ixx="${felis_linkB_ixx}" _iyy="${felis_linkB_iyy}" _izz="${felis_linkB_izz}"
 		_ixy="${felis_linkB_ixy}" _ixz="${felis_linkB_ixz}" _iyz="${felis_linkB_iyz}" />
+	<xacro:urdf_link _name="left_${portion}_quadleg_linkC" _xyz="0 0 0" _rpy="0 0 0"
+		_mesh="${felis_linkC_mesh}" _mass="${felis_linkC_mass}" _cg="${felis_linkC_cg}"
+		_ixx="${felis_linkC_ixx}" _iyy="${felis_linkC_iyy}" _izz="${felis_linkC_izz}"
+		_ixy="${felis_linkC_ixy}" _ixz="${felis_linkC_ixz}" _iyz="${felis_linkC_iyz}" />
+	<xacro:urdf_link _name="left_${portion}_quadleg_linkD" _xyz="0 0 0" _rpy="0 0 0"
+		_mesh="${felis_linkD_mesh}" _mass="${felis_linkD_mass}" _cg="${felis_linkD_cg}"
+		_ixx="${felis_linkD_ixx}" _iyy="${felis_linkD_iyy}" _izz="${felis_linkD_izz}"
+		_ixy="${felis_linkD_ixy}" _ixz="${felis_linkD_ixz}" _iyz="${felis_linkD_iyz}" />
+	
 
 
-	<xacro:urdf_revolute_joint _name="${suffix}_${portion}_linkA_joint" _parent="base_link"
-		_child="${suffix}_${portion}_quadleg_linkA" _axis="0 1 0" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${quadleg_jointA_lower_angle}"
+
+
+	<xacro:urdf_revolute_joint _name="left_${portion}_linkA_joint" _parent="base_link"
+		_child="left_${portion}_quadleg_linkA" _axis="0 0 1" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${quadleg_jointA_lower_angle}"
 		_upper="${quadleg_jointA_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
-	<xacro:urdf_revolute_joint _name="${suffix}_${portion}_linkB_joint" _parent="${suffix}_${portion}_quadleg_linkA"
-		_child="${suffix}_${portion}_quadleg_linkB" _axis="0 1 0" _xyz="${felis_linkB_joint_xyz}" _rpy="0 0 0" _lower="${quadleg_jointB_lower_angle}"
+	<xacro:urdf_revolute_joint _name="left_${portion}_linkB_joint" _parent="left_${portion}_quadleg_linkA"
+		_child="left_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${felis_jointAB_zoffset}" _rpy="0 0 -${felis_linkB_starting_angle}" _lower="${quadleg_jointB_lower_angle}"
 		_upper="${quadleg_jointB_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
-
+	<xacro:urdf_revolute_joint _name="left_${portion}_linkC_joint" _parent="left_${portion}_quadleg_linkB"
+		_child="left_${portion}_quadleg_linkC" _axis="0 0 1" _xyz="${felis_fulllink_centerlength/2} 0 0" _rpy="0 0 0" _lower="${quadleg_jointC_lower_angle}"
+		_upper="${quadleg_jointC_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
+	<xacro:urdf_revolute_joint _name="left_${portion}_linkD_joint" _parent="left_${portion}_quadleg_linkC"
+		_child="left_${portion}_quadleg_linkD" _axis="0 0 1" _xyz="${felis_fulllink_centerlength} 0 0" _rpy="0 0 0" _lower="${quadleg_jointD_lower_angle}"
+		_upper="${quadleg_jointD_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
 
 </xacro:macro>
+<xacro:macro name="quadleg_right" params="portion geom_rpy joint_xyz">
+	<xacro:urdf_link _name="right_${portion}_quadleg_linkA" _xyz="0 0 0" _rpy="0 ${angle_180d} ${angle_180d}"
+		_mesh="${felis_linkA_mesh}" _mass="${felis_linkA_mass}" _cg="${felis_linkA_cg}"
+		_ixx="${felis_linkA_ixx}" _iyy="${felis_linkA_iyy}" _izz="${felis_linkA_izz}"
+		_ixy="${felis_linkA_ixy}" _ixz="${felis_linkA_ixz}" _iyz="${felis_linkA_iyz}" />
+	<xacro:urdf_link _name="right_${portion}_quadleg_linkB" _xyz="0 0 0" _rpy="0 0 0"
+		_mesh="${felis_linkB_mesh}" _mass="${felis_linkB_mass}" _cg="${felis_linkB_cg}"
+		_ixx="${felis_linkB_ixx}" _iyy="${felis_linkB_iyy}" _izz="${felis_linkB_izz}"
+		_ixy="${felis_linkB_ixy}" _ixz="${felis_linkB_ixz}" _iyz="${felis_linkB_iyz}" />
+	<xacro:urdf_link _name="right_${portion}_quadleg_linkC" _xyz="0 0 0" _rpy="0 ${angle_180d} ${angle_180d}"
+		_mesh="${felis_linkC_mesh}" _mass="${felis_linkC_mass}" _cg="${felis_linkC_cg}"
+		_ixx="${felis_linkC_ixx}" _iyy="${felis_linkC_iyy}" _izz="${felis_linkC_izz}"
+		_ixy="${felis_linkC_ixy}" _ixz="${felis_linkC_ixz}" _iyz="${felis_linkC_iyz}" />
+	<xacro:urdf_link _name="right_${portion}_quadleg_linkD" _xyz="0 0 0" _rpy="0 0 0"
+		_mesh="${felis_linkD_mesh}" _mass="${felis_linkD_mass}" _cg="${felis_linkD_cg}"
+		_ixx="${felis_linkD_ixx}" _iyy="${felis_linkD_iyy}" _izz="${felis_linkD_izz}"
+		_ixy="${felis_linkD_ixy}" _ixz="${felis_linkD_ixz}" _iyz="${felis_linkD_iyz}" />
+
+
+	<xacro:urdf_revolute_joint _name="right_${portion}_linkA_joint" _parent="base_link"
+		_child="right_${portion}_quadleg_linkA" _axis="0 0 1" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${quadleg_jointA_lower_angle}"
+		_upper="${quadleg_jointA_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
+	<xacro:urdf_revolute_joint _name="right_${portion}_linkB_joint" _parent="right_${portion}_quadleg_linkA"
+		_child="right_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${-felis_jointAB_zoffset-felis_link_width}" _rpy="0 0 -${felis_linkB_starting_angle}" _lower="${quadleg_jointB_lower_angle}"
+		_upper="${quadleg_jointB_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
+	<xacro:urdf_revolute_joint _name="right_${portion}_linkC_joint" _parent="right_${portion}_quadleg_linkB"
+		_child="right_${portion}_quadleg_linkC" _axis="0 0 1" _xyz="${felis_fulllink_centerlength/2} 0 ${felis_link_width}" _rpy="0 0 0" _lower="${quadleg_jointC_lower_angle}"
+		_upper="${quadleg_jointC_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
+	<xacro:urdf_revolute_joint _name="right_${portion}_linkD_joint" _parent="right_${portion}_quadleg_linkC"
+		_child="right_${portion}_quadleg_linkD" _axis="0 0 1" _xyz="${felis_fulllink_centerlength} 0 -${felis_link_width}" _rpy="0 0 0" _lower="${quadleg_jointD_lower_angle}"
+		_upper="${quadleg_jointD_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
+
+</xacro:macro>
+
 </robot>
