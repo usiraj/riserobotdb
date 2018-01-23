@@ -12,24 +12,24 @@
 <!-- Base/Cage Data -->
 <xacro:property name="felis_z" value="0" />
 <xacro:property name="felis_xyz" value="0 0 ${felis_z}" />
-<xacro:property name="felis_rpy" value="0 0 3.14159" />
+<xacro:property name="felis_rpy" value="0 0 0" />
 <xacro:property name="felis_baselink_cg" value="0 0 0" />
 <!-- Spool Data -->
 <xacro:property name="felis_spool_xyz" value="0 0 0" />
 <xacro:property name="felis_spool_cg" value="0 0 0" />
-<xacro:property name="felis_spool_joint1_xyz" value="-3 1 0" />
-<xacro:property name="felis_spool_joint1_rpy" value="0 3.14159 3.14159" />
-<xacro:property name="felis_spool_joint2_xyz" value="0 1 0" />
-<xacro:property name="felis_spool_joint2_rpy" value="0 3.14159 3.14159" />
-<xacro:property name="felis_spool_joint3_xyz" value="0 1 0" />
-<xacro:property name="felis_spool_joint3_rpy" value="0 3.14159 3.14159" />
-<xacro:property name="felis_spool_joint4_xyz" value="0 1 0" />
-<xacro:property name="felis_spool_joint4_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_spool_joint1_xyz" value="0.04382 0.06030 0.02956" />
+<xacro:property name="felis_spool_joint1_rpy" value="-1.570796327 0 0" />
+<xacro:property name="felis_spool_joint2_xyz" value="0.04382 -0.06030 0.02956" />
+<xacro:property name="felis_spool_joint2_rpy" value="1.570796327 -1.570796327 0" />
+<xacro:property name="felis_spool_joint3_xyz" value="-0.12118 0.06840 0.02956" />
+<xacro:property name="felis_spool_joint3_rpy" value="-1.570796327 0 0" />
+<xacro:property name="felis_spool_joint4_xyz" value="-0.12118 -0.06840 0.02956" />
+<xacro:property name="felis_spool_joint4_rpy" value="1.570796327 -1.570796327 0" />
 <!-- Link A Data -->
 <xacro:property name="felis_linkA_xyz" value="0 0 0" />
 <xacro:property name="felis_linkA_cg" value="0 0 0" />
-<xacro:property name="felis_linkA_joint1_xyz" value="-4 3 0" />
-<xacro:property name="felis_linkA_joint1_rpy" value="0 3.14159 3.14159" />
+<xacro:property name="felis_linkA_joint1_xyz" value="0.06401 0.06030 0.00990" />
+<xacro:property name="felis_linkA_joint1_rpy" value="-1.570796327 2.35619449 0" />
 <xacro:property name="felis_linkA_joint2_xyz" value="0 1 0" />
 <xacro:property name="felis_linkA_joint2_rpy" value="0 3.14159 3.14159" />
 <xacro:property name="felis_linkA_joint3_xyz" value="0 1 0" />
