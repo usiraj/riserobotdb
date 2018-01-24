@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <launch>
     <!-- To load robot model with rviz -->
-    <arg name="model_urdf" />
-    <arg name="rootns" default="/Robots" />
-	<arg name="robot_name" default="basic_robot" />
-	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
+    <arg name="model_urdf" /><!-- URDF(Xacro) oF Robot to Load -->
+    <arg name="rootns" default="/Robots" /><!-- Namespace of Robot -->
+	<arg name="robot_name" default="basic_robot" /><!-- Robot Name -->
+	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" /><!-- Joints default joint state publisher should ignore -->
+	<arg name="jspub_defversion" default="true" /><!-- Flag to enable default joint state publisher -->
   	<!-- Load Robot in Parameter Server -->
   	<include file="$(find riserobotdb)/launch/common/paramload.launch" ns="$(arg rootns)">
   	    <arg name="robot_model" value="$(arg model_urdf)" />
@@ -20,8 +21,11 @@
     		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
  	</node>
 	<!--Joint State with Ignrore List -->
-	<node name="jspublisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
-		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
-		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
-	</node>
+	<group if="$(arg jspub_defversion)">
+		<node name="jspublisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
+			<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+			<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+		</node>
+	</group>
+	
 </launch>

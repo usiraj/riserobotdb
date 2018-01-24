@@ -12,7 +12,8 @@
   	<arg name="headless" default="false"/>
   	<arg name="debug" default="false"/>
   	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
-  	<arg name="rootns" default="/Robots" />  	
+  	<arg name="rootns" default="/Robots" />
+	<arg name="jspub_defversion" default="true" /><!-- Flag to enable default joint state publisher -->  	
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<group ns="$(arg rootns)">
 	    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
@@ -45,8 +46,10 @@
     		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
  	</node>
 	<!--Joint State with Ignrore List -->
-	<node name="joint_state_publisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
-		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
-		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
-	</node>	
+	<group if="$(arg jspub_defversion)">
+		<node name="joint_state_publisher" pkg="riserobotdb" type="jointstatesdefault.py" ns="$(arg rootns)/$(arg robot_name)">
+			<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+			<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+		</node>
+	</group>
 </launch>
