@@ -6,17 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
-        - /RobotModel1/Links1
-        - /RobotModel1/Links1/base_link1
-        - /RobotModel1/Links1/left_front_quadleg_linkA1
-        - /RobotModel1/Links1/left_front_quadleg_linkB1
-        - /RobotModel1/Links1/left_front_quadleg_linkC1
-        - /RobotModel1/Links1/left_front_quadleg_linkD1
-        - /RobotModel1/Links1/right_front_quadleg_linkA1
-        - /RobotModel1/Links1/right_front_quadleg_linkB1
-        - /RobotModel1/Links1/right_front_quadleg_linkC1
-        - /RobotModel1/Links1/right_front_quadleg_linkD1
         - /Axes1
       Splitter Ratio: 0.564202309
     Tree Height: 775
@@ -77,22 +66,32 @@ Visualization Manager:
           Value: true
         left_front_quadleg_linkA:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         left_front_quadleg_linkB:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         left_front_quadleg_linkC:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         left_front_quadleg_linkD:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_front_quadleg_linkE:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_front_quadleg_linkF:
+          Alpha: 1
+          Show Axes: false
           Show Trail: false
           Value: true
         left_front_spool_link:
@@ -120,6 +119,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_rear_quadleg_linkE:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_rear_quadleg_linkF:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_rear_spool_link:
           Alpha: 1
           Show Axes: false
@@ -127,22 +136,32 @@ Visualization Manager:
           Value: true
         right_front_quadleg_linkA:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         right_front_quadleg_linkB:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         right_front_quadleg_linkC:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
           Show Trail: false
           Value: true
         right_front_quadleg_linkD:
           Alpha: 1
-          Show Axes: true
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_front_quadleg_linkE:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_front_quadleg_linkF:
+          Alpha: 1
+          Show Axes: false
           Show Trail: false
           Value: true
         right_front_spool_link:
@@ -166,6 +185,16 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_rear_quadleg_linkD:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_rear_quadleg_linkE:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_rear_quadleg_linkF:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -212,25 +241,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.373033106
+      Distance: 0.930419147
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0644527599
-        Y: -0.00725798775
-        Z: -0.0996956602
+        X: 0.0287253372
+        Y: -0.0479244739
+        Z: -0.112890355
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.465197951
+      Pitch: 1.46979618
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.84173357
+      Yaw: 0.248595044
     Saved: ~
 Window Geometry:
   Displays:

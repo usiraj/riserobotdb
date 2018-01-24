@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9abfa</authoring_tool>
     </contributor>
-    <created>2018-01-23T17:47:08</created>
-    <modified>2018-01-23T17:47:08</modified>
+    <created>2018-01-24T16:52:54</created>
+    <modified>2018-01-24T16:52:54</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -82,7 +82,7 @@
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
       <node id="LinkE" name="LinkE" type="NODE">
-        <matrix sid="transform">0.7071065 -0.7071069 6.11887e-4 0.03926157 -8.65408e-4 -6.86472e-8 0.9999996 0.0643 -0.7071066 -0.7071068 -6.11984e-4 -0.01484907 0 0 0 1</matrix>
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
         <instance_geometry url="#LinkEMesh-mesh" name="LinkE">
           <bind_material>
             <technique_common>
@@ -94,7 +94,7 @@
           <technique profile="blender">
             <Child_Of_constraint>
               <type sid="type" type="int">1</type>
-              <enforce sid="enforce" type="float">1</enforce>
+              <enforce sid="enforce" type="float">0</enforce>
               <flag sid="flag" type="int">17</flag>
               <headtail sid="headtail" type="float">0</headtail>
               <lin_error sid="lin_error" type="float">0</lin_error>

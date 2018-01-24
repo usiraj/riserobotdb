@@ -61,6 +61,10 @@
 <xacro:property name="quadleg_jointC_upper_angle"  value="1.4" />
 <xacro:property name="quadleg_jointD_lower_angle"  value="0.0" />
 <xacro:property name="quadleg_jointD_upper_angle"  value="1.4" />
+<xacro:property name="quadleg_jointE_lower_angle"  value="0.0" />
+<xacro:property name="quadleg_jointE_upper_angle"  value="1.4" />
+<xacro:property name="quadleg_jointF_lower_angle"  value="0.0" />
+<xacro:property name="quadleg_jointF_upper_angle"  value="1.4" />
 <!-- Mass -->
 <xacro:property name="felis_baselink_mass" value="1.5" />
 <xacro:property name="felis_spool_mass" value="0.2" />
