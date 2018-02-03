@@ -39,7 +39,7 @@ class FelisJointStatePublisher():
         self.link_length = 0.07
         self.gui = None
 
-        limits = {'a_min':0, 'a_max':179, 'b_min':1, 'b_max': self.link_length*1000-5}
+        limits = {'a_min':0, 'a_max':179, 'b_min':3, 'b_max': (self.link_length*1000)-3}
         #TODO stuff
         use_gui = get_param("use_gui", True)
         if use_gui:
@@ -115,15 +115,24 @@ class FelisConfigurationGui(QWidget):
         self.ui.le_rl_a.valueChanged.connect(self.rl_a_finechanged)
         self.ui.slider_rr_a.valueChanged.connect(self.rr_a_changed)
         self.ui.le_rr_a.valueChanged.connect(self.rr_a_finechanged)
+        self.ui.slider_fl_b.valueChanged.connect(self.fl_b_changed)
+        self.ui.le_fl_b.valueChanged.connect(self.fl_b_finechanged)
+        self.ui.slider_fr_b.valueChanged.connect(self.fr_b_changed)
+        self.ui.le_fr_b.valueChanged.connect(self.fr_b_finechanged)
+        self.ui.slider_rl_b.valueChanged.connect(self.rl_b_changed)
+        self.ui.le_rl_b.valueChanged.connect(self.rl_b_finechanged)
+        self.ui.slider_rr_b.valueChanged.connect(self.rr_b_changed)
+        self.ui.le_rr_b.valueChanged.connect(self.rr_b_finechanged)
+
         ########## Values (Dummy Initial) ###############
         self.set_fl_a(90)
         self.set_fr_a(90)
         self.set_rl_a(90)
         self.set_rr_a(90)
-        self.val_b_fl = 35.0
-        self.val_b_fr = 35.0
-        self.val_b_rl = 35.0
-        self.val_b_rr = 35.0
+        self.set_fl_b(35)
+        self.set_fr_b(35)
+        self.set_rl_b(35)
+        self.set_rr_b(35)
         self.val_x_fl = 0.0
         self.val_x_fr = 0.0
         self.val_x_rl = 0.0
@@ -183,6 +192,54 @@ class FelisConfigurationGui(QWidget):
             self.ui.slider_rr_a.setValue(int(self.val_a_rr * 100))
             self.val_rr_a_updated()
 
+    def fl_b_changed(self, valtochange):
+        if self.val_b_fl != float(valtochange) / 100:
+            self.val_b_fl = float(self.ui.slider_fl_b.value()) / 100
+            self.ui.le_fl_b.setValue(self.val_b_fl)
+            self.val_fl_b_updated()
+
+    def fl_b_finechanged(self, valtochange):
+        if valtochange != self.val_b_fl:
+            self.val_b_fl = self.ui.le_fl_b.value()
+            self.ui.slider_fl_b.setValue(int(self.val_b_fl * 100))
+            self.val_fl_b_updated()
+
+    def fr_b_changed(self, valtochange):
+        if self.val_b_fr != float(valtochange) / 100:
+            self.val_b_fr = float(self.ui.slider_fr_b.value()) / 100
+            self.ui.le_fr_b.setValue(self.val_b_fr)
+            self.val_fr_b_updated()
+
+    def fr_b_finechanged(self, valtochange):
+        if valtochange != self.val_b_fr:
+            self.val_b_fr = self.ui.le_fr_b.value()
+            self.ui.slider_fr_b.setValue(int(self.val_b_fr * 100))
+            self.val_fr_b_updated()
+
+    def rl_b_changed(self, valtochange):
+        if self.val_b_rl != float(valtochange) / 100:
+            self.val_b_rl = float(self.ui.slider_rl_b.value()) / 100
+            self.ui.le_rl_b.setValue(self.val_b_rl)
+            self.val_rl_b_updated()
+
+    def rl_b_finechanged(self, valtochange):
+        if valtochange != self.val_b_rl:
+            self.val_b_rl = self.ui.le_rl_b.value()
+            self.ui.slider_rl_b.setValue(int(self.val_b_rl * 100))
+            self.val_rl_b_updated()
+
+    def rr_b_changed(self, valtochange):
+        if self.val_b_rr != float(valtochange) / 100:
+            self.val_b_rr = float(self.ui.slider_rr_b.value()) / 100
+            self.ui.le_rr_b.setValue(self.val_b_rr)
+            self.val_rr_b_updated()
+
+    def rr_b_finechanged(self, valtochange):
+        if valtochange != self.val_b_rr:
+            self.val_b_rr = self.ui.le_rr_b.value()
+            self.ui.slider_rr_b.setValue(int(self.val_b_rr * 100))
+            self.val_rr_b_updated()
+
     ########### After Control Parameters are Updated ##############
     def val_fl_a_updated(self):
         print 'Control Parameter A FL Updated'
@@ -195,6 +252,19 @@ class FelisConfigurationGui(QWidget):
 
     def val_rr_a_updated(self):
         print 'Control Parameter A RR Updated'
+
+    def val_fl_b_updated(self):
+        print 'Control Parameter B FL Updated'
+
+    def val_fr_b_updated(self):
+        print 'Control Parameter B FR Updated'
+
+    def val_rl_b_updated(self):
+        print 'Control Parameter B RL Updated'
+
+    def val_rr_b_updated(self):
+        print 'Control Parameter B RR Updated'
+
 
     ###############################################################
 
@@ -219,6 +289,26 @@ class FelisConfigurationGui(QWidget):
         self.val_a_rr = val
         self.ui.le_rr_a.setValue(self.val_a_rr)
         self.ui.slider_rr_a.setSliderPosition(int(self.val_a_rr * 100))
+
+    def set_fl_b(self, val):
+        self.val_b_fl = val
+        self.ui.le_fl_b.setValue(self.val_b_fl)
+        self.ui.slider_fl_b.setSliderPosition(int(self.val_b_fl * 100))
+
+    def set_fr_b(self, val):
+        self.val_b_fr = val
+        self.ui.le_fr_b.setValue(self.val_b_fr)
+        self.ui.slider_fr_b.setSliderPosition(int(self.val_b_fr * 100))
+
+    def set_rl_b(self, val):
+        self.val_b_rl = val
+        self.ui.le_rl_b.setValue(self.val_b_rl)
+        self.ui.slider_rl_b.setSliderPosition(int(self.val_b_rl * 100))
+
+    def set_rr_b(self, val):
+        self.val_b_rr = val
+        self.ui.le_rr_b.setValue(self.val_b_rr)
+        self.ui.slider_rr_b.setSliderPosition(int(self.val_b_rr * 100))
 
 
 # the main of module
