@@ -8,6 +8,7 @@
         <arg name="rootns" value="/Robots" />
 	    <arg name="robot_name" value="$(arg robot_name)" />
   	    <arg name="rviz_config" value="$(arg rviz_config)" />
+		<arg name="jspub_defversion" value="false" />
   	    <!--arg name="ignore_joints" value="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" /-->
     </include>	
 </launch>

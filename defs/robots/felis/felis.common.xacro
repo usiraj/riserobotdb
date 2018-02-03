@@ -21,6 +21,9 @@
 <xacro:property name="felis_jointAB_zoffset" value="0.004" />
 <xacro:property name="felis_fulllink_centerlength" value="0.07" />
 <xacro:property name="felis_link_width" value="0.006" />
+<xacro:property name="joint_min_angle" value="0.087266463" />
+<!--xacro:property name="joint_min_angle" value="0" /-->
+<xacro:property name="joint_max_angle" value="3.124139361" />
 
 <!-- Base/Cage Data -->
 <xacro:property name="felis_xyz" value="0 0 ${felis_z}" />
@@ -45,7 +48,7 @@
 <xacro:property name="felis_linkA_joint_lr_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
 <xacro:property name="felis_linkA_joint_rr_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
 <!-- Link B Data -->
-<xacro:property name="felis_linkB_starting_angle" value="${angle_180d-angle_30d}" />
+<xacro:property name="felis_linkB_starting_angle" value="0" />
 <!-- Link C Data -->
 <!-- Link D Data -->
 <!-- Link E Data -->
@@ -53,18 +56,18 @@
 <!-- Joints Constraints -->
 <xacro:property name="spool_lower_angle" value="0" />
 <xacro:property name="spool_upper_angle" value="1.0" />
-<xacro:property name="quadleg_jointA_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointA_upper_angle"  value="1.4" />
-<xacro:property name="quadleg_jointB_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointB_upper_angle"  value="1.4" />
-<xacro:property name="quadleg_jointC_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointC_upper_angle"  value="1.4" />
-<xacro:property name="quadleg_jointD_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointD_upper_angle"  value="1.4" />
-<xacro:property name="quadleg_jointE_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointE_upper_angle"  value="1.4" />
-<xacro:property name="quadleg_jointF_lower_angle"  value="0.0" />
-<xacro:property name="quadleg_jointF_upper_angle"  value="1.4" />
+<xacro:property name="quadleg_jointA_lower_angle"  value="-${joint_min_angle}" />
+<xacro:property name="quadleg_jointA_upper_angle"  value="-${joint_max_angle}" />
+<xacro:property name="quadleg_jointB_lower_angle"  value="${joint_min_angle}" />
+<xacro:property name="quadleg_jointB_upper_angle"  value="${joint_max_angle}" />
+<xacro:property name="quadleg_jointC_lower_angle"  value="${joint_min_angle}" />
+<xacro:property name="quadleg_jointC_upper_angle"  value="${joint_max_angle}" />
+<xacro:property name="quadleg_jointD_lower_angle"  value="-${joint_min_angle}" />
+<xacro:property name="quadleg_jointD_upper_angle"  value="-${joint_max_angle}" />
+<xacro:property name="quadleg_jointE_lower_angle"  value="-${joint_min_angle}" />
+<xacro:property name="quadleg_jointE_upper_angle"  value="-${joint_max_angle}" />
+<xacro:property name="quadleg_jointF_lower_angle"  value="${joint_min_angle}" />
+<xacro:property name="quadleg_jointF_upper_angle"  value="${joint_max_angle}" />
 <!-- Mass -->
 <xacro:property name="felis_baselink_mass" value="1.5" />
 <xacro:property name="felis_spool_mass" value="0.2" />

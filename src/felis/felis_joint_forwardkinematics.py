@@ -12,6 +12,7 @@ from python_qt_binding.QtWidgets import QApplication
 from python_qt_binding.QtWidgets import QWidget
 from python_qt_binding.QtWidgets import QSlider
 from FelisJConf import Ui_FelisConfiguration
+from FelisKinematics import FelisRobotv1Joints
 
 import xml.dom.minidom
 from sensor_msgs.msg import JointState
@@ -26,6 +27,7 @@ RANGE = 10000
 def get_param(name, value=None):
     private = "~%s" % name
     if rospy.has_param(private):
+        print 'has param'
         return rospy.get_param(private)
     elif rospy.has_param(name):
         return rospy.get_param(name)
@@ -36,25 +38,116 @@ def get_param(name, value=None):
 ######## Joint State Publisher ###########
 class FelisJointStatePublisher():
     def __init__(self):
-        self.link_length = 0.07
+        description = get_param('robot_description')
+        if description is None:
+            raise EnvironmentError('No robot description found on parameter server, check param remapping before'
+                                   'starting the application')
+            sys.exit(-1)
         self.gui = None
-
-        limits = {'a_min':0, 'a_max':179, 'b_min':3, 'b_max': (self.link_length*1000)-3}
-        #TODO stuff
+        self.robot = xml.dom.minidom.parseString(description).getElementsByTagName('robot')[0]
+        rospy.loginfo('Loaded URDF for felis')
+        self.link_length = self.get_link_length() * 2
+        rospy.loginfo('Link length loaded from urdf : %f', self.link_length)
+        ######## Initialize All Joints #########
+        self.joints = {}
+        for jnt in self.get_all_joint_names():
+            self.joints[jnt] = {'value': 0.0}
+            _info = self.get_joint_info(jnt)
+            self.joints[jnt]['max_effort'] = _info[0]
+            self.joints[jnt]['max_velocity'] = _info[1]
+            self.joints[jnt]['lower_val'] = _info[2]
+            self.joints[jnt]['upper_val'] = _info[3]
+        rospy.loginfo('Loaded Joint Constraints')
+        print self.joints
+        self.rkinematics = FelisRobotv1Joints( self.link_length / 2)
+        # TODO compute b_min and b_max
+        limits = {'a_max':self.joints['left_front_linkA_joint']['lower_val'],
+                  'a_min':self.joints['left_front_linkA_joint']['upper_val'],
+                  'b_min':3, 'b_max': (self.link_length*1000)-3}
+        ####### GUI Functionality ##############
         use_gui = get_param("use_gui", True)
+        self.close_on_exit = get_param("close_on_exit", True)
         if use_gui:
             self.app = QApplication(sys.argv)
             self.gui = FelisConfigurationGui(self, limits)
             self.gui.show()
         else:
             self.gui = None
+        ######## Subscribe for Control Parameters from outside #####
+        # TODO
+        ####### Publisher ##########
+        self.pub = rospy.Publisher('joint_states', JointState, queue_size=5)
 
     def loop(self):
-        hz = get_param("rate", 10)
+        hz = get_param("rate", 100)
         r = rospy.Rate(hz)
-        delta = get_param("delta", 0.0 )
+        while not rospy.is_shutdown():
+            if self.gui is not None and self.close_on_exit and not self.gui.isVisible():
+                rospy.loginfo('Exiting Publishing Joint States, since GUI is closed')
+                break
+            msg = JointState()
+            msg.header.stamp = rospy.Time.now()
+            msg.name = []
+            msg.position = []
+            msg.velocity = []
+            msg.effort = []
+            # Initialize msg.position, msg.velocity and msg.effort
+            for joint in self.joints:
+                msg.name.append(joint)
+                msg.position.append(self.joints[joint]['value'])
+            if msg.name or msg.position or msg.velocity or msg.effort:
+                # Only publish non-empty messages
+                self.pub.publish(msg)
+            try:
+                r.sleep()
+            except rospy.exceptions.ROSTimeMovedBackwardsException:
+                pass
 
-        # Do other stuff
+    def get_link_length(self):
+        for child in self.robot.childNodes:
+            if child.localName == 'joint' and child.getAttribute('name') == 'left_front_linkC_joint':
+                orgval = child.getElementsByTagName('origin')[0].getAttribute('xyz')
+                vals = orgval.split()[0]
+                try:
+                    num = float(vals)
+                except ValueError:
+                    raise RuntimeError('Could Not Get Link Length')
+                return num
+
+    def get_all_joint_names(self):
+        jnames = []
+        for child in self.robot.childNodes:
+            if child.localName == 'joint':
+                jnames.append(str(child.getAttribute('name')))
+        return jnames
+
+    def get_joint_info(self, jname):
+        for child in self.robot.childNodes:
+            if child.localName == 'joint' and child.getAttribute('name') == jname:
+                limit_node = child.getElementsByTagName('limit')[0]
+                max_effort = limit_node.getAttribute('effort')
+                lower_val = limit_node.getAttribute('lower')
+                upper_val = limit_node.getAttribute('upper')
+                max_velocity = limit_node.getAttribute('velocity')
+                try:
+                    max_effort = float(max_effort)
+                except ValueError:
+                    raise RuntimeError('Could not get maximum effort for joint %s'%jname)
+                try:
+                    max_velocity = float(max_velocity)
+                except ValueError:
+                    raise RuntimeError('Could not get maximum velocity for joint %s'%jname)
+                try:
+                    lower_val = math.degrees(float(lower_val))
+                except ValueError:
+                    raise RuntimeError('Could not get minimum angle for joint %s'%jname)
+                try:
+                    upper_val = math.degrees(float(upper_val))
+                except ValueError:
+                    raise RuntimeError('Could not get maximum angle for joint %s'%jname)
+                return max_effort, max_velocity, lower_val, upper_val
+
+
 
 
 ######## Joint Configuration Optional GUI ###########
@@ -125,10 +218,10 @@ class FelisConfigurationGui(QWidget):
         self.ui.le_rr_b.valueChanged.connect(self.rr_b_finechanged)
 
         ########## Values (Dummy Initial) ###############
-        self.set_fl_a(90)
-        self.set_fr_a(90)
-        self.set_rl_a(90)
-        self.set_rr_a(90)
+        self.set_fl_a(-90)
+        self.set_fr_a(-90)
+        self.set_rl_a(-90)
+        self.set_rr_a(-90)
         self.set_fl_b(35)
         self.set_fr_b(35)
         self.set_rl_b(35)
@@ -320,8 +413,10 @@ if __name__ == '__main__':
             print 'some'
             jsp.loop()
         else:
+            print 'Starting'
             Thread(target=jsp.loop).start()
             signal.signal(signal.SIGINT, signal.SIG_DFL)
             sys.exit(jsp.app.exec_())
+            print 'Exiting'
     except rospy.ROSInterruptException:
         pass
