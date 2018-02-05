@@ -58,12 +58,23 @@ class FelisJointStatePublisher():
             self.joints[jnt]['lower_val'] = _info[2]
             self.joints[jnt]['upper_val'] = _info[3]
         rospy.loginfo('Loaded Joint Constraints')
-        print self.joints
-        self.rkinematics = FelisRobotv1Joints( self.link_length / 2)
+        self.rkinFL = FelisRobotv1Joints(self.link_length / 2)
+        self.rkinFR = FelisRobotv1Joints(self.link_length / 2)
+        self.rkinRL = FelisRobotv1Joints(self.link_length / 2)
+        self.rkinRR = FelisRobotv1Joints(self.link_length / 2)
+        #### Set Joint Names ####
+        self.rkinFL.set_jointNames('left_front_linkA_joint', 'left_front_linkB_joint', 'left_front_linkC_joint',
+                                   'left_front_linkD_joint', 'left_front_linkE_joint', 'left_front_linkF_joint')
+        self.rkinFR.set_jointNames('right_front_linkA_joint', 'right_front_linkB_joint', 'right_front_linkC_joint',
+                                   'right_front_linkD_joint', 'right_front_linkE_joint', 'right_front_linkF_joint')
+        self.rkinRL.set_jointNames('left_rear_linkA_joint', 'left_rear_linkB_joint', 'left_rear_linkC_joint',
+                                   'left_rear_linkD_joint', 'left_rear_linkE_joint', 'left_rear_linkF_joint')
+        self.rkinRR.set_jointNames('right_rear_linkA_joint', 'right_rear_linkB_joint', 'right_rear_linkC_joint',
+                                   'right_rear_linkD_joint', 'right_rear_linkE_joint', 'right_rear_linkF_joint')
         # TODO compute b_min and b_max
-        limits = {'a_max':self.joints['left_front_linkA_joint']['lower_val'],
-                  'a_min':self.joints['left_front_linkA_joint']['upper_val'],
-                  'b_min':3, 'b_max': (self.link_length*1000)-3}
+        limits = {'a_min':self.joints['left_front_linkA_joint']['lower_val'],
+                  'a_max':self.joints['left_front_linkA_joint']['upper_val'],
+                  'b_min':(self.link_length*1000)/float(4), 'b_max': (self.link_length*1000)-3}
         ####### GUI Functionality ##############
         use_gui = get_param("use_gui", True)
         self.close_on_exit = get_param("close_on_exit", True)
@@ -73,6 +84,11 @@ class FelisJointStatePublisher():
             self.gui.show()
         else:
             self.gui = None
+        ######### Dummy Initial Publish #####
+        self.rkinFL.syncJointInfo(self.joints)
+        self.rkinFR.syncJointInfo(self.joints)
+        self.rkinRL.syncJointInfo(self.joints)
+        self.rkinRR.syncJointInfo(self.joints)
         ######## Subscribe for Control Parameters from outside #####
         # TODO
         ####### Publisher ##########
@@ -216,16 +232,19 @@ class FelisConfigurationGui(QWidget):
         self.ui.le_rl_b.valueChanged.connect(self.rl_b_finechanged)
         self.ui.slider_rr_b.valueChanged.connect(self.rr_b_changed)
         self.ui.le_rr_b.valueChanged.connect(self.rr_b_finechanged)
-
         ########## Values (Dummy Initial) ###############
-        self.set_fl_a(-90)
-        self.set_fr_a(-90)
-        self.set_rl_a(-90)
-        self.set_rr_a(-90)
+        self.set_fl_a(150)
+        self.set_fr_a(150)
+        self.set_rl_a(150)
+        self.set_rr_a(150)
         self.set_fl_b(35)
         self.set_fr_b(35)
         self.set_rl_b(35)
         self.set_rr_b(35)
+        self.jsp.rkinFL.updateControlParams(self.val_a_fl, self.val_b_fl/float(1000))
+        self.jsp.rkinFR.updateControlParams(self.val_a_fr, self.val_b_fr/float(1000))
+        self.jsp.rkinRL.updateControlParams(self.val_a_rl, self.val_b_rl/float(1000))
+        self.jsp.rkinRR.updateControlParams(self.val_a_rr, self.val_b_rr/float(1000))
         self.val_x_fl = 0.0
         self.val_x_fr = 0.0
         self.val_x_rl = 0.0
@@ -335,28 +354,36 @@ class FelisConfigurationGui(QWidget):
 
     ########### After Control Parameters are Updated ##############
     def val_fl_a_updated(self):
-        print 'Control Parameter A FL Updated'
+        self.jsp.rkinFL.updateControlParamA(self.val_a_fl)
+        self.jsp.rkinFL.syncJointInfo(self.jsp.joints)
 
     def val_fr_a_updated(self):
-        print 'Control Parameter A FR Updated'
+        self.jsp.rkinFR.updateControlParamA(self.val_a_fr)
+        self.jsp.rkinFR.syncJointInfo(self.jsp.joints)
 
     def val_rl_a_updated(self):
-        print 'Control Parameter A RL Updated'
+        self.jsp.rkinRL.updateControlParamA(self.val_a_rl)
+        self.jsp.rkinRL.syncJointInfo(self.jsp.joints)
 
     def val_rr_a_updated(self):
-        print 'Control Parameter A RR Updated'
+        self.jsp.rkinRR.updateControlParamA(self.val_a_rr)
+        self.jsp.rkinRR.syncJointInfo(self.jsp.joints)
 
     def val_fl_b_updated(self):
-        print 'Control Parameter B FL Updated'
+        self.jsp.rkinFL.updateControlParamB(self.val_b_fl/float(1000))
+        self.jsp.rkinFL.syncJointInfo(self.jsp.joints)
 
     def val_fr_b_updated(self):
-        print 'Control Parameter B FR Updated'
+        self.jsp.rkinFR.updateControlParamB(self.val_b_fr / float(1000))
+        self.jsp.rkinFR.syncJointInfo(self.jsp.joints)
 
     def val_rl_b_updated(self):
-        print 'Control Parameter B RL Updated'
+        self.jsp.rkinRL.updateControlParamB(self.val_b_rl / float(1000))
+        self.jsp.rkinRL.syncJointInfo(self.jsp.joints)
 
     def val_rr_b_updated(self):
-        print 'Control Parameter B RR Updated'
+        self.jsp.rkinRR.updateControlParamB(self.val_b_rr / float(1000))
+        self.jsp.rkinRR.syncJointInfo(self.jsp.joints)
 
 
     ###############################################################
