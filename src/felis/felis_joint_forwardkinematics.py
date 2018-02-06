@@ -15,7 +15,9 @@ from FelisJConf import Ui_FelisConfiguration
 from FelisKinematics import FelisRobotv1Joints
 
 import xml.dom.minidom
+import tf
 from sensor_msgs.msg import JointState
+from geometry_msgs.msg import PointStamped
 from math import pi
 from threading import Thread
 import sys
@@ -43,11 +45,15 @@ class FelisJointStatePublisher():
             raise EnvironmentError('No robot description found on parameter server, check param remapping before'
                                    'starting the application')
             sys.exit(-1)
+        self.tfprefix = get_param('tf_prefix')
+        if self.tfprefix is None:
+            raise EnvironmentError('tf_prefix must be set in parameter server')
+            sys.exit(-1)
         self.gui = None
         self.robot = xml.dom.minidom.parseString(description).getElementsByTagName('robot')[0]
         rospy.loginfo('Loaded URDF for felis')
-        self.link_length = self.get_link_length() * 2
-        rospy.loginfo('Link length loaded from urdf : %f', self.link_length)
+        self.link_lengthC = self.get_link_length() * 2
+        rospy.loginfo('Link length loaded from urdf : %f', self.link_lengthC)
         ######## Initialize All Joints #########
         self.joints = {}
         for jnt in self.get_all_joint_names():
@@ -58,10 +64,11 @@ class FelisJointStatePublisher():
             self.joints[jnt]['lower_val'] = _info[2]
             self.joints[jnt]['upper_val'] = _info[3]
         rospy.loginfo('Loaded Joint Constraints')
-        self.rkinFL = FelisRobotv1Joints(self.link_length / 2)
-        self.rkinFR = FelisRobotv1Joints(self.link_length / 2)
-        self.rkinRL = FelisRobotv1Joints(self.link_length / 2)
-        self.rkinRR = FelisRobotv1Joints(self.link_length / 2)
+        self.rkinFL = FelisRobotv1Joints(self.link_lengthC / 2)
+        self.rkinFR = FelisRobotv1Joints(self.link_lengthC / 2)
+        self.rkinRL = FelisRobotv1Joints(self.link_lengthC / 2)
+        self.rkinRR = FelisRobotv1Joints(self.link_lengthC / 2)
+        self.FootPositions = {'FL': [0, 0, 0], 'FR': [0, 0, 0], 'RL': [0, 0, 0], 'RR': [0, 0, 0]}
         #### Set Joint Names ####
         self.rkinFL.set_jointNames('left_front_linkA_joint', 'left_front_linkB_joint', 'left_front_linkC_joint',
                                    'left_front_linkD_joint', 'left_front_linkE_joint', 'left_front_linkF_joint')
@@ -74,7 +81,7 @@ class FelisJointStatePublisher():
         # TODO compute b_min and b_max
         limits = {'a_min':self.joints['left_front_linkA_joint']['lower_val'],
                   'a_max':self.joints['left_front_linkA_joint']['upper_val'],
-                  'b_min':(self.link_length*1000)/float(4), 'b_max': (self.link_length*1000)-3}
+                  'b_min':(self.link_lengthC*1000)/float(4), 'b_max': (self.link_lengthC*1000)-3}
         ####### GUI Functionality ##############
         use_gui = get_param("use_gui", True)
         self.close_on_exit = get_param("close_on_exit", True)
@@ -89,6 +96,8 @@ class FelisJointStatePublisher():
         self.rkinFR.syncJointInfo(self.joints)
         self.rkinRL.syncJointInfo(self.joints)
         self.rkinRR.syncJointInfo(self.joints)
+        ######### Subscribe to tf ############
+        self.listener = tf.TransformListener()
         ######## Subscribe for Control Parameters from outside #####
         # TODO
         ####### Publisher ##########
@@ -110,10 +119,11 @@ class FelisJointStatePublisher():
             # Initialize msg.position, msg.velocity and msg.effort
             for joint in self.joints:
                 msg.name.append(joint)
-                msg.position.append(self.joints[joint]['value'])
+                msg.position.append(math.radians(self.joints[joint]['value']))
             if msg.name or msg.position or msg.velocity or msg.effort:
                 # Only publish non-empty messages
                 self.pub.publish(msg)
+            self.updateFootPositions()
             try:
                 r.sleep()
             except rospy.exceptions.ROSTimeMovedBackwardsException:
@@ -163,7 +173,42 @@ class FelisJointStatePublisher():
                     raise RuntimeError('Could not get maximum angle for joint %s'%jname)
                 return max_effort, max_velocity, lower_val, upper_val
 
+    def get_Transformation(self, _from, _to):
+        try:
+            (trans, rot) = self.listener.lookupTransform('/%s/%s'%(self.tfprefix,_from),'/%s/%s'%(self.tfprefix,_to),
+                                                         rospy.Time(0))
+            TMat = self.listener.fromTranslationRotation(trans, rot)
+            return TMat
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            return None
 
+    def convertPoint(self, from_frame, obs_frame, xyz):
+        pt = PointStamped()
+        pt.point.x = xyz[0]
+        pt.point.y = xyz[1]
+        pt.point.z = xyz[2]
+        pt.header.stamp = rospy.Time(0)
+        pt.header.frame_id = '/%s/%s'%(self.tfprefix, obs_frame)
+        try:
+            rpt = self.listener.transformPoint('/%s/%s'%(self.tfprefix, from_frame), pt)
+            rval = [rpt.point.x, rpt.point.y, rpt.point.z]
+            return rval
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            return None
+
+    def updateFootPositions(self):
+        fl = self.convertPoint('base_link', 'left_front_quadleg_linkD', [self.link_lengthC, 0, 0])
+        fr = self.convertPoint('base_link', 'right_front_quadleg_linkD', [self.link_lengthC, 0, 0])
+        rl = self.convertPoint('base_link', 'left_rear_quadleg_linkD', [self.link_lengthC, 0, 0])
+        rr = self.convertPoint('base_link', 'right_rear_quadleg_linkD', [self.link_lengthC, 0, 0])
+        if fl is not None:
+            self.FootPositions['FL'] = fl
+        if fr is not None:
+            self.FootPositions['FR'] = fr
+        if rl is not None:
+            self.FootPositions['RL'] = rl
+        if rr is not None:
+            self.FootPositions['RR'] = rr
 
 
 ######## Joint Configuration Optional GUI ###########

@@ -71,18 +71,58 @@ class FelisRobotv1Joints():
         self.jointD = -2 * _thtemp
         self.jointF = 2 * _thtemp
 
+    def _getTx33Mat(self, phi,l):
+        _sinphi = np.sin(math.radians(phi))
+        _cosphi = np.cos(math.radians(phi))
+        _tmat = np.ndarray((3,3), dtype='float32')
+        _tmat[:, :] = 0.0
+        _tmat[2, 2] = 1.0
+        _tmat[0, 2] = l
+        _tmat[0, 0] = _cosphi
+        _tmat[1, 1] = _cosphi
+        _tmat[0, 1] = -_sinphi
+        _tmat[1, 0] = _sinphi
+        return _tmat
+
+    def getLegXZ(self):
+        _t0a = self._getTx33Mat(self.jointA, 0.0)
+        _tab = self._getTx33Mat(self.jointB, 0.0)
+        _tbc = self._getTx33Mat(self.jointC, self.linklength)
+        _tcd = self._getTx33Mat(self.jointD, 2.0*self.linklength)
+        _tv = np.zeros((3, 1), dtype='float32')
+        _tv[0, 0] = 2.0 * self.linklength
+        _tv[2, 0] = 1.0
+        _r = np.matmul(_tcd, _tv)
+        _r = np.matmul(_tbc, _r)
+        _r = np.matmul(_tab, _r)
+        _r = np.matmul(_t0a, _r)
+        _r[2] = -_r[1]
+        _r[1] = 0.0
+        return _r
+
     def syncJointInfo(self, jdict):
-        jdict[self.jointAName]['value'] = math.radians(self.jointA)
-        jdict[self.jointBName]['value'] = math.radians(self.jointB)
-        jdict[self.jointCName]['value'] = math.radians(self.jointC)
-        jdict[self.jointDName]['value'] = math.radians(self.jointD)
-        jdict[self.jointEName]['value'] = math.radians(self.jointE)
-        jdict[self.jointFName]['value'] = math.radians(self.jointF)
+        jdict[self.jointAName]['value'] = self.jointA
+        jdict[self.jointBName]['value'] = self.jointB
+        jdict[self.jointCName]['value'] = self.jointC
+        jdict[self.jointDName]['value'] = self.jointD
+        jdict[self.jointEName]['value'] = self.jointE
+        jdict[self.jointFName]['value'] = self.jointF
+
+
+class FelisLegNumericSolverKinematics():
+    def __init__(self, amin=75, amax=165, bmin=17.5, bmax=67, linklength=0.035):
+        self.JSolver = FelisRobotv1Joints(linklength)
+        self.ARange = [amin, amax]
+        self.BRange = [bmin, bmax]
+
+
+
+
 
 
 if __name__ == '__main__':
     fr = FelisRobotv1Joints()
+    fr.updateControlParamB(0.025)
+    fr.updateControlParamA(150)
     fr.printinfo()
-    fr.updateControlParamB(0.005)
-    fr.updateControlParamA(-90)
-    fr.printinfo()
+    print fr.getLegXZ()
