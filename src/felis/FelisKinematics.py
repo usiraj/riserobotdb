@@ -115,9 +115,38 @@ class FelisLegNumericSolverKinematics():
         self.ARange = [amin, amax]
         self.BRange = [bmin, bmax]
 
-
-
-
+    def ShowLegArcsA(self, stepsize=10):
+        legarcs={}
+        _val = self.ARange[0]
+        _i = 1
+        while _val <= self.ARange[1]:
+            legarcs['arc_%03d'%_i] = {'param': _val, 'x': [], 'z':[], 'B':[]}
+            _val += stepsize
+            _i += 1
+        ############ Generate Data ##########
+        for _arc in legarcs:
+            _pA = legarcs[_arc]['param']
+            self.JSolver.updateControlParamA(_pA)
+            _val = self.BRange[0]
+            while _val <= self.BRange[1]:
+                self.JSolver.updateControlParamB(_val/float(1000))
+                _xyz = self.JSolver.getLegXZ()
+                legarcs[_arc]['B'].append(_val)
+                legarcs[_arc]['x'].append(_xyz[0, 0])
+                legarcs[_arc]['z'].append(_xyz[2, 0])
+                _val += 0.1
+        ############ Plot Data ###############
+        import matplotlib.pyplot as plt
+        for _arc in legarcs:
+            plt.plot(legarcs[_arc]['x'], legarcs[_arc]['z'])
+        plt.axis('equal')
+        plt.xlabel('X axis')
+        plt.ylabel('Z axis')
+        plt.title('XZ foot arcs for different control param A:[%f,%f] with B:[%f,%f]'%(self.ARange[0], self.ARange[1],
+                                                                                       self.BRange[0], self.BRange[1]))
+        plt.grid()
+        plt.gca().invert_xaxis()
+        plt.show()
 
 
 if __name__ == '__main__':
@@ -125,4 +154,11 @@ if __name__ == '__main__':
     fr.updateControlParamB(0.025)
     fr.updateControlParamA(150)
     fr.printinfo()
-    print fr.getLegXZ()
+    ks = FelisLegNumericSolverKinematics()
+    ks.ShowLegArcsA(stepsize=1)
+
+
+
+
+
+
