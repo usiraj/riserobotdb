@@ -3,7 +3,7 @@
     <!-- To launch real robot -->
 	<arg name="robot_name" default="felis" />
 	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/felis_real.rviz" />
-	<arg name="rootns" value="/Robots" />
+	<arg name="rootns" default="/Robots" />
     <include file="$(find riserobotdb)/launch/common/robotwithrviz.launch" >	
         <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/felis/felis.urdf.xacro" />
         <arg name="rootns" value="$(arg rootns)" />

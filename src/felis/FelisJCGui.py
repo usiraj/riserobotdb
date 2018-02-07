@@ -85,6 +85,7 @@ class FelisConfigurationGui(QWidget):
         ######### Publisher / Subscriber ################
         self.listener = tf.TransformListener()
         self.pub = rospy.Publisher('felis_control_params', JointState, queue_size=5)
+        self.setWindowTitle('Felis State Control Parameters')
 
     def initialize_robot(self):
         description = self.get_param('robot_description')
