@@ -244,7 +244,7 @@ if __name__ == '__main__':
     ks = FelisLegNumericSolverKinematics()
     #ks.ShowLegArcsA(stepsize=1)
     #ks.ShowLegArcsB(stepsize=0.5)
-    _val = ks.SolveIK([0.04, -0.1], [90, 31])
+    _val = ks.SolveIK([0.1181, -0.1], [90, 31])
     print _val
     if _val is not None:
         fr.updateControlParams(_val[0], _val[1]/float(1000))

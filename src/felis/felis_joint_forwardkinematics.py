@@ -221,6 +221,7 @@ class FelisConfigurationGui(QWidget):
         self.ui = Ui_FelisConfiguration()
         self.ui.setupUi(self)
         ### Initialize other stuff ######
+        print type(self.ui.le_fl_a)
         self.ui.le_fl_a.setRange(limits['a_min'], limits['a_max'])
         self.ui.le_fr_a.setRange(limits['a_min'], limits['a_max'])
         self.ui.le_rl_a.setRange(limits['a_min'], limits['a_max'])
@@ -237,22 +238,6 @@ class FelisConfigurationGui(QWidget):
         self.ui.le_fr_b.setSingleStep(0.01)
         self.ui.le_rl_b.setSingleStep(0.01)
         self.ui.le_rr_b.setSingleStep(0.01)
-        self.ui.le_fl_x.setSingleStep(0.001)
-        self.ui.le_fr_x.setSingleStep(0.001)
-        self.ui.le_rl_x.setSingleStep(0.001)
-        self.ui.le_rr_x.setSingleStep(0.001)
-        self.ui.le_fl_z.setSingleStep(0.001)
-        self.ui.le_fr_z.setSingleStep(0.001)
-        self.ui.le_rl_z.setSingleStep(0.001)
-        self.ui.le_rr_z.setSingleStep(0.001)
-        self.ui.le_fl_x.setDecimals(3)
-        self.ui.le_fr_x.setDecimals(3)
-        self.ui.le_rl_x.setDecimals(3)
-        self.ui.le_rr_x.setDecimals(3)
-        self.ui.le_fl_z.setDecimals(3)
-        self.ui.le_fr_z.setDecimals(3)
-        self.ui.le_rl_z.setDecimals(3)
-        self.ui.le_rr_z.setDecimals(3)
         self.ui.slider_fl_a.setRange(int(limits['a_min']*100), int(limits['a_max']*100))
         self.ui.slider_fr_a.setRange(int(limits['a_min'] * 100), int(limits['a_max'] * 100))
         self.ui.slider_rl_a.setRange(int(limits['a_min'] * 100), int(limits['a_max'] * 100))
@@ -290,14 +275,6 @@ class FelisConfigurationGui(QWidget):
         self.jsp.rkinFR.updateControlParams(self.val_a_fr, self.val_b_fr/float(1000))
         self.jsp.rkinRL.updateControlParams(self.val_a_rl, self.val_b_rl/float(1000))
         self.jsp.rkinRR.updateControlParams(self.val_a_rr, self.val_b_rr/float(1000))
-        self.val_x_fl = 0.0
-        self.val_x_fr = 0.0
-        self.val_x_rl = 0.0
-        self.val_x_rr = 0.0
-        self.val_z_fl = 0.0
-        self.val_z_fr = 0.0
-        self.val_z_rl = 0.0
-        self.val_z_rr = 0.0
 
 
         ################# Param A UI #############################
