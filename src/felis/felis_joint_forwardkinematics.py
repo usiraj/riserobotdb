@@ -99,9 +99,11 @@ class FelisJointStatePublisher():
         ######### Subscribe to tf ############
         self.listener = tf.TransformListener()
         ######## Subscribe for Control Parameters from outside #####
-        # TODO
+
         ####### Publisher ##########
         self.pub = rospy.Publisher('joint_states', JointState, queue_size=5)
+
+
 
     def loop(self):
         hz = get_param("rate", 100)

@@ -3,12 +3,21 @@
     <!-- To launch real robot -->
 	<arg name="robot_name" default="felis" />
 	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/felis_real.rviz" />
+	<arg name="rootns" value="/Robots" />
     <include file="$(find riserobotdb)/launch/common/robotwithrviz.launch" >	
         <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/felis/felis.urdf.xacro" />
-        <arg name="rootns" value="/Robots" />
+        <arg name="rootns" value="$(arg rootns)" />
 	    <arg name="robot_name" value="$(arg robot_name)" />
   	    <arg name="rviz_config" value="$(arg rviz_config)" />
 		<arg name="jspub_defversion" value="false" />
   	    <!--arg name="ignore_joints" value="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" /-->
-    </include>	
+    </include>
+	<!-- Joint State Publisher -->
+	<node name="felis_joint_state_publisher" pkg="riserobotdb" type="felis_joint_state_publisher.py" ns="$(arg rootns)/$(arg robot_name)">
+		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+		<remap from="tf_prefix" to="$(arg rootns)/$(arg robot_name)_tfprefix" />
+		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+		<remap from="felis_control_params" to="$(arg rootns)/$(arg robot_name)/felis_control_params" />
+		<param name="rate" value="100" />
+	</node>
 </launch>
