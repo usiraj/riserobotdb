@@ -54,7 +54,7 @@
 <!-- Link F Data -->
 <!-- Joints Constraints -->
 <xacro:property name="spool_lower_angle" value="0" />
-<xacro:property name="spool_upper_angle" value="1.0" />
+<xacro:property name="spool_upper_angle" value="${angle_60d}" />
 <xacro:property name="quadleg_jointA_lower_angle"  value="${angle_60d+angle_15d}" /> <!-- Use Exact Values -->
 <xacro:property name="quadleg_jointA_upper_angle"  value="${angle_180d - angle_15d}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointB_lower_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->

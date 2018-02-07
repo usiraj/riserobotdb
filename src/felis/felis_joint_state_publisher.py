@@ -34,6 +34,7 @@ class FelisJointStatePublisher():
         self.robot = xml.dom.minidom.parseString(description).getElementsByTagName('robot')[0]
         rospy.loginfo('Loaded URDF for felis')
         self.link_length = self.get_link_length()
+        self.spool_minangle, self.spool_maxangle = self.get_spool_minmaxangle()
         rospy.loginfo('Link length loaded from urdf : %f', self.link_length)
         self.joints = {}
         for jnt in self.get_all_joint_names():
@@ -67,6 +68,10 @@ class FelisJointStatePublisher():
         self.rkinFR.syncJointInfo(self.joints)
         self.rkinRL.syncJointInfo(self.joints)
         self.rkinRR.syncJointInfo(self.joints)
+        self.joints['left_front_spool_joint']['value'] = -self.get_spool_turn(35)
+        self.joints['right_front_spool_joint']['value'] = self.get_spool_turn(35)
+        self.joints['left_rear_spool_joint']['value'] = -self.get_spool_turn(35)
+        self.joints['right_rear_spool_joint']['value'] = self.get_spool_turn(35)
         ##### Subscribe for joint info #######
         sub = rospy.Subscriber('felis_control_params', JointState, self.cpupdate)
         ########### Publish Joints ###########
@@ -82,6 +87,23 @@ class FelisJointStatePublisher():
                 except ValueError:
                     raise RuntimeError('Could Not Get Link Length')
                 return num
+
+    def get_spool_minmaxangle(self):
+        for child in self.robot.childNodes:
+            if child.localName == 'joint' and child.getAttribute('name') == 'left_front_spool_joint':
+                limit_node = child.getElementsByTagName('limit')[0]
+                lower_val = limit_node.getAttribute('lower')
+                upper_val = limit_node.getAttribute('upper')
+                try:
+                    lower_val = math.degrees(float(lower_val))
+                except ValueError:
+                    raise RuntimeError('Could not get minimum angle for joint left_front_spool_joint')
+                try:
+                    upper_val = math.degrees(float(upper_val))
+                except ValueError:
+                    raise RuntimeError('Could not get maximum angle for joint left_front_spool_joint')
+
+                return lower_val, upper_val
 
     def get_all_joint_names(self):
         jnames = []
@@ -116,6 +138,12 @@ class FelisJointStatePublisher():
                     raise RuntimeError('Could not get maximum angle for joint %s'%jname)
                 return max_effort, max_velocity, lower_val, upper_val
 
+    def get_spool_turn(self, bval):
+        _bmin = float(self.link_length)*500.0
+        _bmax = float(self.link_length)*2000.0
+        _delspool = self.spool_maxangle - self.spool_minangle
+        return _delspool - (_delspool * (bval - _bmin) / (_bmax - _bmin))
+
     def cpupdate(self, msg):
         if len(msg.name) > 0:
             for _i in range(len(msg.name)):
@@ -125,18 +153,22 @@ class FelisJointStatePublisher():
                     self.rkinFL.updateControlParamA(msg.position[_i])
                 elif msg.name[_i] == 'felis_fl_cpb':
                     self.rkinFL.updateControlParamB(msg.position[_i]/float(1000))
+                    self.joints['left_front_spool_joint']['value'] = -self.get_spool_turn(msg.position[_i])
                 elif msg.name[_i] == 'felis_fr_cpa':
                     self.rkinFR.updateControlParamA(msg.position[_i])
                 elif msg.name[_i] == 'felis_fr_cpb':
                     self.rkinFR.updateControlParamB(msg.position[_i] / float(1000))
+                    self.joints['right_front_spool_joint']['value'] = self.get_spool_turn(msg.position[_i])
                 elif msg.name[_i] == 'felis_rl_cpa':
                     self.rkinRL.updateControlParamA(msg.position[_i])
                 elif msg.name[_i] == 'felis_rl_cpb':
                     self.rkinRL.updateControlParamB(msg.position[_i] / float(1000))
+                    self.joints['left_rear_spool_joint']['value'] = -self.get_spool_turn(msg.position[_i])
                 elif msg.name[_i] == 'felis_rr_cpa':
                     self.rkinRR.updateControlParamA(msg.position[_i])
                 elif msg.name[_i] == 'felis_rr_cpb':
                     self.rkinRR.updateControlParamB(msg.position[_i] / float(1000))
+                    self.joints['right_rear_spool_joint']['value'] = self.get_spool_turn(msg.position[_i])
             ########### Update ##########
             self.rkinFL.syncJointInfo(self.joints)
             self.rkinFR.syncJointInfo(self.joints)

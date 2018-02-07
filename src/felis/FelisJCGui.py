@@ -8,12 +8,9 @@ import xml.dom.minidom
 import tf
 from threading import Thread
 import signal
-from python_qt_binding.QtCore import pyqtSlot
-from python_qt_binding.QtCore import Qt
 from python_qt_binding.QtCore import Signal
 from python_qt_binding.QtWidgets import QApplication
 from python_qt_binding.QtWidgets import QWidget
-from python_qt_binding.QtWidgets import QSlider
 from FelisJConf import Ui_FelisConfiguration
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import PointStamped
@@ -84,6 +81,7 @@ class FelisConfigurationGui(QWidget):
         self.set_fr_b(35)
         self.set_rl_b(35)
         self.set_rr_b(35)
+        self.updateFootPositionsDisplay()
         ######### Publisher / Subscriber ################
         self.listener = tf.TransformListener()
         self.pub = rospy.Publisher('felis_control_params', JointState, queue_size=5)
@@ -279,10 +277,10 @@ class FelisConfigurationGui(QWidget):
             return None
 
     def updateFootPositions(self):
-        fl = self.convertPoint('base_link', 'left_front_quadleg_linkD', [self.link_lengthC, 0, 0])
-        fr = self.convertPoint('base_link', 'right_front_quadleg_linkD', [self.link_lengthC, 0, 0])
-        rl = self.convertPoint('base_link', 'left_rear_quadleg_linkD', [self.link_lengthC, 0, 0])
-        rr = self.convertPoint('base_link', 'right_rear_quadleg_linkD', [self.link_lengthC, 0, 0])
+        fl = self.convertPoint('base_link', 'left_front_quadleg_linkD', [self.link_lengthC, 0, 0.003])
+        fr = self.convertPoint('base_link', 'right_front_quadleg_linkD', [self.link_lengthC, 0, 0.003])
+        rl = self.convertPoint('base_link', 'left_rear_quadleg_linkD', [self.link_lengthC, 0, 0.003])
+        rr = self.convertPoint('base_link', 'right_rear_quadleg_linkD', [self.link_lengthC, 0, 0.003])
         if fl is not None:
             self.FootPositions['FL'] = fl
         if fr is not None:
@@ -291,7 +289,21 @@ class FelisConfigurationGui(QWidget):
             self.FootPositions['RL'] = rl
         if rr is not None:
             self.FootPositions['RR'] = rr
-        print self.FootPositions
+        self.updateFootPositionsDisplay()
+
+    def updateFootPositionsDisplay(self):
+        self.ui.disp_fl_x.setText('X:%9.2f mm' % (self.FootPositions['FL'][0] * 1000.0))
+        self.ui.disp_fl_y.setText('Y:%9.2f mm' % (self.FootPositions['FL'][1] * 1000.0))
+        self.ui.disp_fl_z.setText('Z:%9.2f mm' % (self.FootPositions['FL'][2] * 1000.0))
+        self.ui.disp_fr_x.setText('X:%9.2f mm' % (self.FootPositions['FR'][0] * 1000.0))
+        self.ui.disp_fr_y.setText('Y:%9.2f mm' % (self.FootPositions['FR'][1] * 1000.0))
+        self.ui.disp_fr_z.setText('Z:%9.2f mm' % (self.FootPositions['FR'][2] * 1000.0))
+        self.ui.disp_rl_x.setText('X:%9.2f mm' % (self.FootPositions['RL'][0] * 1000.0))
+        self.ui.disp_rl_y.setText('Y:%9.2f mm' % (self.FootPositions['RL'][1] * 1000.0))
+        self.ui.disp_rl_z.setText('Z:%9.2f mm' % (self.FootPositions['RL'][2] * 1000.0))
+        self.ui.disp_rr_x.setText('X:%9.2f mm' % (self.FootPositions['RR'][0] * 1000.0))
+        self.ui.disp_rr_y.setText('Y:%9.2f mm' % (self.FootPositions['RR'][1] * 1000.0))
+        self.ui.disp_rr_z.setText('Z:%9.2f mm' % (self.FootPositions['RR'][2] * 1000.0))
 
     ########## Set Values ###############
     def set_fl_a(self, val):
