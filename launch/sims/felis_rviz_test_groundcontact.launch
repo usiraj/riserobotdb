@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="robot_name" default="felis" />
+	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/felis_test_groundcontact3.rviz" />
+	<arg name="rootns" default="/Robots" />
+    <include file="$(find riserobotdb)/launch/sims/felis_rviz_test_configuration.launch" >
+		<arg name="rootns" value="$(arg rootns)" />
+	    <arg name="robot_name" value="$(arg robot_name)" />
+  	    <arg name="rviz_config" value="$(arg rviz_config)" />
+	</include>
+	<!-- Simple Configuration GUI -->
+	<node name="felis_static_groundpose_estimator_3contact" pkg="riserobotdb" type="felis_static_ground_pose.py" ns="$(arg rootns)/$(arg robot_name)">
+		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+		<remap from="tf_prefix" to="$(arg rootns)/$(arg robot_name)_tfprefix" />
+	</node>
+
+</launch>
