@@ -14,8 +14,8 @@
       <file leaf-file-name="FelisKinematics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FelisKinematics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="226" column="86" lean-forward="true" selection-start-line="226" selection-start-column="48" selection-end-line="226" selection-end-column="86" />
+            <state relative-caret-position="0">
+              <caret line="226" column="86" lean-forward="false" selection-start-line="226" selection-start-column="48" selection-end-line="226" selection-end-column="86" />
               <folding>
                 <element signature="e#69#87#0" expanded="true" />
                 <element signature="e#808#973#0" expanded="false" />
@@ -41,18 +41,23 @@
       <file leaf-file-name="felis_static_ground_pose.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/felis_static_ground_pose.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="229" column="0" lean-forward="true" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+            <state relative-caret-position="198">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding>
                 <element signature="e#105#128#0" expanded="true" />
-                <element signature="e#1847#2303#0" expanded="false" />
-                <element signature="e#2930#4457#0" expanded="false" />
-                <element signature="e#4493#5979#0" expanded="false" />
-                <element signature="e#6048#6516#0" expanded="false" />
-                <element signature="e#6579#7367#0" expanded="false" />
-                <element signature="e#7436#7942#0" expanded="false" />
-                <element signature="e#8022#9721#0" expanded="false" />
-                <element signature="e#9770#10238#0" expanded="false" />
+                <element signature="e#295#516#0" expanded="false" />
+                <element signature="e#563#11962#0" expanded="false" />
+                <element signature="e#1906#2362#0" expanded="false" />
+                <element signature="e#2428#2935#0" expanded="false" />
+                <element signature="e#2989#4516#0" expanded="false" />
+                <element signature="e#4552#6071#0" expanded="false" />
+                <element signature="e#6140#6608#0" expanded="false" />
+                <element signature="e#6688#7825#0" expanded="false" />
+                <element signature="e#7894#8400#0" expanded="false" />
+                <element signature="e#8491#9326#0" expanded="false" />
+                <element signature="e#9406#11105#0" expanded="false" />
+                <element signature="e#11154#11622#0" expanded="false" />
+                <element signature="e#11659#11962#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -266,12 +271,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="73" y="58" width="1922" height="1092" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16302083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31390592" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3609407" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -325,11 +329,107 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="27" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/FelisKinematics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#69#87#0" expanded="true" />
+            <element signature="e#808#973#0" expanded="false" />
+            <element signature="e#1036#1256#0" expanded="false" />
+            <element signature="e#1319#1555#0" expanded="false" />
+            <element signature="e#1636#2072#0" expanded="false" />
+            <element signature="e#2123#2266#0" expanded="false" />
+            <element signature="e#2301#2641#0" expanded="false" />
+            <element signature="e#2680#2971#0" expanded="false" />
+            <element signature="e#3015#3363#0" expanded="false" />
+            <element signature="e#3397#3924#0" expanded="false" />
+            <element signature="e#3970#4285#0" expanded="false" />
+            <element signature="e#4418#4533#0" expanded="false" />
+            <element signature="e#4584#6113#0" expanded="false" />
+            <element signature="e#6163#7708#0" expanded="false" />
+            <element signature="e#7760#8753#0" expanded="false" />
+            <element signature="e#8795#8839#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/felis_static_ground_pose.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2718">
+          <caret line="205" column="47" lean-forward="false" selection-start-line="205" selection-start-column="45" selection-end-line="205" selection-end-column="47" />
+          <folding>
+            <element signature="e#105#128#0" expanded="true" />
+            <element signature="e#295#516#0" expanded="false" />
+            <element signature="e#563#11962#0" expanded="false" />
+            <element signature="e#1906#2362#0" expanded="false" />
+            <element signature="e#2428#2935#0" expanded="false" />
+            <element signature="e#2989#4516#0" expanded="false" />
+            <element signature="e#4552#6071#0" expanded="false" />
+            <element signature="e#6140#6608#0" expanded="false" />
+            <element signature="e#6688#7825#0" expanded="false" />
+            <element signature="e#7894#8400#0" expanded="false" />
+            <element signature="e#8491#9326#0" expanded="false" />
+            <element signature="e#9406#11105#0" expanded="false" />
+            <element signature="e#11154#11622#0" expanded="false" />
+            <element signature="e#11659#11962#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FelisKinematics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4068">
+          <caret line="226" column="86" lean-forward="true" selection-start-line="226" selection-start-column="48" selection-end-line="226" selection-end-column="86" />
+          <folding>
+            <element signature="e#69#87#0" expanded="true" />
+            <element signature="e#808#973#0" expanded="false" />
+            <element signature="e#1036#1256#0" expanded="false" />
+            <element signature="e#1319#1555#0" expanded="false" />
+            <element signature="e#1636#2072#0" expanded="false" />
+            <element signature="e#2123#2266#0" expanded="false" />
+            <element signature="e#2301#2641#0" expanded="false" />
+            <element signature="e#2680#2971#0" expanded="false" />
+            <element signature="e#3015#3363#0" expanded="false" />
+            <element signature="e#3397#3924#0" expanded="false" />
+            <element signature="e#3970#4285#0" expanded="false" />
+            <element signature="e#4418#4533#0" expanded="false" />
+            <element signature="e#4584#6113#0" expanded="false" />
+            <element signature="e#6163#7708#0" expanded="false" />
+            <element signature="e#7760#8753#0" expanded="false" />
+            <element signature="e#8795#8839#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/felis_static_ground_pose.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="229" column="0" lean-forward="true" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+          <folding>
+            <element signature="e#105#128#0" expanded="true" />
+            <element signature="e#295#516#0" expanded="false" />
+            <element signature="e#563#11962#0" expanded="false" />
+            <element signature="e#1906#2362#0" expanded="false" />
+            <element signature="e#2428#2935#0" expanded="false" />
+            <element signature="e#2989#4516#0" expanded="false" />
+            <element signature="e#4552#6071#0" expanded="false" />
+            <element signature="e#6140#6608#0" expanded="false" />
+            <element signature="e#6688#7825#0" expanded="false" />
+            <element signature="e#7894#8400#0" expanded="false" />
+            <element signature="e#8491#9326#0" expanded="false" />
+            <element signature="e#9406#11105#0" expanded="false" />
+            <element signature="e#11154#11622#0" expanded="false" />
+            <element signature="e#11659#11962#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/FelisKinematics.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1116">
@@ -380,14 +480,19 @@
           <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
           <folding>
             <element signature="e#105#128#0" expanded="true" />
-            <element signature="e#1847#2303#0" expanded="false" />
-            <element signature="e#2930#4457#0" expanded="false" />
-            <element signature="e#4493#5979#0" expanded="false" />
-            <element signature="e#6048#6516#0" expanded="false" />
-            <element signature="e#6579#7367#0" expanded="false" />
-            <element signature="e#7436#7942#0" expanded="false" />
-            <element signature="e#8022#9721#0" expanded="false" />
-            <element signature="e#9770#10238#0" expanded="false" />
+            <element signature="e#295#516#0" expanded="false" />
+            <element signature="e#563#11962#0" expanded="false" />
+            <element signature="e#1906#2362#0" expanded="false" />
+            <element signature="e#2428#2935#0" expanded="false" />
+            <element signature="e#2989#4516#0" expanded="false" />
+            <element signature="e#4552#6071#0" expanded="false" />
+            <element signature="e#6140#6608#0" expanded="false" />
+            <element signature="e#6688#7825#0" expanded="false" />
+            <element signature="e#7894#8400#0" expanded="false" />
+            <element signature="e#8491#9326#0" expanded="false" />
+            <element signature="e#9406#11105#0" expanded="false" />
+            <element signature="e#11154#11622#0" expanded="false" />
+            <element signature="e#11659#11962#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -423,14 +528,19 @@
           <caret line="94" column="14" lean-forward="false" selection-start-line="94" selection-start-column="14" selection-end-line="94" selection-end-column="14" />
           <folding>
             <element signature="e#105#128#0" expanded="true" />
-            <element signature="e#1847#2303#0" expanded="false" />
-            <element signature="e#2930#4457#0" expanded="false" />
-            <element signature="e#4493#5979#0" expanded="false" />
-            <element signature="e#6048#6516#0" expanded="false" />
-            <element signature="e#6579#7367#0" expanded="false" />
-            <element signature="e#7436#7942#0" expanded="false" />
-            <element signature="e#8022#9721#0" expanded="false" />
-            <element signature="e#9770#10238#0" expanded="false" />
+            <element signature="e#295#516#0" expanded="false" />
+            <element signature="e#563#11962#0" expanded="false" />
+            <element signature="e#1906#2362#0" expanded="false" />
+            <element signature="e#2428#2935#0" expanded="false" />
+            <element signature="e#2989#4516#0" expanded="false" />
+            <element signature="e#4552#6071#0" expanded="false" />
+            <element signature="e#6140#6608#0" expanded="false" />
+            <element signature="e#6688#7825#0" expanded="false" />
+            <element signature="e#7894#8400#0" expanded="false" />
+            <element signature="e#8491#9326#0" expanded="false" />
+            <element signature="e#9406#11105#0" expanded="false" />
+            <element signature="e#11154#11622#0" expanded="false" />
+            <element signature="e#11659#11962#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -783,7 +893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -802,29 +911,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf/transformations.py">
+    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/rospy/topics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="1099" column="4" lean-forward="false" selection-start-line="1099" selection-start-column="4" selection-end-line="1099" selection-end-column="4" />
-          <folding>
-            <element signature="e#8013#8672#0" expanded="false" />
-            <element signature="e#8715#9761#0" expanded="false" />
-            <element signature="e#13135#14374#0" expanded="false" />
-            <element signature="e#14412#15878#0" expanded="false" />
-            <element signature="e#15993#18409#0" expanded="false" />
-            <element signature="e#18466#21352#0" expanded="false" />
-            <element signature="e#21432#23493#0" expanded="false" />
-            <element signature="e#23551#24726#0" expanded="false" />
-            <element signature="e#24764#26377#0" expanded="false" />
-            <element signature="e#29116#30741#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="447">
+          <caret line="871" column="40" lean-forward="false" selection-start-line="871" selection-start-column="15" selection-end-line="871" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf2_ros/transform_broadcaster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="42" column="8" lean-forward="false" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf/broadcaster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="41" column="64" lean-forward="true" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/FelisKinematics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="226" column="86" lean-forward="true" selection-start-line="226" selection-start-column="48" selection-end-line="226" selection-end-column="86" />
+        <state relative-caret-position="0">
+          <caret line="226" column="86" lean-forward="false" selection-start-line="226" selection-start-column="48" selection-end-line="226" selection-end-column="86" />
           <folding>
             <element signature="e#69#87#0" expanded="true" />
             <element signature="e#808#973#0" expanded="false" />
@@ -846,46 +957,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/rospy/topics.py">
+    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf/transformations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="871" column="40" lean-forward="false" selection-start-line="871" selection-start-column="15" selection-end-line="871" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf2_ros/transform_broadcaster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="42" column="8" lean-forward="false" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/lib/python2.7/dist-packages/tf/broadcaster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="41" column="64" lean-forward="true" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
+        <state relative-caret-position="657">
+          <caret line="968" column="40" lean-forward="true" selection-start-line="968" selection-start-column="13" selection-end-line="968" selection-end-column="40" />
           <folding>
-            <element signature="e#1603#1627#0" expanded="true" />
+            <element signature="e#8013#8672#0" expanded="false" />
+            <element signature="e#8715#9761#0" expanded="false" />
+            <element signature="e#13135#14374#0" expanded="false" />
+            <element signature="e#14412#15878#0" expanded="false" />
+            <element signature="e#15993#18409#0" expanded="false" />
+            <element signature="e#18466#21352#0" expanded="false" />
+            <element signature="e#21432#23493#0" expanded="false" />
+            <element signature="e#23551#24726#0" expanded="false" />
+            <element signature="e#24764#26377#0" expanded="false" />
+            <element signature="e#29116#30741#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1247972723/__builtin__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="509" column="4" lean-forward="false" selection-start-line="509" selection-start-column="4" selection-end-line="509" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/felis_static_ground_pose.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="229" column="0" lean-forward="true" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+        <state relative-caret-position="198">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="e#105#128#0" expanded="true" />
-            <element signature="e#1847#2303#0" expanded="false" />
-            <element signature="e#2930#4457#0" expanded="false" />
-            <element signature="e#4493#5979#0" expanded="false" />
-            <element signature="e#6048#6516#0" expanded="false" />
-            <element signature="e#6579#7367#0" expanded="false" />
-            <element signature="e#7436#7942#0" expanded="false" />
-            <element signature="e#8022#9721#0" expanded="false" />
-            <element signature="e#9770#10238#0" expanded="false" />
+            <element signature="e#295#516#0" expanded="false" />
+            <element signature="e#563#11962#0" expanded="false" />
+            <element signature="e#1906#2362#0" expanded="false" />
+            <element signature="e#2428#2935#0" expanded="false" />
+            <element signature="e#2989#4516#0" expanded="false" />
+            <element signature="e#4552#6071#0" expanded="false" />
+            <element signature="e#6140#6608#0" expanded="false" />
+            <element signature="e#6688#7825#0" expanded="false" />
+            <element signature="e#7894#8400#0" expanded="false" />
+            <element signature="e#8491#9326#0" expanded="false" />
+            <element signature="e#9406#11105#0" expanded="false" />
+            <element signature="e#11154#11622#0" expanded="false" />
+            <element signature="e#11659#11962#0" expanded="false" />
           </folding>
         </state>
       </provider>

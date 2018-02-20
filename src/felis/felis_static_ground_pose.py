@@ -9,6 +9,7 @@ from geometry_msgs.msg import PointStamped
 import tf
 from tf import transformations
 
+
 def _get_param(name, value=None):
     private = "~%s" % name
     if rospy.has_param(private):
@@ -37,6 +38,7 @@ class FelisStaticGroundPoseEstimator():
         self.leg_length = self.get_leg_length()
         #### Load from parameter server Frames ###
         self.ground_contact_frame = _get_param('ground_frame', 'ground_frame')
+        self.numericsol = _get_param("numericsol", False)
         ##########################################
         self.PotentialContactPoints = {'FL_Leg': None, 'FL_Joint': None, 'FR_Leg': None, 'FR_Joint': None,
                                        'RL_Leg': None, 'RL_Joint': None, 'RR_Leg': None, 'RR_Joint': None}
@@ -117,8 +119,9 @@ class FelisStaticGroundPoseEstimator():
                 _pD = self.PotentialContactPoints['RR_Leg']
             else:
                 _pD = self.PotentialContactPoints['RR_Joint']
-            _Ts, _Tc = self._gplane_solutions(_pA, _pB, _pC, _pD)
+            _Ts, _Tc = self._gplane_solutions(_pA, _pB, _pC, _pD, analytical=not self.numericsol)
             _Tfs, _Tfc = self._pick_closest_to_previous(_Ts, _Tc)
+
             ########## Publish Result Now ###########
             if _Tfs is not None:
                 self.PreviousSolution = _Tfs
@@ -139,13 +142,19 @@ class FelisStaticGroundPoseEstimator():
         else:
             return None, None
 
-    def _gplane_solutions(self, _pA, _pB, _pC, _pD):
+    def _gplane_solutions(self, _pA, _pB, _pC, _pD, analytical=True):
         _Ans = []
         _Cnts = []
-        _T0 = self._solve_ground_plane(_pA, _pB, _pC, _pD)
-        _T1 = self._solve_ground_plane(_pA, _pB, _pD, _pC)
-        _T2 = self._solve_ground_plane(_pD, _pB, _pC, _pA)
-        _T3 = self._solve_ground_plane(_pA, _pD, _pC, _pB)
+        if analytical:
+            _T0 = self._solve_ground_plane_analytical(_pA, _pB, _pC, _pD)
+            _T1 = self._solve_ground_plane_analytical(_pA, _pB, _pD, _pC)
+            _T2 = self._solve_ground_plane_analytical(_pD, _pB, _pC, _pA)
+            _T3 = self._solve_ground_plane_analytical(_pA, _pD, _pC, _pB)
+        else:
+            _T0 = self._solve_ground_plane(_pA, _pB, _pC, _pD)
+            _T1 = self._solve_ground_plane(_pA, _pB, _pD, _pC)
+            _T2 = self._solve_ground_plane(_pD, _pB, _pC, _pA)
+            _T3 = self._solve_ground_plane(_pA, _pD, _pC, _pB)
         if _T0 is not None:
             _Ans.append(_T0)
             _Cnts.append(['FL', 'FR', 'RL'])
@@ -179,6 +188,31 @@ class FelisStaticGroundPoseEstimator():
                 _drem.append(_Sols[_i])
                 _dcons.append(_Cnts[_i])
         return _drem, _dcons
+
+    @staticmethod
+    def _solve_ground_plane_analytical(_p1, _p2, _p3, _pTest):
+        _ptmat = np.array((_p1, _p2, _p3), dtype='float64').transpose()
+        try:
+            _ptmatinv = np.linalg.inv(_ptmat)
+        except np.linalg.LinAlgError:
+            return None
+        _ps = np.sum(_ptmatinv, axis=0)
+        _m = _ps[0]
+        _n = _ps[1]
+        _l = _ps[2]
+        _roll = math.atan2(-_n, -_l)
+        _sroll = math.sin(_roll)
+        _dist = np.sqrt(1.0/((_n**2 / (_sroll**2)) + (_m**2)))
+        _distmm = 1000.0 * _dist
+        _pitch = math.asin(_m * _dist)
+        # Test
+        _TMat = transformations.euler_matrix(_roll, _pitch, 0.0)
+        _TMat[2, 3] = _dist
+        _pTg = (np.matmul(_TMat, np.array([_pTest[0], _pTest[1], _pTest[2], 1.0])) * 1000)
+        if _pTg[2] >= 0.0:
+            return np.array([math.degrees(_roll), math.degrees(_pitch), _distmm])
+        else:
+            return None
 
     @staticmethod
     def _solve_ground_plane(_p1, _p2, _p3, _pTest):
