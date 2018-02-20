@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- To launch real robot -->
+	<arg name="rootns" default="/Robots" />
+	<arg name="robot_name" default="felis" />
+	<arg name="rviz_config" default="$(find riserobotdb)/config/rviz/felis_real.rviz" />
+	<arg name="gazebo_world" default="$(find riserobotdb)/worlds/indoor_basic_01.world" />
+  	<arg name="gazebo_gui" default="true" />
+	<!-- Launches FELIS in gazebo along with rviz -->
+	<include file="$(find riserobotdb)/launch/common/loadandsimulate.launch" >
+        <arg name="model_urdf" value="$(find riserobotdb)/defs/robots/felis/felis.urdf.xacro" />
+	    <arg name="model_sdf"  value="$(find riserobotdb)/defs/robots/felis/felis.sdf.xacro"/>
+    	<arg name="robot_name" value="$(arg robot_name)" />
+    	<arg name="rootns" value="$(arg rootns)" />
+  	    <arg name="paused" value="false"/>
+  	    <arg name="use_sim_time" value="true"/>
+  	    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
+  	    <!--arg name="gazebo_world" value="$(arg gazebo_world)" /-->
+  	    <arg name="rviz_config" value="$(arg rviz_config)" />
+  	    <arg name="headless" value="false"/>
+  	    <arg name="debug" value="false"/>
+		<arg name="jspub_defversion" value="false" />
+    </include>
+	<!-- Joint State Publisher-->
+	<node name="felis_joint_state_publisher" pkg="riserobotdb" type="felis_joint_state_publisher.py" ns="$(arg rootns)/$(arg robot_name)">
+		<remap from="robot_description" to="$(arg rootns)/$(arg robot_name)_urdf" />
+		<remap from="tf_prefix" to="$(arg rootns)/$(arg robot_name)_tfprefix" />
+		<remap from="joint_states" to="$(arg rootns)/$(arg robot_name)/joint_states" />
+		<remap from="felis_control_params" to="$(arg rootns)/$(arg robot_name)/felis_control_params" />
+		<param name="rate" value="100" />
+	</node>
+</launch>

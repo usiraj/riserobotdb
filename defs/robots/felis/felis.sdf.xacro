@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/robots/felis/felis.common.sdf.xacro" />
+	<model name="risewheelchair">
+		<static>0</static>
+		<pose>0 0 0 0 0 0</pose>
+		<!-- Base Link -->
+		<link name="base_link">
+			<xacro:link_def_extra />
+			<pose>${felis_xyz} ${felis_rpy}</pose>
+			<xacro:sdf_inertial _mass="${felis_baselink_mass}" _cg="${felis_baselink_cg}" 
+				_ixx="${felis_baselink_ixx}" _iyy="${felis_baselink_iyy}" _izz="${felis_baselink_izz}" _ixy="${felis_baselink_ixy}" 
+				_ixz="${felis_baselink_ixz}" _iyz="${felis_baselink_iyz}" />
+			<visual name="base_link_visual">
+				<pose>0 0 0 0 0 0</pose>
+				<xacro:sdf_mesh _filename="${felis_base_mesh}" />
+			</visual>
+			<collision name="base_link_collision">
+				<pose>0 0 0 0 0 0</pose>
+				<xacro:sdf_mesh _filename="${felis_base_mesh}" />
+			</collision>
+			<!-- Basic Camera TODO-->
+		</link>
+		<!-- Spools -->
+		<xacro:spool suffix="left" portion="front" geom_rpy="${felis_spool_joint_lf_rpy}" joint_xyz="${felis_spool_joint_lf_xyz}" />
+		<xacro:spool suffix="right" portion="front" geom_rpy="${felis_spool_joint_rf_rpy}" joint_xyz="${felis_spool_joint_rf_xyz}" />
+		<xacro:spool suffix="left" portion="rear" geom_rpy="${felis_spool_joint_lr_rpy}" joint_xyz="${felis_spool_joint_lr_xyz}" />
+		<xacro:spool suffix="right" portion="rear" geom_rpy="${felis_spool_joint_rr_rpy}" joint_xyz="${felis_spool_joint_rr_xyz}" />
+		<!-- Legs -->
+
+
+
+
+	</model>
+</sdf>

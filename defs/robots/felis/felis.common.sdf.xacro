@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" ?>
+<sdf version="1.5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find riserobotdb)/defs/common/common.sdf.xacro" />
+<xacro:include filename="$(find riserobotdb)/defs/robots/felis/felis.common.xacro" />
+
+<!-- Spools -->
+<xacro:macro name="spool" params="suffix portion geom_rpy joint_xyz">
+	<link name="${suffix}_${portion}_spool_link">
+		<xacro:link_def_extra />
+		<pose>${joint_xyz} ${geom_rpy}</pose>
+		<xacro:sdf_inertial _mass="${felis_spool_mass}" _cg="${felis_spool_cg}" 
+				_ixx="${felis_spool_ixx}" _iyy="${felis_spool_iyy}" _izz="${felis_spool_izz}" _ixy="${felis_spool_ixy}" 
+				_ixz="${felis_spool_ixz}" _iyz="${felis_spool_iyz}" />
+		<visual name="${suffix}_${portion}_spool_visual">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${felis_spool_mesh}" />
+		</visual>
+		<collision name="${suffix}_${portion}_spool_collision">
+			<pose>0 0 0 0 0 0</pose>
+			<xacro:sdf_mesh _filename="${felis_spool_mesh}" />
+		</collision>
+	</link>	
+	<xacro:sdf_revolute_joint _name="${suffix}_${portion}_spool_joint" _parent="base_link" _child="${suffix}_${portion}_spool_link" _axis="0 0 1" 
+				_lower="${spool_lower_angle}" _upper="${spool_upper_angle}" _useparent="0" />
+</xacro:macro>
+<!-- Legs -->
+
+</sdf>
