@@ -12,7 +12,7 @@
 	    <arg name="model_sdf"  value="$(find riserobotdb)/defs/robots/felis/felis.sdf.xacro"/>
     	<arg name="robot_name" value="$(arg robot_name)" />
     	<arg name="rootns" value="$(arg rootns)" />
-  	    <arg name="paused" value="false"/>
+  	    <arg name="paused" value="true"/>
   	    <arg name="use_sim_time" value="true"/>
   	    <arg name="gazebo_gui" value="$(arg gazebo_gui)"/>
   	    <!--arg name="gazebo_world" value="$(arg gazebo_world)" /-->
@@ -20,6 +20,7 @@
   	    <arg name="headless" value="false"/>
   	    <arg name="debug" value="false"/>
 		<arg name="jspub_defversion" value="false" />
+		<arg name="sdf_joint_initialize" value="-J left_front_linkA_joint 2.6179938779914944 -J left_front_linkB_joint -2.0943951023931957 -J left_front_linkC_joint 2.0943951023931957 -J left_front_linkD_joint -2.0943951023931957 -J left_front_linkE_joint -2.0943951023931957 -J left_front_linkF_joint 2.0943951023931957 -J left_rear_linkA_joint 2.6179938779914944 -J left_rear_linkB_joint -2.0943951023931957 -J left_rear_linkC_joint 2.0943951023931957 -J left_rear_linkD_joint -2.0943951023931957 -J left_rear_linkE_joint -2.0943951023931957 -J left_rear_linkF_joint 2.0943951023931957" />
     </include>
 	<!-- Joint State Publisher-->
 	<node name="felis_joint_state_publisher" pkg="riserobotdb" type="felis_joint_state_publisher.py" ns="$(arg rootns)/$(arg robot_name)">

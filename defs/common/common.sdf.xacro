@@ -76,6 +76,15 @@
 	<self_collide>0</self_collide>
 	<kinematic>0</kinematic>
 </xacro:macro>
+<xacro:macro name="link_def_extra_selfcollide">
+	<velocity_decay>
+		<linear>0.001</linear>
+		<angular>0.001</angular>
+	</velocity_decay>
+	<gravity>1</gravity>
+	<self_collide>1</self_collide>
+	<kinematic>0</kinematic>
+</xacro:macro>
 <!-- Macro for null link in sdf -->
 <xacro:macro name="sdf_link_null" params="_name geom_rpy joint_xyz">
 	<link name="${_name}">

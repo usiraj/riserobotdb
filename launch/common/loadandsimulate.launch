@@ -13,6 +13,7 @@
   	<arg name="debug" default="false"/>
   	<arg name="ignore_joints" default="$(find riserobotdb)/config/ignorelist/empty_ignore.yaml" />
   	<arg name="rootns" default="/Robots" />
+	<arg name="sdf_joint_initialize" default="" />
 	<arg name="jspub_defversion" default="true" /><!-- Flag to enable default joint state publisher -->  	
 	<!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
 	<group ns="$(arg rootns)">
@@ -33,8 +34,10 @@
 	    <param name="$(arg robot_name)_tfprefix" value="$(arg robot_name)" />
 	    <rosparam file="$(arg ignore_joints)" command="load" />
 	    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
-  	    <node name="sdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-	    	args="-sdf -model $(arg robot_name) -param $(arg robot_name)_sdf -gazebo_namespace /Robots/gazebo"/>
+  	    <!--node name="sdf_spawner" pkg="riserobotdb" type="loadsdfgazebo.py" respawn="false" output="screen"
+	    	args="-sdf -model $(arg robot_name) -param $(arg robot_name)_sdf -gazebo_namespace /Robots/gazebo $(arg sdf_joint_initialize)"/-->
+		<node name="sdf_spawner"  pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	    	args="-sdf -model $(arg robot_name) -param $(arg robot_name)_sdf -gazebo_namespace /Robots/gazebo $(arg sdf_joint_initialize)"/>
 	    <!-- now launch rviz -->	
 	    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" />
 	</group>

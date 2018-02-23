@@ -38,14 +38,29 @@
 <xacro:property name="felis_spool_joint_rr_rpy" value="${angle_90d} -${angle_90d} 0" />
 <!-- Link A Data -->
 <xacro:property name="felis_linkA_starting_angle" value="0" />
-<xacro:property name="felis_linkA_joint_lf_xyz" value="${felis_jointfront_x+felis_motor_flipdifference} ${felis_jointfront_y} ${felis_leg_z}" />
-<xacro:property name="felis_linkA_joint_rf_xyz" value="${felis_jointfront_x+felis_motor_flipdifference} -${felis_jointfront_y} ${felis_leg_z}" />
-<xacro:property name="felis_linkA_joint_lr_xyz" value="-${felis_jointrear_x} ${felis_jointrear_y} ${felis_leg_z}" />
-<xacro:property name="felis_linkA_joint_rr_xyz" value="-${felis_jointrear_x} -${felis_jointrear_y} ${felis_leg_z}" />
-<xacro:property name="felis_linkA_joint_lf_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
-<xacro:property name="felis_linkA_joint_rf_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
-<xacro:property name="felis_linkA_joint_lr_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
-<xacro:property name="felis_linkA_joint_rr_rpy" value="-${angle_90d} ${felis_linkA_starting_angle} 0" />
+<!-- Link A Component Wise -->
+<xacro:property name="felis_linkA_joint_lf_x" value="${felis_jointfront_x+felis_motor_flipdifference}" />
+<xacro:property name="felis_linkA_joint_lf_y" value="${felis_jointfront_y}" />
+<xacro:property name="felis_linkA_joint_rf_x" value="${felis_jointfront_x+felis_motor_flipdifference}" />
+<xacro:property name="felis_linkA_joint_rf_y" value="-${felis_jointfront_y}" />
+<xacro:property name="felis_linkA_joint_lr_x" value="-${felis_jointrear_x}" />
+<xacro:property name="felis_linkA_joint_lr_y" value="${felis_jointrear_y}" />
+<xacro:property name="felis_linkA_joint_rr_x" value="-${felis_jointrear_x}" />
+<xacro:property name="felis_linkA_joint_rr_y" value="-${felis_jointrear_y}" />
+<xacro:property name="felis_linkA_joint_all_z" value="${felis_leg_z}" />
+<xacro:property name="felis_linkA_joint_allrpy_r" value="-${angle_90d}" />
+<xacro:property name="felis_linkA_joint_allrpy_p" value="${felis_linkA_starting_angle}" />
+<xacro:property name="felis_linkA_joint_allrpy_y" value="0" />
+<!-- Link A pose vectors -->
+<xacro:property name="felis_linkA_joint_lf_xyz" value="${felis_linkA_joint_lf_x} ${felis_linkA_joint_lf_y} ${felis_linkA_joint_all_z}" />
+<xacro:property name="felis_linkA_joint_rf_xyz" value="${felis_linkA_joint_rf_x} ${felis_linkA_joint_rf_y} ${felis_linkA_joint_all_z}" />
+<xacro:property name="felis_linkA_joint_lr_xyz" value="${felis_linkA_joint_lr_x} ${felis_linkA_joint_lr_y} ${felis_linkA_joint_all_z}" />
+<xacro:property name="felis_linkA_joint_rr_xyz" value="${felis_linkA_joint_rr_x} ${felis_linkA_joint_lf_y} ${felis_linkA_joint_all_z}" />
+<xacro:property name="felis_linkA_joint_lf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_rf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_lr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_rr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
+
 <!-- Link B Data -->
 <xacro:property name="felis_linkB_starting_angle" value="0" />
 <!-- Link C Data -->
@@ -57,8 +72,8 @@
 <xacro:property name="spool_upper_angle" value="${angle_60d}" />
 <xacro:property name="quadleg_jointA_lower_angle"  value="${angle_60d+angle_15d}" /> <!-- Use Exact Values -->
 <xacro:property name="quadleg_jointA_upper_angle"  value="${angle_180d - angle_15d}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointB_lower_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointB_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointB_lower_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointB_upper_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointC_lower_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointC_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointD_lower_angle"  value="-${joint_min_angle}" /><!-- Use Exact Values -->
@@ -144,9 +159,17 @@
 <xacro:property name="quadleg_joint_effort" value="100" />
 <xacro:property name="quadleg_joint_velocity" value="50" />
 
+<xacro:property name="links_kp" value="1e+06" />
+<xacro:property name="links_kd" value="100" />
+<xacro:property name="links_mu" value="0.3" />
+<xacro:property name="links_mu2" value="0.5" />
+<xacro:property name="links_slip1" value="0.5" />
+<xacro:property name="links_slip2" value="0.2" />
+<xacro:property name="links_fdir1" value="1 0 0" />
+
 
 <!-- SDF Specific parameters -->
-
+<xacro:property name="links_max_contacts" value="6" />
 <!-- Important Constants -->
 <xacro:property name="angle_05d" value="0.087266463" />
 <xacro:property name="angle_10d" value="0.174532925" />
