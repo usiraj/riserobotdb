@@ -32,8 +32,10 @@
 			joint_x="${felis_linkA_joint_lf_x}" joint_y="${felis_linkA_joint_lf_y}" joint_z="${felis_linkA_joint_all_z}" />
 		<xacro:quadleg_left portion="rear" geom_r="${felis_linkA_joint_allrpy_r}" geom_p="${felis_linkA_joint_allrpy_p}" geom_y="${felis_linkA_joint_allrpy_y}"
 			joint_x="${felis_linkA_joint_lr_x}" joint_y="${felis_linkA_joint_lr_y}" joint_z="${felis_linkA_joint_all_z}" />
-
-
+		<xacro:quadleg_right portion="front" geom_r="${felis_linkA_joint_allrpy_r}" geom_p="${felis_linkA_joint_allrpy_p}" geom_y="${felis_linkA_joint_allrpy_y}"
+			joint_x="${felis_linkA_joint_rf_x}" joint_y="${felis_linkA_joint_rf_y}" joint_z="${felis_linkA_joint_all_z}" />
+		<xacro:quadleg_right portion="rear" geom_r="${felis_linkA_joint_allrpy_r}" geom_p="${felis_linkA_joint_allrpy_p}" geom_y="${felis_linkA_joint_allrpy_y}"
+			joint_x="${felis_linkA_joint_rr_x}" joint_y="${felis_linkA_joint_rr_y}" joint_z="${felis_linkA_joint_all_z}" />
 
 	</model>
 </sdf>

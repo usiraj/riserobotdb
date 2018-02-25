@@ -7,150 +7,137 @@
 <xacro:macro name="spool" params="suffix portion geom_rpy joint_xyz">
 	<link name="${suffix}_${portion}_spool_link">
 		<xacro:link_def_extra />
-		<pose>${joint_xyz} ${geom_rpy}</pose>
+		<pose>${joint_xyz} 0 0 0</pose>
 		<xacro:sdf_inertial _mass="${felis_spool_mass}" _cg="${felis_spool_cg}" 
 				_ixx="${felis_spool_ixx}" _iyy="${felis_spool_iyy}" _izz="${felis_spool_izz}" _ixy="${felis_spool_ixy}" 
 				_ixz="${felis_spool_ixz}" _iyz="${felis_spool_iyz}" />
 		<visual name="${suffix}_${portion}_spool_visual">
-			<pose>0 0 0 0 0 0</pose>
+			<pose>0 0 0 ${geom_rpy}</pose>
 			<xacro:sdf_mesh _filename="${felis_spool_mesh}" />
 		</visual>
 		<collision name="${suffix}_${portion}_spool_collision">
-			<pose>0 0 0 0 0 0</pose>
+			<pose>0 0 0 ${geom_rpy}</pose>
 			<xacro:sdf_mesh _filename="${felis_spool_mesh}" />
 		</collision>
 	</link>	
-	<xacro:sdf_revolute_joint _name="${suffix}_${portion}_spool_joint" _parent="base_link" _child="${suffix}_${portion}_spool_link" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${suffix}_${portion}_spool_joint" _parent="base_link" _child="${suffix}_${portion}_spool_link" _axis="0 1 0" 
 				_lower="${spool_lower_angle}" _upper="${spool_upper_angle}" _useparent="0" />
 </xacro:macro>
-<!--Left Leg -->
-<xacro:macro name="quadleg_left" params="portion geom_r geom_p geom_y joint_x joint_y joint_z">
-	<link name="left_${portion}_quadleg_linkA">
+<!-- Links -->
+<xacro:macro name="quadleg_link" params="side portion ID cx cy cz tr tp ty mesh mass cg ixx iyy izz ixy ixz iyz">
+	<link name="${side}_${portion}_quadleg_link${ID}">
 		<xacro:link_def_extra_selfcollide />
-		<pose>${joint_x} ${joint_y} ${joint_z} ${geom_r} ${geom_p} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkA_mass}" _cg="${felis_linkA_cg}" 
-				_ixx="${felis_linkA_ixx}" _iyy="${felis_linkA_iyy}" _izz="${felis_linkA_izz}" _ixy="${felis_linkA_ixy}" 
-				_ixz="${felis_linkA_ixz}" _iyz="${felis_linkA_iyz}" />
-		<visual name="left_${portion}_quadleg_linkA_visual">
+		<pose>${cx} ${cy} ${cz} ${tr} ${tp} ${ty}</pose>
+		<xacro:sdf_inertial _mass="${mass}" _cg="${cg}"
+			_ixx="${ixx}" _iyy="${iyy}" _izz="${izz}" _ixy="${ixy}"
+			_ixz="${ixz}" _iyz="${iyz}" />
+		<visual name="${side}_${portion}_quadleg_link${ID}_visual">
 			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkA_mesh}" />
+			<xacro:sdf_mesh _filename="${mesh}" />
 		</visual>
-		<collision name="left_${portion}_quadleg_linkA_collision">
+		<collision name="${side}_${portion}_quadleg_link${ID}_collision">
 			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkA_mesh}" />
+			<xacro:sdf_mesh _filename="${mesh}" />
 			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
 				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
 		</collision>
 	</link>
-
-	<link name="left_${portion}_quadleg_linkB">
+</xacro:macro>
+<xacro:macro name="quadleg_link_reflected" params="side portion ID cx cy cz tr tp ty mesh mass cg ixx iyy izz ixy ixz iyz">
+	<link name="${side}_${portion}_quadleg_link${ID}">
 		<xacro:link_def_extra_selfcollide />
-		<pose >${joint_x} ${joint_y + felis_jointAB_zoffset} ${joint_z} ${geom_r} ${geom_p-felis_linkB_starting_angle} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkB_mass}" _cg="${felis_linkB_cg}" 
-				_ixx="${felis_linkB_ixx}" _iyy="${felis_linkB_iyy}" _izz="${felis_linkB_izz}" _ixy="${felis_linkB_ixy}" 
-				_ixz="${felis_linkB_ixz}" _iyz="${felis_linkB_iyz}" />
-		<visual name="left_${portion}_quadleg_linkB_visual">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkB_mesh}" />
+		<pose>${cx} ${cy} ${cz} ${tr} ${tp} ${ty}</pose>
+		<xacro:sdf_inertial _mass="${mass}" _cg="${cg}"
+			_ixx="${ixx}" _iyy="${iyy}" _izz="${izz}" _ixy="${ixy}"
+			_ixz="${ixz}" _iyz="${iyz}" />
+		<visual name="${side}_${portion}_quadleg_link${ID}_visual">
+			<pose>0 0 0 0 ${angle_180d} ${angle_180d}</pose>
+			<xacro:sdf_mesh _filename="${mesh}" />
 		</visual>
-		<collision name="left_${portion}_quadleg_linkB_collision">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkB_mesh}" />
+		<collision name="${side}_${portion}_quadleg_link${ID}_collision">
+			<pose>0 0 0 0 ${angle_180d} ${angle_180d}</pose>
+			<xacro:sdf_mesh _filename="${mesh}" />
 			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
 				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
 		</collision>
 	</link>
-
-	<link name="left_${portion}_quadleg_linkC">
-		<xacro:link_def_extra_selfcollide />
-		<pose >${joint_x + (felis_fulllink_centerlength/2)} ${joint_y + felis_jointAB_zoffset} ${joint_z} ${geom_r} ${geom_p-felis_linkB_starting_angle} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkC_mass}" _cg="${felis_linkC_cg}" 
-				_ixx="${felis_linkC_ixx}" _iyy="${felis_linkC_iyy}" _izz="${felis_linkC_izz}" _ixy="${felis_linkC_ixy}" 
-				_ixz="${felis_linkC_ixz}" _iyz="${felis_linkC_iyz}" />
-		<visual name="left_${portion}_quadleg_linkC_visual">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkC_mesh}" />
-		</visual>
-		<collision name="left_${portion}_quadleg_linkC_collision">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkC_mesh}" />
-			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
-				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
-		</collision>
-	</link>
-
-	<link name="left_${portion}_quadleg_linkD">
-		<xacro:link_def_extra_selfcollide />
-		<pose >${joint_x + 3*(felis_fulllink_centerlength/2)} ${joint_y + felis_jointAB_zoffset} ${joint_z} ${geom_r} ${geom_p-felis_linkB_starting_angle} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkD_mass}" _cg="${felis_linkD_cg}" 
-				_ixx="${felis_linkD_ixx}" _iyy="${felis_linkD_iyy}" _izz="${felis_linkD_izz}" _ixy="${felis_linkD_ixy}" 
-				_ixz="${felis_linkD_ixz}" _iyz="${felis_linkD_iyz}" />
-		<visual name="left_${portion}_quadleg_linkD_visual">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkD_mesh}" />
-		</visual>
-		<collision name="left_${portion}_quadleg_linkD_collision">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkD_mesh}" />
-			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
-				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
-		</collision>
-	</link>
-
-	<link name="left_${portion}_quadleg_linkE">
-		<xacro:link_def_extra_selfcollide />
-		<pose >${joint_x + (felis_fulllink_centerlength/2)} ${joint_y + felis_jointAB_zoffset} ${joint_z} ${geom_r} ${geom_p-felis_linkB_starting_angle} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkE_mass}" _cg="${felis_linkE_cg}" 
-				_ixx="${felis_linkE_ixx}" _iyy="${felis_linkE_iyy}" _izz="${felis_linkE_izz}" _ixy="${felis_linkE_ixy}" 
-				_ixz="${felis_linkE_ixz}" _iyz="${felis_linkE_iyz}" />
-		<visual name="left_${portion}_quadleg_linkE_visual">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkE_mesh}" />
-		</visual>
-		<collision name="left_${portion}_quadleg_linkE_collision">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkE_mesh}" />
-			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
-				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
-		</collision>
-	</link>
-
-	<link name="left_${portion}_quadleg_linkF">
-		<xacro:link_def_extra_selfcollide />
-		<pose >${joint_x + 3*(felis_fulllink_centerlength/2)} ${joint_y + felis_jointAB_zoffset} ${joint_z} ${geom_r} ${geom_p-felis_linkB_starting_angle} ${geom_y}</pose>
-		<xacro:sdf_inertial _mass="${felis_linkE_mass}" _cg="${felis_linkF_cg}" 
-				_ixx="${felis_linkF_ixx}" _iyy="${felis_linkF_iyy}" _izz="${felis_linkF_izz}" _ixy="${felis_linkF_ixy}" 
-				_ixz="${felis_linkF_ixz}" _iyz="${felis_linkF_iyz}" />
-		<visual name="left_${portion}_quadleg_linkF_visual">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkF_mesh}" />
-		</visual>
-		<collision name="left_${portion}_quadleg_linkF_collision">
-			<pose>0 0 0 0 0 0</pose>
-			<xacro:sdf_mesh _filename="${felis_linkF_mesh}" />
-			<xacro:sdf_collision_params kp="${links_kp}" kd="${links_kd}" mu="${links_mu}" mu2="${links_mu2}" 
-				slip1="${links_slip1}" slip2="${links_slip2}" fdir1="${links_fdir1}" max_contacts="${links_max_contacts}"/>
-		</collision>
-	</link>
-
-
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkA_joint" _parent="base_link" _child="left_${portion}_quadleg_linkA" _axis="0 0 1" 
+</xacro:macro>
+<xacro:macro name="quadleg_joints" params="side portion" >
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkA_joint" _parent="base_link" _child="${side}_${portion}_quadleg_linkA" _axis="0 0 1" 
 				_lower="${quadleg_jointA_lower_angle}" _upper="${quadleg_jointA_upper_angle}" _useparent="0" />
 
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkB_joint" _parent="left_${portion}_quadleg_linkA" _child="left_${portion}_quadleg_linkB" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkB_joint" _parent="${side}_${portion}_quadleg_linkA" _child="${side}_${portion}_quadleg_linkB" _axis="0 0 1" 
 				_lower="${quadleg_jointB_lower_angle}" _upper="${quadleg_jointB_upper_angle}" _useparent="0" />
 
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkC_joint" _parent="left_${portion}_quadleg_linkB" _child="left_${portion}_quadleg_linkC" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkC_joint" _parent="${side}_${portion}_quadleg_linkB" _child="${side}_${portion}_quadleg_linkC" _axis="0 0 1" 
 				_lower="${quadleg_jointC_lower_angle}" _upper="${quadleg_jointC_upper_angle}" _useparent="0" />
 
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkD_joint" _parent="left_${portion}_quadleg_linkC" _child="left_${portion}_quadleg_linkD" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkD_joint" _parent="${side}_${portion}_quadleg_linkC" _child="${side}_${portion}_quadleg_linkD" _axis="0 0 1" 
 				_lower="${quadleg_jointD_lower_angle}" _upper="${quadleg_jointD_upper_angle}" _useparent="0" />
 
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkE_joint" _parent="left_${portion}_quadleg_linkA" _child="left_${portion}_quadleg_linkE" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkE_joint" _parent="${side}_${portion}_quadleg_linkA" _child="${side}_${portion}_quadleg_linkE" _axis="0 0 1" 
 				_lower="${quadleg_jointE_lower_angle}" _upper="${quadleg_jointE_upper_angle}" _useparent="0" />
 
-	<xacro:sdf_revolute_joint _name="left_${portion}_linkF_joint" _parent="left_${portion}_quadleg_linkE" _child="left_${portion}_quadleg_linkF" _axis="0 0 1" 
+	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkF_joint" _parent="${side}_${portion}_quadleg_linkE" _child="${side}_${portion}_quadleg_linkF" _axis="0 0 1" 
 				_lower="${quadleg_jointF_lower_angle}" _upper="${quadleg_jointF_upper_angle}" _useparent="0" />
 </xacro:macro>
+<!--Left Leg -->
+<!-- TODO ADD SPRINGS ETC -->
+<xacro:macro name="quadleg_left" params="portion geom_r geom_p geom_y joint_x joint_y joint_z">
+	<xacro:quadleg_link side="left" portion="${portion}" ID="A" mesh="${felis_linkA_mesh}"
+		cx="${joint_x}" cy="${joint_y}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p}" ty="${geom_y}"
+		mass="${felis_linkA_mass}" cg="${felis_linkA_cg}" ixx="${felis_linkA_ixx}" iyy="${felis_linkA_iyy}"
+		izz="${felis_linkA_izz}" ixy="${felis_linkA_ixy}" ixz="${felis_linkA_ixz}" iyz="${felis_linkA_iyz}" />
+	<xacro:quadleg_link side="left" portion="${portion}" ID="B" mesh="${felis_linkB_mesh}"
+		cx="${joint_x}" cy="${joint_y+felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkB_mass}" cg="${felis_linkB_cg}" ixx="${felis_linkB_ixx}" iyy="${felis_linkB_iyy}"
+		izz="${felis_linkB_izz}" ixy="${felis_linkB_ixy}" ixz="${felis_linkB_ixz}" iyz="${felis_linkB_iyz}" />
+	<xacro:quadleg_link side="left" portion="${portion}" ID="C" mesh="${felis_linkC_mesh}"
+		cx="${joint_x + (felis_fulllink_centerlength/2)}" cy="${joint_y+felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkC_mass}" cg="${felis_linkC_cg}" ixx="${felis_linkC_ixx}" iyy="${felis_linkC_iyy}"
+		izz="${felis_linkC_izz}" ixy="${felis_linkC_ixy}" ixz="${felis_linkC_ixz}" iyz="${felis_linkC_iyz}" />
+	<xacro:quadleg_link side="left" portion="${portion}" ID="D" mesh="${felis_linkD_mesh}"
+		cx="${joint_x + 3*(felis_fulllink_centerlength/2)}" cy="${joint_y+felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkD_mass}" cg="${felis_linkD_cg}" ixx="${felis_linkD_ixx}" iyy="${felis_linkD_iyy}"
+		izz="${felis_linkD_izz}" ixy="${felis_linkD_ixy}" ixz="${felis_linkD_ixz}" iyz="${felis_linkD_iyz}" />
+	<xacro:quadleg_link side="left" portion="${portion}" ID="E" mesh="${felis_linkE_mesh}"
+		cx="${joint_x + (felis_fulllink_centerlength/2)}" cy="${joint_y+felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkE_mass}" cg="${felis_linkE_cg}" ixx="${felis_linkE_ixx}" iyy="${felis_linkE_iyy}"
+		izz="${felis_linkE_izz}" ixy="${felis_linkE_ixy}" ixz="${felis_linkE_ixz}" iyz="${felis_linkE_iyz}" />
+	<xacro:quadleg_link side="left" portion="${portion}" ID="F" mesh="${felis_linkF_mesh}"
+		cx="${joint_x + 3*(felis_fulllink_centerlength/2)}" cy="${joint_y+felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkF_mass}" cg="${felis_linkF_cg}" ixx="${felis_linkF_ixx}" iyy="${felis_linkF_iyy}"
+		izz="${felis_linkF_izz}" ixy="${felis_linkF_ixy}" ixz="${felis_linkF_ixz}" iyz="${felis_linkF_iyz}" />
+	
+	<xacro:quadleg_joints side="left" portion="${portion}" />
+</xacro:macro>
 <!-- Right Leg -->
+<xacro:macro name="quadleg_right" params="portion geom_r geom_p geom_y joint_x joint_y joint_z">
+	<xacro:quadleg_link_reflected side="right" portion="${portion}" ID="A" mesh="${felis_linkA_mesh}"
+		cx="${joint_x}" cy="${joint_y}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p}" ty="${geom_y}"
+		mass="${felis_linkA_mass}" cg="${felis_linkA_cg}" ixx="${felis_linkA_ixx}" iyy="${felis_linkA_iyy}"
+		izz="${felis_linkA_izz}" ixy="${felis_linkA_ixy}" ixz="${felis_linkA_ixz}" iyz="${felis_linkA_iyz}" />
+	<xacro:quadleg_link side="right" portion="${portion}" ID="B" mesh="${felis_linkB_mesh}"
+		cx="${joint_x}" cy="${joint_y-felis_jointAB_zoffset-felis_link_width}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkB_mass}" cg="${felis_linkB_cg}" ixx="${felis_linkB_ixx}" iyy="${felis_linkB_iyy}"
+		izz="${felis_linkB_izz}" ixy="${felis_linkB_ixy}" ixz="${felis_linkB_ixz}" iyz="${felis_linkB_iyz}" />
+	<xacro:quadleg_link_reflected side="right" portion="${portion}" ID="C" mesh="${felis_linkC_mesh}"
+		cx="${joint_x + (felis_fulllink_centerlength/2)}" cy="${joint_y-felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkC_mass}" cg="${felis_linkC_cg}" ixx="${felis_linkC_ixx}" iyy="${felis_linkC_iyy}"
+		izz="${felis_linkC_izz}" ixy="${felis_linkC_ixy}" ixz="${felis_linkC_ixz}" iyz="${felis_linkC_iyz}" />
+	<xacro:quadleg_link side="right" portion="${portion}" ID="D" mesh="${felis_linkD_mesh}"
+		cx="${joint_x + 3*(felis_fulllink_centerlength/2)}" cy="${joint_y-felis_jointAB_zoffset-felis_link_width}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkD_mass}" cg="${felis_linkD_cg}" ixx="${felis_linkD_ixx}" iyy="${felis_linkD_iyy}"
+		izz="${felis_linkD_izz}" ixy="${felis_linkD_ixy}" ixz="${felis_linkD_ixz}" iyz="${felis_linkD_iyz}" />
+	<xacro:quadleg_link_reflected side="right" portion="${portion}" ID="E" mesh="${felis_linkE_mesh}"
+		cx="${joint_x + (felis_fulllink_centerlength/2)}" cy="${joint_y-felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkE_mass}" cg="${felis_linkE_cg}" ixx="${felis_linkE_ixx}" iyy="${felis_linkE_iyy}"
+		izz="${felis_linkE_izz}" ixy="${felis_linkE_ixy}" ixz="${felis_linkE_ixz}" iyz="${felis_linkE_iyz}" />
+	<xacro:quadleg_link_reflected side="right" portion="${portion}" ID="F" mesh="${felis_linkF_mesh}"
+		cx="${joint_x + 3*(felis_fulllink_centerlength/2)}" cy="${joint_y-felis_jointAB_zoffset}" cz="${joint_z}" tr="${geom_r}" tp="${geom_p-felis_linkB_starting_angle}" ty="${geom_y}"
+		mass="${felis_linkF_mass}" cg="${felis_linkF_cg}" ixx="${felis_linkF_ixx}" iyy="${felis_linkF_iyy}"
+		izz="${felis_linkF_izz}" ixy="${felis_linkF_ixy}" ixz="${felis_linkF_ixz}" iyz="${felis_linkF_iyz}" />
+
+	<xacro:quadleg_joints side="right" portion="${portion}" />
+</xacro:macro>
 </sdf>
