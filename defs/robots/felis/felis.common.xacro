@@ -55,7 +55,7 @@
 <xacro:property name="felis_linkA_joint_lf_xyz" value="${felis_linkA_joint_lf_x} ${felis_linkA_joint_lf_y} ${felis_linkA_joint_all_z}" />
 <xacro:property name="felis_linkA_joint_rf_xyz" value="${felis_linkA_joint_rf_x} ${felis_linkA_joint_rf_y} ${felis_linkA_joint_all_z}" />
 <xacro:property name="felis_linkA_joint_lr_xyz" value="${felis_linkA_joint_lr_x} ${felis_linkA_joint_lr_y} ${felis_linkA_joint_all_z}" />
-<xacro:property name="felis_linkA_joint_rr_xyz" value="${felis_linkA_joint_rr_x} ${felis_linkA_joint_lf_y} ${felis_linkA_joint_all_z}" />
+<xacro:property name="felis_linkA_joint_rr_xyz" value="${felis_linkA_joint_rr_x} ${felis_linkA_joint_rr_y} ${felis_linkA_joint_all_z}" />
 <xacro:property name="felis_linkA_joint_lf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
 <xacro:property name="felis_linkA_joint_rf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
 <xacro:property name="felis_linkA_joint_lr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
