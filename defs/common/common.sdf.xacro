@@ -40,6 +40,25 @@
 		</axis>	
 	</joint>
 </xacro:macro>
+<xacro:macro name="sdf_revolute_joint_spring" params="_name _parent _child _axis _lower _upper _useparent _spref _spk" >
+	<joint name="${_name}" type="revolute">
+		<child>${_child}</child>
+		<parent>${_parent}</parent>
+		<axis>
+			<xyz>${_axis}</xyz>
+			<limit>
+				<lower>${_lower}</lower>
+				<upper>${_upper}</upper>
+			</limit>
+			<dynamics>
+				<spring_reference>${_spref}</spring_reference>
+				<spring_stiffness>${_spk}</spring_stiffness>
+			</dynamics>
+			<use_parent_model_frame>${_useparent}</use_parent_model_frame>
+		</axis>	
+	</joint>
+</xacro:macro>
+
 <!-- Macro for a wheel joint -->
 <xacro:macro name="sdf_wheel_joint" params="_name _parent _child _axis" >
 	<xacro:sdf_revolute_joint _name="${_name}" _parent="${_parent}" _child="${_child}" _axis="${_axis}" 

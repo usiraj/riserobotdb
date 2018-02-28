@@ -21,8 +21,8 @@
 <xacro:property name="felis_jointAB_zoffset" value="0.004" />
 <xacro:property name="felis_fulllink_centerlength" value="0.07" />
 <xacro:property name="felis_link_width" value="0.006" />
-<xacro:property name="joint_min_angle" value="0.087266463" /><!-- Use Exact Values (For all links except A)-->
-<xacro:property name="joint_max_angle" value="3.124139361" /><!-- Use Exact Values (For all links except A)-->
+<xacro:property name="joint_min_angle" value="${angle_30d-angle_05d}" /><!-- Use Exact Values (For all links except A)-->
+<xacro:property name="joint_max_angle" value="${angle_60d-angle_05d}" /><!-- Use Exact Values (For all links except A)-->
 
 <!-- Base/Cage Data -->
 <xacro:property name="felis_xyz" value="0 0 ${felis_z}" />
@@ -37,7 +37,7 @@
 <xacro:property name="felis_spool_joint_rr_xyz" value="-${felis_jointrear_x+felis_motor_flipdifference} -${felis_jointrear_y} ${felis_spool_z}" />
 <xacro:property name="felis_spool_joint_rr_rpy" value="${angle_90d} -${angle_90d} 0" />
 <!-- Link A Data -->
-<xacro:property name="felis_linkA_starting_angle" value="0" />
+<xacro:property name="felis_linkA_starting_angle" value="${angle_180d-angle_30d}" />
 <!-- Link A Component Wise -->
 <xacro:property name="felis_linkA_joint_lf_x" value="${felis_jointfront_x+felis_motor_flipdifference}" />
 <xacro:property name="felis_linkA_joint_lf_y" value="${felis_jointfront_y}" />
@@ -62,7 +62,7 @@
 <xacro:property name="felis_linkA_joint_rr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
 
 <!-- Link B Data -->
-<xacro:property name="felis_linkB_starting_angle" value="0" />
+<xacro:property name="felis_linkB_starting_angle" value="${angle_120d}" />
 <!-- Link C Data -->
 <!-- Link D Data -->
 <!-- Link E Data -->
@@ -72,16 +72,16 @@
 <xacro:property name="spool_upper_angle" value="${angle_60d}" />
 <xacro:property name="quadleg_jointA_lower_angle"  value="${angle_60d+angle_15d}" /> <!-- Use Exact Values -->
 <xacro:property name="quadleg_jointA_upper_angle"  value="${angle_180d - angle_15d}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointB_lower_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointB_upper_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointC_lower_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointC_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointB_lower_angle"  value="-${joint_min_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointB_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointC_lower_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointC_upper_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointD_lower_angle"  value="-${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointD_upper_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointD_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
 <xacro:property name="quadleg_jointE_lower_angle"  value="-${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointE_upper_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointF_lower_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
-<xacro:property name="quadleg_jointF_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointE_upper_angle"  value="${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointF_lower_angle"  value="-${joint_max_angle}" /><!-- Use Exact Values -->
+<xacro:property name="quadleg_jointF_upper_angle"  value="${joint_min_angle}" /><!-- Use Exact Values -->
 <!-- Mass -->
 <xacro:property name="felis_baselink_mass" value="1.5" />
 <xacro:property name="felis_spool_mass" value="0.2" />
@@ -178,6 +178,7 @@
 <xacro:property name="angle_45d" value="0.785398163" />
 <xacro:property name="angle_60d" value="1.047197551" />
 <xacro:property name="angle_90d" value="1.570796327" />
+<xacro:property name="angle_120d" value="${2*angle_60d}" />
 <xacro:property name="angle_135d" value="2.35619449" />
 <xacro:property name="angle_180d" value="3.141592654" />
 </robot>
