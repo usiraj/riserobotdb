@@ -38,6 +38,7 @@
 <xacro:property name="felis_spool_joint_rr_rpy" value="${angle_90d} -${angle_90d} 0" />
 <!-- Link A Data -->
 <xacro:property name="felis_linkA_starting_angle" value="${angle_180d-angle_30d}" />
+<xacro:property name="felis_linkA_starting_angle_urdf" value="0" />
 <!-- Link A Component Wise -->
 <xacro:property name="felis_linkA_joint_lf_x" value="${felis_jointfront_x+felis_motor_flipdifference}" />
 <xacro:property name="felis_linkA_joint_lf_y" value="${felis_jointfront_y}" />
@@ -56,13 +57,14 @@
 <xacro:property name="felis_linkA_joint_rf_xyz" value="${felis_linkA_joint_rf_x} ${felis_linkA_joint_rf_y} ${felis_linkA_joint_all_z}" />
 <xacro:property name="felis_linkA_joint_lr_xyz" value="${felis_linkA_joint_lr_x} ${felis_linkA_joint_lr_y} ${felis_linkA_joint_all_z}" />
 <xacro:property name="felis_linkA_joint_rr_xyz" value="${felis_linkA_joint_rr_x} ${felis_linkA_joint_rr_y} ${felis_linkA_joint_all_z}" />
-<xacro:property name="felis_linkA_joint_lf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
-<xacro:property name="felis_linkA_joint_rf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
-<xacro:property name="felis_linkA_joint_lr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
-<xacro:property name="felis_linkA_joint_rr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_joint_allrpy_p} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_lf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_starting_angle_urdf} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_rf_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_starting_angle_urdf} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_lr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_starting_angle_urdf} ${felis_linkA_joint_allrpy_y}" />
+<xacro:property name="felis_linkA_joint_rr_rpy" value="${felis_linkA_joint_allrpy_r} ${felis_linkA_starting_angle_urdf} ${felis_linkA_joint_allrpy_y}" />
 
 <!-- Link B Data -->
 <xacro:property name="felis_linkB_starting_angle" value="${angle_120d}" />
+<xacro:property name="felis_linkB_starting_angle_urdf" value="0" />
 <!-- Link C Data -->
 <!-- Link D Data -->
 <!-- Link E Data -->

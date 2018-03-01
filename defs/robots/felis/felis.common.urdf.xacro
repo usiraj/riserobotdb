@@ -45,7 +45,7 @@
 		_child="left_${portion}_quadleg_linkA" _axis="0 0 1" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${quadleg_jointA_lower_angle}"
 		_upper="${quadleg_jointA_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
 	<xacro:urdf_revolute_joint _name="left_${portion}_linkB_joint" _parent="left_${portion}_quadleg_linkA"
-		_child="left_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${felis_jointAB_zoffset}" _rpy="0 0 -${felis_linkB_starting_angle}" _lower="${quadleg_jointB_lower_angle}"
+		_child="left_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${felis_jointAB_zoffset}" _rpy="0 0 -${felis_linkB_starting_angle_urdf}" _lower="${quadleg_jointB_lower_angle}"
 		_upper="${quadleg_jointB_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
 	<xacro:urdf_revolute_joint _name="left_${portion}_linkC_joint" _parent="left_${portion}_quadleg_linkB"
 		_child="left_${portion}_quadleg_linkC" _axis="0 0 1" _xyz="${felis_fulllink_centerlength/2} 0 0" _rpy="0 0 0" _lower="${quadleg_jointC_lower_angle}"
@@ -92,7 +92,7 @@
 		_child="right_${portion}_quadleg_linkA" _axis="0 0 1" _xyz="${joint_xyz}" _rpy="${geom_rpy}" _lower="${quadleg_jointA_lower_angle}"
 		_upper="${quadleg_jointA_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
 	<xacro:urdf_revolute_joint _name="right_${portion}_linkB_joint" _parent="right_${portion}_quadleg_linkA"
-		_child="right_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${-felis_jointAB_zoffset-felis_link_width}" _rpy="0 0 -${felis_linkB_starting_angle}" _lower="${quadleg_jointB_lower_angle}"
+		_child="right_${portion}_quadleg_linkB" _axis="0 0 1" _xyz="0 0 ${-felis_jointAB_zoffset-felis_link_width}" _rpy="0 0 -${felis_linkB_starting_angle_urdf}" _lower="${quadleg_jointB_lower_angle}"
 		_upper="${quadleg_jointB_upper_angle}" _effort="${quadleg_joint_effort}" _velocity="${quadleg_joint_velocity}" />
 	<xacro:urdf_revolute_joint _name="right_${portion}_linkC_joint" _parent="right_${portion}_quadleg_linkB"
 		_child="right_${portion}_quadleg_linkC" _axis="0 0 1" _xyz="${felis_fulllink_centerlength/2} 0 ${felis_link_width}" _rpy="0 0 0" _lower="${quadleg_jointC_lower_angle}"
