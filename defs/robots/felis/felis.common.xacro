@@ -169,6 +169,10 @@
 <xacro:property name="links_slip2" value="0.2" />
 <xacro:property name="links_fdir1" value="1 0 0" />
 
+<xacro:property name="linkD_spring_ref" value="0" />
+<xacro:property name="linkD_spring_k" value="0" />
+<xacro:property name="cable_spring_ref" value="0" />
+<xacro:property name="cable_spring_k" value="0" />
 
 <!-- SDF Specific parameters -->
 <xacro:property name="links_max_contacts" value="6" />

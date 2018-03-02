@@ -72,8 +72,8 @@
 	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkC_joint" _parent="${side}_${portion}_quadleg_linkB" _child="${side}_${portion}_quadleg_linkC" _axis="0 0 1" 
 				_lower="${quadleg_jointC_lower_angle}" _upper="${quadleg_jointC_upper_angle}" _useparent="0"/>
 
-	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkD_joint" _parent="${side}_${portion}_quadleg_linkC" _child="${side}_${portion}_quadleg_linkD" _axis="0 0 1" 
-				_lower="${quadleg_jointD_lower_angle}" _upper="${quadleg_jointD_upper_angle}" _useparent="0"/>
+	<xacro:sdf_revolute_joint_spring _name="${side}_${portion}_linkD_joint" _parent="${side}_${portion}_quadleg_linkC" _child="${side}_${portion}_quadleg_linkD" _axis="0 0 1" 
+				_lower="${quadleg_jointD_lower_angle}" _upper="${quadleg_jointD_upper_angle}" _useparent="0" _spref="${linkD_spring_ref}" _spk="${linkD_spring_k}" />
 
 	<xacro:sdf_revolute_joint _name="${side}_${portion}_linkE_joint" _parent="${side}_${portion}_quadleg_linkA" _child="${side}_${portion}_quadleg_linkE" _axis="0 0 1" 
 				_lower="${quadleg_jointE_lower_angle}" _upper="${quadleg_jointE_upper_angle}" _useparent="0"/>
@@ -106,28 +106,27 @@
 			</limit>
 		</axis>
 	</joint>
-</xacro:macro>
-<!-- Spring -->
-<xacro:macro name="gazebo_spring" params="_name _parent _child _axis _lower _upper _sprref _sprk _useparent" >
-	<joint name="${_name}_spring" type="prismatic">
-		<parent>${_parent}</parent>
-		<child>${_child}</child>
+	<!-- Joint for tension thread -->
+	<!--joint name="${side}_${portion}_cable" type="prismatic">
+		<parent>${side}_${portion}_quadleg_linkA</parent>
+		<child>${side}_${portion}_quadleg_linkC</child>
+		<pose>0.035 0 0 0 0 0</pose>
 		<axis>
-			<xyz>${_axis}</xyz>
+			<xyz>-0.5 0.866025404 0</xyz>
+			<use_parent_model_frame>0</use_parent_model_frame>
 			<limit>
-				<lower>${_lower}</lower>
-				<upper>${_upper}</upper>
+				<lower>0.0</lower>
+				<upper>1.0</upper>
 			</limit>
 			<dynamics>
-				<spring_reference>${_sprref}</spring_reference>
-				<spring_stiffness>${_sprk}</spring_stiffness>
+				<spring_reference>${cable_spring_ref}</spring_reference>
+				<spring_stiffness>${cable_spring_k}</spring_stiffness>
 			</dynamics>
-			<use_parent_model_frame>${_useparent}</use_parent_model_frame>
 		</axis>
-	</joint>
+	</joint-->
+
 </xacro:macro>
 <!--Left Leg -->
-<!-- TODO ADD SPRINGS ETC -->
 <xacro:macro name="quadleg_left" params="portion geom_r geom_p geom_y joint_x joint_y joint_z">
 	<xacro:property name="sinlinkphi" value="${(felis_fulllink_centerlength/2)*sin(geom_p-felis_linkB_starting_angle)}" />
 	<xacro:property name="coslinkphi" value="${(felis_fulllink_centerlength/2)*cos(geom_p-felis_linkB_starting_angle)}" />
@@ -158,11 +157,6 @@
 		izz="${felis_linkF_izz}" ixy="${felis_linkF_ixy}" ixz="${felis_linkF_ixz}" iyz="${felis_linkF_iyz}" />
 	
 	<xacro:quadleg_joints side="left" portion="${portion}" angA="${geom_p}" />
-
-	<!--Springs -->
-	<!--xacro:gazebo_spring _name="left_${portion}_quadleg_DF" _parent="left_${portion}_quadleg_linkD" _child="left_${portion}_quadleg_linkF"
-		_axis="0 -1 0" _lower=".0.017" _upper="0.1" _sprref="0" _sprk="100" _useparent="0" /-->
-		
 </xacro:macro>
 <!-- Right Leg -->
 <xacro:macro name="quadleg_right" params="portion geom_r geom_p geom_y joint_x joint_y joint_z">
